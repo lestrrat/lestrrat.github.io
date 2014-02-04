@@ -35,7 +35,7 @@ body {
     z-index: 1000;
     display: block;
     padding: 70px 20px 20px;
-    background-color: #f5f5f5;
+    background-color: #384546;
     border-right: 1px solid #eee;
   }
 }
@@ -47,6 +47,7 @@ body {
   margin-bottom: 20px;
 }
 .nav-sidebar > li > a {
+  font-weight: bold;
   padding-left: 20px;
   padding-right: 20px;
 }
