@@ -2,6 +2,12 @@
 
 This file contains my brief bio/introduction, to be used for conferences, articles, etc.
 
+# Profile photo
+
+Please crop as you see fit
+
+![](./profile.jpg)
+
 # English version
 
 *Please feel free to make edits (so as long as the information is accurate), if it is necessary to fit the particular medium*
