@@ -18,4 +18,4 @@ Daisuke Maki, a.k.a. lestrrat, is the main author of [peco](https://github.com/p
 
 *掲載媒体の必要に応じて名前部分を省くなど、情報に齟齬が無い限りの編集は自由にしてください*
 
-牧大輔(lestrrat) - [peco](https://github.com/peco/peco) の開発責任者。Go/Perl/Cプログラマであり、登壇や執筆をこなす傍ら技術カンファレンスの運営に関わり続けている（元[YAPC::Asia Tokyo](http://yapcasia.org)主催、現在は[builderscon](https://builderscon.io)を運営中）。2児の父。[株式会社HDE](https://www.hde.co.jp)所属。
+牧大輔(lestrrat) - [peco](https://github.com/peco/peco) の開発責任者。Go/Perl/Cプログラマであり、登壇や執筆をこなす傍ら技術カンファレンスの運営に関わり続けている（元[YAPC::Asia Tokyo](http://yapcasia.org)主催、現在は[builderscon](https://builderscon.io)を運営中）。3児の父。[株式会社HDE](https://www.hde.co.jp)所属。
