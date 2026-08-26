@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>My Slackbot Setup For GKE</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">My Slackbot Setup For GKE</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+So in a previous installment (sorry, Japanese only), I realized that in order to use Kubernetes ingress resources (and perform maintainance…
+</section>
+<section data-field="body" class="e-content">
+<section name="c7c3" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="296e" id="296e" class="graf graf--h3 graf--leading graf--title">My Slackbot Setup For GKE</h3><p name="d414" id="d414" class="graf graf--p graf-after--h3">So in a <a href="../2016-04-15-8076bf314777/index.html" data-href="../2016-04-15-8076bf314777/index.html" class="markup--anchor markup--p-anchor" target="_blank">previous installment</a> (sorry, Japanese only), I realized that in order to use Kubernetes ingress resources (and perform maintainance without downtime, such as updating SSL certificates), I need to bring up multiple generations of ingress resources up, then use DNS to switch over which ingress receives the traffic.</p><figure name="051d" id="051d" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*x3TETR2cF5dSG0jedM0y4g.jpeg" data-width="1024" data-height="768" src="image-36074d310b008791.jpeg"><figcaption class="imageCaption">slide explaining the structure from previous article.</figcaption></figure><p name="e1ec" id="e1ec" class="graf graf--p graf-after--figure">This is relatively straight forward, but requires manual intervention to update DNS entries that matches the newly brought up ingress (this in reality is a new instance of GCP’s HTTP(s) Load Balancer). You need to wait for the load balancer to get an IP address, and then finally update the DNS, etc etc… The same thing goes when you bring an existing ingress resource.</p><p name="feb2" id="feb2" class="graf graf--p graf-after--p">So clearly this is screaming “You need to automate this!!!”. So how do we go about doing it?</p><h3 name="3c49" id="3c49" class="graf graf--h3 graf-after--p">Write a Slack Gateway</h3><p name="114a" id="114a" class="graf graf--p graf-after--h3">I’m such a hipster that my natural selection is to use Slack as the interface to automate this. So first I need a Slack-to-my-bot gateway. There exists a few solutions for this already. I’d been a fan of <a href="https://github.com/yappo/p5-App-Ikachan" data-href="https://github.com/yappo/p5-App-Ikachan" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Ikachan</a>, which is a tool that provides an HTTP interface to post to IRC channels. There’s a Slack equivalent for this called <a href="https://github.com/kentaro/takosan" data-href="https://github.com/kentaro/takosan" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Takosan</a>, so I looked at it first.</p><p name="2cbf" id="2cbf" class="graf graf--p graf-after--p">But this is an HTTP-to-Slack gateway. I also need a tool that gives me access to Slack’s Real Time Messaging (RTM). I was first going to fork and send a pull request to Takosan, but then as I was writing the code for it, I realized that the code was starting to deviate quite a lot… <a href="https://github.com/lestrrat/go-slackgw" data-href="https://github.com/lestrrat/go-slackgw" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">so I made a new repo for it, go-slackgw</a>.</p><figure name="4ddb" id="4ddb" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Sgx3_BSf65iT4loiJmm1Uw.png" data-width="972" data-height="679" src="image-3ed331867c00c8de.png"></figure><p name="8cac" id="8cac" class="graf graf--p graf-after--figure">After a few tries, I realized that you need to push these messages into some sort of a queue. Well, I’m working in GCP, so <a href="https://cloud.google.com/pubsub/overview" data-href="https://cloud.google.com/pubsub/overview" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Cloud Pubsub</a> it is.</p><figure name="67ca" id="67ca" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*22bK6sp0wYXju59vZiaX0A.png" data-width="1109" data-height="654" src="image-ebabe437c10bbbc1.png"><figcaption class="imageCaption">https://cloud.google.com/pubsub/overview</figcaption></figure><p name="ef1a" id="ef1a" class="graf graf--p graf-after--figure">So now I had tool that can post to Slack, listen to incoming messages on Slack, and then filter/forward events to Cloud Pubsub. Alright, now the real bot part…</p><h3 name="a3a6" id="a3a6" class="graf graf--h3 graf-after--p">The Bots</h3><p name="bb49" id="bb49" class="graf graf--p graf-after--h3">I knew I was going to have bot(s) that can understand multiple commands — and I was not going to shove all the code in one bot. So I wanted to route events to different pubsub topics depending on the message content.</p><p name="5ad1" id="5ad1" class="graf graf--p graf-after--p">go-slackgw first forwards all Message events (i.e., the actual text that you type in Slack) to 1 topic. Then there’s a component named slackrouter that subscribes to this topic, and multiplexes the messages to appropriate topics.</p><p name="ac9c" id="ac9c" class="graf graf--p graf-after--p">There’s a “acmebot” that does all the Let’s Encrypt / ACME interaction. And there’s a “deploybot” that does the deployment to Kubernetes.</p><p name="83f1" id="83f1" class="graf graf--p graf-after--p">These bots do exactly what I just described, but there’s a catch. I was writing all of this in Go: The higher-level library to Google Cloud Platform APIs is at <a href="https://godoc.org/google.golang.org/cloud" data-href="https://godoc.org/google.golang.org/cloud" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">google.golang.org/cloud</a>, and uses the lower level API <a href="https://godoc.org/google.golang.org/api" data-href="https://godoc.org/google.golang.org/api" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">google.golang.org/api</a>. These bots also needed to interact with Kubernetes, so I needed to use <a href="https://godoc.org/k8s.io/kubernetes" data-href="https://godoc.org/k8s.io/kubernetes" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">k8s.io/kubernetes</a> as well.</p><p name="23e3" id="23e3" class="graf graf--p graf-after--p">The problem starts here: as of this writing (Apr 2016), k8s.io/kubernetes is fixed to use google.golang.org/api from approximately 1 year ago. But the API that I want to use from google.golang.org/cloud requires the lower api to from as recent as 3 month ago. You can see where this is going.</p><p name="b9a2" id="b9a2" class="graf graf--p graf-after--p">This means I needed to create separate binaries for components that talk to GCP API using the higher level libraries, and those that talk to Kubernetes.</p><p name="9cfb" id="9cfb" class="graf graf--p graf-after--p">I could also create more pubsub topics to connect these components, but at this point it is getting ridiculous. Using pubsubintroduces a significant amount of latency in exchange for delivery guarantees. This time I decided to try to be creative with the Kubernetes Pod structure.</p><h3 name="859a" id="859a" class="graf graf--h3 graf-after--p">Abusing The Pod Structure</h3><p name="4325" id="4325" class="graf graf--p graf-after--h3">Pods have a guarantee that containers specified in the same Pod will be run on the same node, there by allowing us to share local resources within the same node. For example, you can create a shared directory on the node, populate it from one node, and mount it from another to share the same set of files.</p><p name="e390" id="e390" class="graf graf--p graf-after--p">Using the same logic, we should be able to share a named pipe (FIFO) between containers within the same Pod.</p><figure name="dd3d" id="dd3d" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*uymvy6eD9yVh4JYay8D-ug.jpeg" data-width="1024" data-height="768" src="image-398b1f9abd6f322e.jpeg"></figure><p name="d0f1" id="d0f1" class="graf graf--p graf-after--figure">So voila, now I had all the bits and pieces ready to plug as many workers as I needed later. Coolness.</p><h3 name="846c" id="846c" class="graf graf--h3 graf-after--p">Putting Everything Together</h3><p name="474e" id="474e" class="graf graf--p graf-after--h3">With all of the foundations laid down, the bot is ready. I was afraid of completely breaking stuff when an ingress deploy failed midway, so I made the deploy 3 steps. First step brings up a new ingress, waits for it to be ready, and then adds its IP address to the pre-existing DNS entry.</p><figure name="2a17" id="2a17" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*_mSFZYGVEh-nlva8yli74A.png" data-width="1330" data-height="486" src="image-648f581d8dc4743f.png"></figure><p name="797b" id="797b" class="graf graf--p graf-after--figure">The next requires human intervention for now. I’m sure this can be automated, but right now we don’t have an automatic way to make sure that the ingress is properly handling the traffic, so we ask the user to check that that the ingress is working, and remove the DNS entry for the old ingress, if need be.</p><p name="65b1" id="65b1" class="graf graf--p graf-after--p">The third step brings down the existing ingress, and removes any remaining DNS records, if any.</p><figure name="edea" id="edea" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*_6amOfInY8QqUZuQ-lJzDg.png" data-width="1178" data-height="656" src="image-970ba1cd6a236dce.png"></figure><p name="e36b" id="e36b" class="graf graf--p graf-after--figure graf--trailing">And all was good. This has been a fun trip to look within GCP Load Balancers, Kubernetes Ingress, ways to use various GCP and Kubernetes APIs, and working with Cloud Pubsub. I look forward to doing more in the future.</p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2016-04-21-86dbd03f2e41/index.html"><time class="dt-published" datetime="2016-04-21T05:52:18.507Z">April 21, 2016</time></a>.</p></footer></article></body></html>

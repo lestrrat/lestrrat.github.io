@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Adventures in JOSE using Go</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">Adventures in JOSE using Go</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+(This is an English version of my article on my employer’s blog)
+</section>
+<section data-field="body" class="e-content">
+<section name="b944" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="45b2" id="45b2" class="graf graf--h3 graf--leading graf--title">Adventures in JOSE using Go</h3><p name="6196" id="6196" class="graf graf--p graf-after--h3">(This is an English version of <a href="http://hde-advent-2015.hatenadiary.jp/entry/2015/12/02/095643" data-href="http://hde-advent-2015.hatenadiary.jp/entry/2015/12/02/095643" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">my article on my employer’s blog</a>)</p><p name="d174" id="d174" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">tl;dr;</strong> Yes, I know other libraries for JOSE in Go already exist. But for various reasons I created go-jwx. I believe it’s a pretty good library, and now I have a much much better understanding of the specification, so even if I have to go back to using other libraries, all is not lost.</p><h3 name="af1b" id="af1b" class="graf graf--h3 graf-after--p">How It Came To Be</h3><p name="92f6" id="92f6" class="graf graf--p graf-after--h3">I had been writing some code for an OpenID server using <a href="https://golang.org" data-href="https://golang.org" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Go</a>. First I read the specs. “JW- what?” You see, OAuth2/OpenID uses these things called JWT’s to transfer tokens amongst interested parties. These are signed using JWS’s, using JWK’s, using one of the algorithms described in JWA, and they can also be optionally encrypted using JWE’s. Enough JWx for you?</p><p name="9bea" id="9bea" class="graf graf--p graf-after--p">Well, at first I was lost in jargon, so I started digging around both documentation and code. Soon I had something working, but it just didn’t feel right: See, I was writing the server side which requires us to work with pretty much the whole specification, not just parts of it. Unfortunately, because most libraries only implment parts of the specification that they deem most importat (for a good reason, too. I just needed more), I ended up having to use multiple libraries for this application.</p><p name="3011" id="3011" class="graf graf--p graf-after--p">This lead to asymmetric code — it worked, but I could already tell the nightmare it would bring with it had it been released into production and there was a problem.</p><p name="35e6" id="35e6" class="graf graf--p graf-after--p">I thought hard about proposing changes to existing libraries, but in the end I came to the conclusion that what I wanted to do would require pretty big API changes, and nobody likes breaking existing user base’s code. At the same time I was feeling that my understanding of the specification was not up to par yet. Well, what better way to do this than to write it yourself?</p><h3 name="308a" id="308a" class="graf graf--h3 graf-after--p">The Library</h3><p name="27d7" id="27d7" class="graf graf--p graf-after--h3">So I wrote go-jwx:</p><div name="e37f" id="e37f" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/lestrrat/go-jwx" data-href="https://github.com/lestrrat/go-jwx" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat/go-jwx"><strong class="markup--strong markup--mixtapeEmbed-strong">lestrrat/go-jwx</strong><br><em class="markup--em markup--mixtapeEmbed-em">go-jwx - Implementation of various JWx technologies</em>github.com</a><a href="https://github.com/lestrrat/go-jwx" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="cf41a6eacb061b53752f8d3344b0ba9c" data-thumbnail-img-id="0*ezgceOX_Gb0TuyEk." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*ezgceOX_Gb0TuyEk.);"></a></div><p name="d09e" id="d09e" class="graf graf--p graf-after--mixtapeEmbed">The main problem I had with many of the existing libraries were that they only implemented parts of the specification. For example, <a href="https://github.com/golang/oauth2/blob/master/jws/jws.go" data-href="https://github.com/golang/oauth2/blob/master/jws/jws.go" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">github.com/golang/oauth2/jws</a> is elegant in its simplicity, but being a client library, it can only create a limited set of JWS, and cannot verify signatures. <a href="https://github.com/square/go-jose" data-href="https://github.com/square/go-jose" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">github.com/square/go-jose</a> was *almost* there, except I needed complete control over the contents of JWT tokens and other JWS/JWK headers.</p><p name="2ada" id="2ada" class="graf graf--p graf-after--p">The other problem that I saw in numerous libraries was that everything was just crammed into one package. It’s not a bad thing per se, but JOSE (Javascript Object Signing and Encryption) consists of 5 major components:</p><ul class="postList"><li name="40b3" id="40b3" class="graf graf--li graf-after--p">JWA (<a href="https://tools.ietf.org/html/rfc7518" data-href="https://tools.ietf.org/html/rfc7518" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">RFC 7518</a>) : JSON Web Algorithms</li><li name="3289" id="3289" class="graf graf--li graf-after--li">JWT (<a href="https://tools.ietf.org/html/rfc7519" data-href="https://tools.ietf.org/html/rfc7519" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">RFC 7519</a>) : JSON Web Token</li><li name="058b" id="058b" class="graf graf--li graf-after--li">JWK (<a href="https://tools.ietf.org/html/rfc7517" data-href="https://tools.ietf.org/html/rfc7517" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">RFC 7517</a>) : JSON Web Key</li><li name="5729" id="5729" class="graf graf--li graf-after--li">JWS (<a href="https://tools.ietf.org/html/rfc7515" data-href="https://tools.ietf.org/html/rfc7515" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">RFC 7515</a>) : JSON Web Signature</li><li name="64b6" id="64b6" class="graf graf--li graf-after--li">JWE (<a href="https://tools.ietf.org/html/rfc7516" data-href="https://tools.ietf.org/html/rfc7516" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">RFC 7516</a>) : JSON Web Encryption</li></ul><p name="0062" id="0062" class="graf graf--p graf-after--li">They are related but independent from each other. For example, JWS can sign arbitrary payload, not just JWT’s. But most Go libraries just dumped all of this in one package and made a general mess. This making it really hard for me to understand how the whole thing fit together.</p><p name="4491" id="4491" class="graf graf--p graf-after--p">With go-jwx, we have created packages for each of the above components and came up with a very neatly streamlined top-level API. Underneath that API, there are components that can be composed on top of each other so that you get maximum flexibility configuring according to you needs. <a href="https://github.com/lestrrat/go-jwx" data-href="https://github.com/lestrrat/go-jwx" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Please see the README for examples</a>.</p><p name="17e4" id="17e4" class="graf graf--p graf-after--p">The library is being used on an OpenID server (not published, sorry) which passes most of the <a href="http://openid.net/certification/" data-href="http://openid.net/certification/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">OpenID Certification Tests</a>.</p><h3 name="6f1a" id="6f1a" class="graf graf--h3 graf-after--p">Reinvention Much?</h3><p name="d80d" id="d80d" class="graf graf--p graf-after--h3">So yes, this was your classical reinvention the wheel. As the author I have gotten to understand the specification in its entirety, so the whole effort has already paid off. I also believe the by-product, go-jwx, is a great library and I hope you consider it as an alternative.</p><p name="d34b" id="d34b" class="graf graf--p graf-after--p">If you are comfortable with your current choice of library, that’s totally fine, and you should not need to consider go-jwx. Buf if you are still shopping around for that JOSE library, I hope you consider using it and give us feedback so we can make it even better.</p><p name="9738" id="9738" class="graf graf--p graf-after--p graf--trailing">Enjoy! And let us know if there are any feedback!</p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2015-12-02-7a115bea995f/index.html"><time class="dt-published" datetime="2015-12-02T01:40:39.575Z">December 2, 2015</time></a>.</p></footer></article></body></html>

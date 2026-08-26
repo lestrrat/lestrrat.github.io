@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>2020年からのカンファレンス設計について考えること</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">2020年からのカンファレンス設計について考えること</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+ここ数年、技術カンファレンスと名のつくものが急速に増えてきたと感じていました。人と人が出会う場所が増えるのは大変素晴らしいことですが、これは同時に参加者の方の期待値や需要と供給のバランスがシフトするということであり、長期的にイベント運営を考える人間は向き合わないといけない命題であ…
+</section>
+<section data-field="body" class="e-content">
+<section name="71da" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="c399" id="c399" class="graf graf--h3 graf--leading graf--title">2020年からのカンファレンス設計について考えること</h3></div><div class="section-inner sectionLayout--fullWidth"><figure name="4ddd" id="4ddd" class="graf graf--figure graf--layoutFillWidth graf-after--h3"><img class="graf-image" data-image-id="1*-yc_zXn6YlILyDLjXNX7Cw.jpeg" data-width="4881" data-height="1627" data-is-featured="true" src="image-63f744f33977df22.jpeg"></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="c8e8" id="c8e8" class="graf graf--p graf-after--figure">ここ数年、技術カンファレンスと名のつくものが急速に増えてきたと感じていました。人と人が出会う場所が増えるのは大変素晴らしいことですが、これは同時に参加者の方の期待値や需要と供給のバランスがシフトするということであり、長期的にイベント運営を考える人間は向き合わないといけない命題であると思います。</p><p name="2997" id="2997" class="graf graf--p graf-after--p">歴史的に技術カンファレンスとは情報発信と交流の場でした。今も本質的な変化はないとは思いますが、そこに人を集めるための考え方が変わってきているのではないかと私は考えています（ここでは特に数百人〜数千人規模のカンファレンスをイメージしています）。</p><p name="0789" id="0789" class="graf graf--p graf-after--p">なおこれは <a href="https://tokyo-2020.devrel.net/" data-href="https://tokyo-2020.devrel.net/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">DevRelcon</a> で話そうと思っている内容の下書き的な内容であり、<a href="https://adventar.org/calendars/3989" data-href="https://adventar.org/calendars/3989" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">コミュニティ•カンファレンス運営 Advent Calendar 2019</a>のエントリでもあります。Devrelconについてはちょっとネタバレでもありますが、当日までにはもっとまとまった形で伝えられると思うのと、英語なのでオーディエンスが違うからきっと大丈夫でしょう。</p><h3 name="cdee" id="cdee" class="graf graf--h3 graf-after--p">情報発信</h3><p name="33c9" id="33c9" class="graf graf--p graf-after--h3">インターネットが存在する前は当然人が集まらなければ情報を交換することが難しかったわけですが、インターネットができたあともしばらくはリッチな情報を交換するのは面と向かって話すしか選択肢はありませんでした。</p><p name="c1c8" id="c1c8" class="graf graf--p graf-after--p">今は動画サイトもたくさんあり、そこにあがったコンテンツを視聴するための帯域も十分に提供されはじめています。カンファレンスの内容も比較的すぐに公開されるため、情報を得るためにカンファレンスに物理的に参加する必要性がぐっと下がっています。</p><p name="ccd1" id="ccd1" class="graf graf--p graf-after--p">こうなってくると情報の発信の場としてのカンファレンスの立ち位置は微妙と言えるのではないでしょうか。ただ、発信する情報の内容が重要でなくなった、というより、「価値のある情報が発信されるのが当たり前になった」「情報のリアルタイム性の価値が低くなった」ということなのではないかと考えています。</p><h3 name="ab2a" id="ab2a" class="graf graf--h3 graf-after--p">交流の場</h3><p name="0865" id="0865" class="graf graf--p graf-after--h3">それでは交流の場としてのカンファレンスはどうでしょう。これはいまでも基本的には変わってないと考えています。カンファレンスに物理的に人が集まるということは、普段喋る機会のない人同士が交流を持てるということでありそのメリットはまだ健在でしょう。</p><p name="d8f4" id="d8f4" class="graf graf--p graf-after--p">ただし、これも今となってはいくつかの問題があると感じています。情報を得るために物理的なプレゼンスが必要なくなったのと同じくらい、交流するのにも物理的なプレゼンスの必要性は下がっています。</p><p name="052d" id="052d" class="graf graf--p graf-after--p">もちろん、実際に会うことに価値がない、というわけではありません、しかし今となっては人はメッセンジャーやSNSでつながっており、物理的なプレゼンスの相対的な重要度が以前より下がっている、ということです。</p><h3 name="6210" id="6210" class="graf graf--h3 graf-after--p">経験の共有とイベントの個性がキー</h3><p name="ee1c" id="ee1c" class="graf graf--p graf-after--h3">これらを踏まえると今後技術カンファレンスに人を集めるために考えなくてはいけないのはその場にいる必要性のあるもの、すなわち多数の人との経験の共有を提供することだと感じています。</p><p name="f117" id="f117" class="graf graf--p graf-after--p">経験の共有とはその場で行うアクティビティに価値を持たせ、なおかつそれを現地のいる他の参加者と共有させる、という事です。逆に言えばオンラインではできないこと、リアルタイムでの共有が重要なこと、そして現場にいる他人同士でできること、というのがポイントでしょう。</p><p name="2584" id="2584" class="graf graf--p graf-after--p">Ask The Speaker、懇親会、そのたいわゆるアイスブレイキング等に使うアクティビティもこの範疇に入るでしょう。ただし、これにも注意点があると感じています。</p><p name="7f89" id="7f89" class="graf graf--p graf-after--p">例えば懇親会は飲み食いをしつつ交流を行う、という人間の根源的な欲求を満たすコストパフォーマンスの高い施策でしたが、現在においてはあちこちで懇親会が行われるため、ただ食事を出すだけではわざわざ会場に足を運ぶほどの魅力を参加者が感じるかどうかはあやしいところです。</p><p name="79c8" id="79c8" class="graf graf--p graf-after--p">これを覆すにはカンファレンスで得られる経験にある一定の個性は必要ということです。（これらが特に良い案というわけではないですが）例えば海外の人と多く交流できるであるとか、一人で参加しても楽しめる形にちゃんと工夫されているとか、の個性を出すプラスアルファがないとそれだけでの集客を望むことは難しいでしょう。</p><p name="bfdd" id="bfdd" class="graf graf--p graf-after--p graf--trailing">つまりこれまでは発信される情報のクォリティによって参加者を集め、その参加者同士の交流によって参加へのモチベーションを与えられていましたが、現在はそれらがあった上でそのイベント特有の経験を共有できる施策を何か追加していかないと運営が難しくなっていくのではないか、というのが私の考えです。</p></div></div></section><section name="762c" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="6e5b" id="6e5b" class="graf graf--p graf--leading">ちなみに経験の共有は以前からもあるMMORPG等のマルチプレイヤーのゲーム等にもコンセプトとして見られましたが、2019年に発売されたDeath Strandingはこのコンセプトをより推し進め、経験の共有をしつつ個々ののプレイヤーの経験もそれぞれのプレイヤー個人だけのものとして特別感を出す、という離れ業をやってのけていると感じています（ゲーマーの方にしかわからない話題ですみません）。</p><p name="e4ea" id="e4ea" class="graf graf--p graf-after--p graf--trailing">閑話休題。</p></div></div></section><section name="cb91" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="4969" id="4969" class="graf graf--h3 graf--leading">本質を見失うことと華美さ</h3><p name="d48f" id="d48f" class="graf graf--p graf-after--h3">以上のような理屈で私はこれまで私が手がけてきたカンファレンスの設計からの脱却を考えねばならないと考えていますが、同時にその方向に向かった時の危険も感じています。</p><p name="ca8e" id="ca8e" class="graf graf--p graf-after--p">前述した「経験の共有」とは結局「ウケる企画」をきれいな言い方に直しただけのものです。ウケることは大事なのですが、これがプラスアルファであるという認識を失ってしまった時はもはや技術カンファレンスというものではなくなり、ある意味サーカスと同じになってしまいます。</p><p name="8e0f" id="8e0f" class="graf graf--p graf-after--p">このバランスはすごく重要かつ難しいと考えています。</p><p name="a7cc" id="a7cc" class="graf graf--p graf-after--p">特に現在我々運営に関わる人間は（間接的にとはいえど）AWSのre:InventやGoogleのGoogle I/Oを含む、バックに本気の大企業がついている華美なイベントと参加者達の可処分時間の奪い合いを行っています。あそこまで完成度の高いイベントに対抗するために過激な企画に走ってしまうのはある意味避けられないとも考えられます。</p><p name="136f" id="136f" class="graf graf--p graf-after--p">しかしその道を選んでしまうといわゆる昔の少年マンガのバトルマンガと同じで強い相手を倒すとさらに強い相手を登場させないといけないという企画のインフレを伴う競争の発生も懸念されます。</p><p name="7241" id="7241" class="graf graf--p graf-after--p graf--trailing">人間は刺激にはあっというまに慣れてしまいます。その道に行ってしまえば比較的すぐに（テレビが現在飽きられつつあるように）カンファレンスという取り組み自体が飽きられてしまう可能性を私は危惧します。</p></div></div></section><section name="9f9c" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="36ca" id="36ca" class="graf graf--p graf--leading graf--trailing">運営者の皆様においては、我々が行っていることの本質を見失わず、しかしカンファレンスという仕組みそのものを進化させて行きましょう！</p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2019-12-03-f4ef34152395/index.html"><time class="dt-published" datetime="2019-12-03T04:27:37.774Z">December 3, 2019</time></a>.</p></footer></article></body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Jitsi — OSSなビデオカンファレンスシステム</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">Jitsi — OSSなビデオカンファレンスシステム</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+ZoomやGoogle MeetのようなOSSのビデオ会議システム、Jitsiをご存じですか？登録いらずですぐ使えるJitsiを簡単に紹介します！
+</section>
+<section data-field="body" class="e-content">
+<section name="c546" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="ca2a" id="ca2a" class="graf graf--h3 graf--leading graf--title">Jitsi — OSSなビデオカンファレンスシステム</h3><p name="ac38" id="ac38" class="graf graf--p graf-after--h3">仕事がら、旬な技術の話題をいつも探しております。</p><p name="802f" id="802f" class="graf graf--p graf-after--p">2020年といえばパンデミック、そしてそれに伴う生活の激変。仕事面ではビデオ会議が当たり前になりましたね。</p><p name="0e33" id="0e33" class="graf graf--p graf-after--p">そんなわけでこのあたりの技術、運用についての話が聞きたいと思ったのが2020年5月頃でした。</p><p name="5fc6" id="5fc6" class="graf graf--p graf-after--p">色々調べてみたところ、Zoom, Microsoft, Google Meet等のビッグプレイヤーの他に、FOSDEMやEFF系のイベントで活躍しているJitsi（ブルガリア語で「ワイヤー」の意味）というオープンソースのシステムがあることを知りました。</p><p name="03dc" id="03dc" class="graf graf--p graf-after--p"><a href="https://ja.wikipedia.org/wiki/Jitsi" data-href="https://ja.wikipedia.org/wiki/Jitsi" class="markup--anchor markup--p-anchor" rel="nofollow noopener" target="_blank">https://ja.wikipedia.org/wiki/Jitsi</a></p><p name="a676" id="a676" class="graf graf--p graf-after--p">Jitsiは最初はXMPPを基本としたかつてのICQのようなメッセージングアプリケーションとして開発されていましたが、現在では立派なビデオ会議システムになっています。</p><p name="7dbb" id="7dbb" class="graf graf--p graf-after--p">今から使う人は特に何もインストールしなくても新しめのウェブブラウザがあれば以下のサイトに行くだけですぐビデオ会議を開始出来ます。アカウントすら必要ありません。</p><figure name="9dbb" id="9dbb" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*VMlPDQSUU0asdhqKbf2dVw.png" data-width="1074" data-height="824" data-is-featured="true" src="image-b38dd5490ad9248e.png"><figcaption class="imageCaption">https://meet.jit.siのスクリーンショット</figcaption></figure><div name="297a" id="297a" class="graf graf--mixtapeEmbed graf-after--figure"><a href="https://meet.jit.si/" data-href="https://meet.jit.si/" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://meet.jit.si/"><strong class="markup--strong markup--mixtapeEmbed-strong">Jitsi Meet</strong><br><em class="markup--em markup--mixtapeEmbed-em">Join a WebRTC video conference powered by the Jitsi Videobridge</em>meet.jit.si</a><a href="https://meet.jit.si/" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="5f0248c9a3a73d6029e46eb0c9ffb958" data-thumbnail-img-id="0*22tQdEdWdOg9oAHG" style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*22tQdEdWdOg9oAHG);"></a></div><p name="b1a8" id="b1a8" class="graf graf--p graf-after--mixtapeEmbed">ビデオ会議するにはまず部屋を作ります。上記ページで適当な部屋の名前をタイプして”Start meeting”ボタンを押すだけ！</p><figure name="c5f0" id="c5f0" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*SXYRVJb4XITCrUmL_aGkVg.png" data-width="548" data-height="132" src="image-af34dfe946adc977.png"></figure><p name="46a9" id="46a9" class="graf graf--p graf-after--figure">部屋の名前は固有のものである必要があります。別途セキュリティ設定で入室の制限は可能ですが、部屋のURLは誰でもタイプして参加を試みることは可能なので、あまりすぐに思いつくような名前（”foo”とか”hoge”とか）は使わないほうがいいです。</p><figure name="aa1a" id="aa1a" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*mn7IKcoRsbwXOqYBzA0SNw.png" data-width="1090" data-height="756" src="image-fc3a1b22369abf18.png"></figure><p name="cf16" id="cf16" class="graf graf--p graf-after--figure">会議をスタートすると、このような画面になるので、ここで初めてユーザーネーム的なものを入力します。これで参加完了です。</p><p name="7e87" id="7e87" class="graf graf--p graf-after--p">他の参加者はこのミーティングのURLを知っていればそれだけで参加可能になります。なので、URLをどこかにペーストするか、Invite more peopleというボタンを押してメール等でお知らせすることができます。</p><figure name="1f77" id="1f77" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*PzAvu5KfnvzSILiUsTR1eA.png" data-width="401" data-height="141" src="image-4d1c5c5cd94bed92.png"></figure><figure name="3274" id="3274" class="graf graf--figure graf-after--figure"><img class="graf-image" data-image-id="1*jAecvKngonyqowUh8G3G0Q.png" data-width="398" data-height="360" src="image-1859841e88fd602d.png"></figure><p name="c9e5" id="c9e5" class="graf graf--p graf-after--figure">他の人はこのリンクを踏めば同じようにハンドルを指定して参加するだけです。</p><figure name="5917" id="5917" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*jSjcZ84Rz_vUNxsGKBwrZQ.png" data-width="861" data-height="559" src="image-e03f6aa4ed926f07.png"></figure><p name="7992" id="7992" class="graf graf--p graf-after--figure">背景のぼかしもまだベータですが、対応してますし、録画、ストリーミング、別サイトへの埋め込みなど、様々な機能に対応しています。</p><figure name="176e" id="176e" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*cHGX1PEDaY6apk9oIYBGmA.png" data-width="858" data-height="562" src="image-e7a0360fe66c0887.png"></figure><p name="440a" id="440a" class="graf graf--p graf-after--figure graf--trailing">わりとすごいなぁ、と思ったのが音声で、なんとなく、ですが、声が多少かぶっても喋りやすい感じがします。</p></div></div></section><section name="2cf2" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="c6c7" id="c6c7" class="graf graf--p graf--leading">話を戻すと、実は2020年5月の時点ではこのサービスは急激な需要の増加による対応中でイマイチ使い勝手がよくなかったのが記憶にありました（多分接続すらできなかった）。</p><p name="28ac" id="28ac" class="graf graf--p graf-after--p">なので最初は「ああ、よくある『作ってみたけど運用までは手が回らない』系か…」と、正直印象はよくなかったのです。</p><p name="8a97" id="8a97" class="graf graf--p graf-after--p">ともあれ、このあたりの話を聞きたかったのでJitsiも含めて、だれか担当者にお話を聞けないかとTwitterで聞いてみました。もちろんこのあたりの事業はどの会社もNDA縛りでなんも話すことできないよなーとは思っていたのでダメ元での発信でした。</p><figure name="f710" id="f710" class="graf graf--figure graf--iframe graf-after--p"><blockquote class="twitter-tweet"><a href="https://twitter.com/lestrrat/status/1263370993977835522"></a></blockquote></figure><p name="7973" id="7973" class="graf graf--p graf-after--figure">で、案の定なしのつぶてでした。まぁ、そりゃそうですよね。</p><p name="aa43" id="aa43" class="graf graf--p graf-after--p">その後しばらくは他の作業が忙しくて忘れていたのですが、10月頃にまた確認してみたところ、「あれ…？Jitsi Meetが使えるようになっている？」となっており、しかも前述のように画像もキレイだし、音声もいいし「お… これは…？！」となって再度Twitterで接触を試みてみました。</p><figure name="91b5" id="91b5" class="graf graf--figure graf--iframe graf-after--p"><blockquote class="twitter-tweet"><a href="https://twitter.com/lestrrat/status/1318022611637432320"></a></blockquote></figure><p name="9d99" id="9d99" class="graf graf--p graf-after--figure">と、<a href="https://twitter.com/saghul/status/1318176648823513098" data-href="https://twitter.com/saghul/status/1318176648823513098" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">ここで中の人から返事が</a>！</p><p name="1503" id="1503" class="graf graf--p graf-after--p">というわけでいくらかの準備と交渉の末、無事ビデオカンファレンスシステムの開発運営に関しての講義をしてもらうことができました！</p><p name="6cac" id="6cac" class="graf graf--p graf-after--p">特にパンデミック下での需要の急増とかは多分他社サービスでも同じようなことをしているのだろうけれども、こちらはオープンソースなシステムなのでかなり詳細にどんなことが起きてどんな障害が発生したのかとかを聞くことができます。</p><p name="31fe" id="31fe" class="graf graf--p graf-after--p">自分でJitsiのインスタンスを立ち上げることもDockerで簡単にできるし、興味ある人は是非<a href="https://www.youtube.com/watch?v=B4dSGpKIpYE" data-href="https://www.youtube.com/watch?v=B4dSGpKIpYE" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">公開中の動画のほうを見てみてください</a>！</p><figure name="5d97" id="5d97" class="graf graf--figure graf-after--p graf--trailing"><img class="graf-image" data-image-id="1*HZf5CpymmeVvKaNna0FuXA.png" data-width="1920" data-height="1080" src="image-34b53055e93bc7ef.png"></figure></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2021-03-15-44ad54aec233/index.html"><time class="dt-published" datetime="2021-03-15T08:57:20.438Z">March 15, 2021</time></a>.</p></footer></article></body></html>

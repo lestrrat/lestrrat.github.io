@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Using different SSH identity files depending on Github projects</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">Using different SSH identity files depending on Github projects</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+If you are in a situation like mine, you have personal projects on Github, but you are also part of corporate team which has private…
+</section>
+<section data-field="body" class="e-content">
+<section name="84fa" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="ac99" id="ac99" class="graf graf--h3 graf--leading graf--title">Using different SSH identity files depending on Github projects</h3><p name="96e7" id="96e7" class="graf graf--p graf-after--h3">If you are in a situation like mine, you have personal projects on Github, but you are also part of corporate team which has private repositories, and <a href="https://help.github.com/en/articles/authenticating-to-a-github-organization-with-saml-single-sign-on" data-href="https://help.github.com/en/articles/authenticating-to-a-github-organization-with-saml-single-sign-on" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">they require you to go through single sign-on</a>.</p><div name="1486" id="1486" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://help.github.com/en/articles/authenticating-to-a-github-organization-with-saml-single-sign-on" data-href="https://help.github.com/en/articles/authenticating-to-a-github-organization-with-saml-single-sign-on" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://help.github.com/en/articles/authenticating-to-a-github-organization-with-saml-single-sign-on"><strong class="markup--strong markup--mixtapeEmbed-strong">Authenticating to a GitHub organization with SAML single sign-on - GitHub Help</strong><br><em class="markup--em markup--mixtapeEmbed-em">You can access an organization that uses SAML single sign-on (SSO) by authenticating through an identity provider…</em>help.github.com</a><a href="https://help.github.com/en/articles/authenticating-to-a-github-organization-with-saml-single-sign-on" class="js-mixtapeImage mixtapeImage mixtapeImage--empty u-ignoreBlock" data-media-id="6c322fcdae1a5a2fdc19cc844cb5e881"></a></div><p name="e672" id="e672" class="graf graf--p graf-after--mixtapeEmbed">When you go through SAML SSO, you basically need to give the SSH key you are using SSO capabilities.</p><div name="5e49" id="5e49" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://help.github.com/en/articles/authorizing-an-ssh-key-for-use-with-a-saml-single-sign-on-organization" data-href="https://help.github.com/en/articles/authorizing-an-ssh-key-for-use-with-a-saml-single-sign-on-organization" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://help.github.com/en/articles/authorizing-an-ssh-key-for-use-with-a-saml-single-sign-on-organization"><strong class="markup--strong markup--mixtapeEmbed-strong">Authorizing an SSH key for use with a SAML single sign-on organization - GitHub Help</strong><br><em class="markup--em markup--mixtapeEmbed-em">To use an SSH key with an organization that uses SAML single sign-on, you must first authorize the key.</em>help.github.com</a><a href="https://help.github.com/en/articles/authorizing-an-ssh-key-for-use-with-a-saml-single-sign-on-organization" class="js-mixtapeImage mixtapeImage mixtapeImage--empty u-ignoreBlock" data-media-id="28ab8b9510a676a4bf0a8f56cb7a93c8"></a></div><p name="583c" id="583c" class="graf graf--p graf-after--mixtapeEmbed">You could do this with the SSH key that you are already using for your personal projects, which is totally fine, but I really would like to keep my work and non-work credentials separate.</p><p name="40e3" id="40e3" class="graf graf--p graf-after--p">I mean, I really don’t want to screw up, so I’d like to play it safe.</p><p name="b15f" id="b15f" class="graf graf--p graf-after--p">So then I basically have to differentiate between these two:</p><pre name="be3b" id="be3b" class="graf graf--pre graf-after--p">git clone git@github.com:work-project/work-repository.git<br>git clone git@github.com:lestrrat/personal-repository.git</pre><p name="cf3b" id="cf3b" class="graf graf--p graf-after--pre">and provide separate identities depending on the path.</p><p name="74d7" id="74d7" class="graf graf--p graf-after--p">Initially I thought that this would be simple enough using <code class="markup--code markup--p-code">.ssh/config</code> and/or <code class="markup--code markup--p-code">.git/config</code> but it turned out harder than I thought.</p><p name="687b" id="687b" class="graf graf--p graf-after--p">After a few attempts, I came up with this: Use <code class="markup--code markup--p-code">smartcd</code> (or its alternatives like <code class="markup--code markup--p-code">direnv</code>) in the non-default project, which in my case is <code class="markup--code markup--p-code">work-project</code>, and just specify this environment variable.</p><pre name="b570" id="b570" class="graf graf--pre graf-after--p">GIT_SSH_COMMAND=&quot;ssh -i ~/.ssh/your_work_identify_file&quot;</pre><p name="8c83" id="8c83" class="graf graf--p graf-after--pre">And that’s it! These tools automatically sets up different environments depending on the directory that are currently working on, and in git’s case it works out perfectly.</p><p name="5230" id="5230" class="graf graf--p graf-after--p graf--trailing">I use <code class="markup--code markup--p-code">peco</code>to switch directories, and it works like a charm.</p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2019-04-01-89d419c1f73f/index.html"><time class="dt-published" datetime="2019-04-01T10:45:18.436Z">April 1, 2019</time></a>.</p></footer></article></body></html>

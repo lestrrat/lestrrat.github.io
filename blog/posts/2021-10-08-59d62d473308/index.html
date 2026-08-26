@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Do-it-Yourself Templating for Slack API (Go)</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">Do-it-Yourself Templating for Slack API (Go)</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+Slack, like any service with a bit of history, has quirks in its API. One such quirk that confused me was the parse: true flag and the use…
+</section>
+<section data-field="body" class="e-content">
+<section name="0f43" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="25e3" id="25e3" class="graf graf--h3 graf--leading graf--title">Do-it-Yourself Templating for Slack API (Go)</h3><p name="7fb6" id="7fb6" class="graf graf--p graf-after--h3">Slack, like any service with a bit of history, has quirks in its API. One such quirk that confused me was the <code class="markup--code markup--p-code">parse: true</code> flag and the use of pseudo-Markdown that they accept in the <code class="markup--code markup--p-code">chat.postMessage</code> API. I had a fun time digging around this feature and achieve what I wanted to do.</p><p name="7ccb" id="7ccb" class="graf graf--p graf-after--p">So first of all. I’m not entirely sure that <code class="markup--code markup--p-code">parse: true</code> in the message payload does, but one of the things that it certainly do is to make <code class="markup--code markup--p-code">@username</code> into actual links. But it also stops the Markdown from being interpreted. For example, <code class="markup--code markup--p-code">&lt;https://foo.com|foo&gt;</code> style links and <code class="markup--code markup--p-code">*foo* _bar_</code> don’t turn into a link, bold font, or italic font, respectively.</p><p name="6659" id="6659" class="graf graf--p graf-after--p">But… But… You want to mix them, don’t you? I did.</p><p name="2069" id="2069" class="graf graf--p graf-after--p">I also wanted to use templates to craft the messages. I wanted to create reminder messages where the days left until the deadline (among many other things) would change depending on when the message was fired, something like:</p><pre name="aa8d" id="aa8d" class="graf graf--pre graf-after--p">Hey @username!</pre><pre name="590c" id="590c" class="graf graf--pre graf-after--pre">This is a friendly reminder that you only have {{ .DaysLeft }} days left until the deadline!</pre><pre name="b0e0" id="b0e0" class="graf graf--pre graf-after--pre">Make sure to *&lt;https://link.to/some/form|submit your paper&gt;*!</pre><p name="c6a0" id="c6a0" class="graf graf--p graf-after--pre">This is a simple piece of Go’s <code class="markup--code markup--p-code">text/template</code> source. I wanted to generate a message using the above template. You can see that I wanted to use a static <code class="markup--code markup--p-code">@username</code> but also include a bold link to a website.</p><p name="8ae8" id="8ae8" class="graf graf--p graf-after--p">After various failed attempts trying to mix <code class="markup--code markup--p-code">parse: true/false</code> , <code class="markup--code markup--p-code">as_user: true/fase</code> , and many other incantations, I realized that the traditional payload just wasn’t going to cut it. Whatever I did, I kept getting only one of those markups to render correctly.</p><p name="b03b" id="b03b" class="graf graf--p graf-after--p">This is when I realized what <a href="https://api.slack.com/block-kit" data-href="https://api.slack.com/block-kit" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">the Block kit </a>was for. I had used the Block kit before, and I knew that they could produce many interesting message types, but until this point I only thought that they were nifty tools to create interactive messages.</p><p name="40e7" id="40e7" class="graf graf--p graf-after--p">But it finally dawned on me that with Block kit you can mix different text sections. For example, the above template could be re-written as:</p><pre name="eca0" id="eca0" class="graf graf--pre graf-after--p">{<br>  &quot;blocks&quot;: [<br>    {<br>      &quot;type&quot;: &quot;section&quot;,<br>      &quot;text&quot;: {<br>        &quot;type&quot;: &quot;plain_text&quot;,<br>        &quot;text&quot;: &quot;Hey &lt;@username&gt;!&quot;<br>      }<br>    },<br>    {<br>      &quot;type&quot;: &quot;section&quot;,<br>      &quot;text&quot;: {<br>        &quot;type&quot;: &quot;mrkdwn&quot;,<br>        &quot;text&quot;: &quot;This is a friendly reminder that you only have {{ .DaysLeft }} days left until the deadline!\n\nMake sure to *&lt;https://link.to/some/form|submit your paper&gt;*!&quot;<br>      }<br>    }<br>  ]<br>}</pre><p name="efb9" id="efb9" class="graf graf--p graf-after--pre">And you can first process the template rendering with <code class="markup--code markup--p-code">text/template</code> then use <code class="markup--code markup--p-code">encoding/json</code> to unmarshal this into an appropriate <code class="markup--code markup--p-code">struct</code> , then feed it to your favorite Slack API binding. This time I happened to be using <a href="https://github.com/slack-go/slack" data-href="https://github.com/slack-go/slack" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">https://github.com/slack-go/slack</a> so you would do something like:</p><pre name="8f63" id="8f63" class="graf graf--pre graf-after--p">//go:embed templates/*<br>var content embed.FS</pre><pre name="3071" id="3071" class="graf graf--pre graf-after--pre">// error handling omitted for brevity</pre><pre name="22fd" id="22fd" class="graf graf--pre graf-after--pre">data, _ := content.ReadFile(filename)<br>tmpl, _ := template.New(&quot;tmpl&quot;).Parse(string(data))</pre><pre name="7945" id="7945" class="graf graf--pre graf-after--pre">var buf bytes.Buffer<br>_ := tmpl.Execute(&amp;buf, arg) // pretend arg has everything required</pre><pre name="e3c9" id="e3c9" class="graf graf--pre graf-after--pre">// Note: as of this writing (Oct 2021), I couldn&#39;t unmarshal<br>// Block kit to slack.Blocks struct, so I had to devise a hack (*1)</pre><pre name="6735" id="6735" class="graf graf--pre graf-after--pre">var blocks slack.Blocks<br>_ := json.Unmarshal(buf.Bytes(), &amp;blocks)</pre><pre name="caee" id="caee" class="graf graf--pre graf-after--pre">var options []slack.MsgOption<br>options = append(options, slack.MsgOptionBlocks(blocks.Blocks...))</pre><pre name="bd88" id="bd88" class="graf graf--pre graf-after--pre">_, _, _ := client.PostMessage(channel, options...)</pre><p name="4ad3" id="4ad3" class="graf graf--p graf-after--pre">Now this was almost good enough, but I had one remaining itch to scratch. Isn’t JSON just horrendous to edit? Especially if you have a piece of text that spans over multiple lines?</p><p name="75de" id="75de" class="graf graf--p graf-after--p">So I changed the source to be YAML. I know, YAML has its problems, and I’m doing extra processing. But in this circumstance, I judged the side effects to be minimal. Now the source template read:</p><pre name="a2a6" id="a2a6" class="graf graf--pre graf-after--p">blocks:<br>  - type: section<br>    text:<br>      type: plain_text<br>      text: &quot;Hey &lt;@username&gt;!&quot;<br>  - type: section<br>    text:<br>      type: mrkdwn<br>      text: |<br>        This is a friendly reminder that you only have {{ .DaysLeft }} days left until the deadline!<br>        <br>        Make sure to *&lt;https://link.to/some/form|submit your paper&gt;*!</pre><p name="2eae" id="2eae" class="graf graf--p graf-after--pre graf--trailing">And there was much rejoicing. Hope this helps somebody who wants to do something similar in Go.</p></div></div></section><section name="1aaf" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="8a1c" id="8a1c" class="graf graf--p graf--leading">(*1) So for whatever reason I couldn’t unmarshal blocks with two ore more entries in it, so I wrote this:</p><pre name="2308" id="2308" class="graf graf--pre graf-after--p">type Blocks struct {<br>  Blocks []slack.Block `json:&quot;blocks&quot;`<br>}</pre><pre name="9843" id="9843" class="graf graf--pre graf-after--pre">type blockhint struct {<br>  Typ string `json:&quot;type&quot;`<br>}</pre><pre name="9e22" id="9e22" class="graf graf--pre graf-after--pre">func (b *Blocks) UnmarshalJSON(data []byte) error {<br>  var proxy struct {<br>    Blocks []json.RawMessage `json:&quot;blocks&quot;`<br>  }</pre><pre name="bec8" id="bec8" class="graf graf--pre graf-after--pre">if err := json.Unmarshal(data, &amp;proxy); err != nil {<br>    return fmt.Errorf(`failed to unmarshal blocks array: %w`, err)<br>  }</pre><pre name="ef46" id="ef46" class="graf graf--pre graf-after--pre">for _, rawBlock := range proxy.Blocks {<br>    var hint blockhint<br>    if err := json.Unmarshal(rawBlock, &amp;hint); err != nil {<br>      return fmt.Errorf(`failed to unmarshal next block for hint: %w`, err)<br>    }</pre><pre name="7d55" id="7d55" class="graf graf--pre graf-after--pre">var block slack.Block<br>    switch hint.Typ {<br>    case &quot;actions&quot;:<br>      block = &amp;slack.ActionBlock{}<br>    case &quot;context&quot;:<br>      block = &amp;slack.ContextBlock{}<br>    case &quot;divider&quot;:<br>      block = &amp;slack.DividerBlock{}<br>    case &quot;file&quot;:<br>      block = &amp;slack.FileBlock{}<br>    case &quot;header&quot;:<br>      block = &amp;slack.HeaderBlock{}<br>    case &quot;image&quot;:<br>      block = &amp;slack.ImageBlock{}<br>    case &quot;input&quot;:<br>      block = &amp;slack.InputBlock{}<br>    case &quot;section&quot;:<br>      block = &amp;slack.SectionBlock{}<br>    default:<br>      block = &amp;slack.UnknownBlock{}<br>    }</pre><pre name="2925" id="2925" class="graf graf--pre graf-after--pre">if err := json.Unmarshal(rawBlock, block); err != nil {<br>      return fmt.Errorf(`failed to unmarshal next block: %w`, err)<br>    }<br>    b.Blocks = append(b.Blocks, block)<br>  }<br>  return nil<br>}</pre><p name="1e69" id="1e69" class="graf graf--p graf-after--pre">And used this in place of <code class="markup--code markup--p-code">slack.Blocks</code> :</p><pre name="6016" id="6016" class="graf graf--pre graf-after--p graf--trailing">var blocks mypkg.Blocks</pre></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2021-10-08-59d62d473308/index.html"><time class="dt-published" datetime="2021-10-08T11:38:56.560Z">October 8, 2021</time></a>.</p></footer></article></body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>作り、造られ、創る</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">作り、造られ、創る</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+今日はbuilderscon 2024の開催日でした。
+</section>
+<section data-field="body" class="e-content">
+<section name="fbb7" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><figure name="004a" id="004a" class="graf graf--figure graf--leading"><img class="graf-image" data-image-id="1*BXJZ1pxL-WwiFFnjIGDrfg.jpeg" data-width="4080" data-height="3072" src="image-e765dbf6268215a0.jpeg"></figure><h3 name="1cc2" id="1cc2" class="graf graf--h3 graf-after--figure graf--title">作り、造られ、創る</h3><p name="7ad3" id="7ad3" class="graf graf--p graf-after--h3">今日はbuilderscon 2024の開催日でした。</p><p name="d4f0" id="d4f0" class="graf graf--p graf-after--p">自分が立ち上げて（でも心折れて開催しなくなった）イベントを、自分が関わらないところで続けてくれるというのは、なんとも感慨深いものです。少なくとも俺のやろうとしてたことは意味があったんだな、という気持ちにさせられました。</p><p name="690c" id="690c" class="graf graf--p graf-after--p">開催にこぎつけた@nasa9084さん、ありがとう！他のスタッフのみなさまも本当にお疲れさまでした。</p><p name="437c" id="437c" class="graf graf--p graf-after--p">さて、今回私は運営には<a href="https://twitter.com/lestrrat/status/1822092330490540347" data-href="https://twitter.com/lestrrat/status/1822092330490540347" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Tシャツのスポンサー以外一切ふれてない</a>のですが、実は開催前日の時点でスケジュールに穴があくかもしれないという話をSlackで聞いたので、それを聞いた私はすぐさまGoogle Docsで原稿を書き始めました。で、すぐ書きおわったのですが、その時にはもうonkさんとsongmuさんが代役に決まったので私の話は無事オクラ入りになりました。</p><p name="9d13" id="9d13" class="graf graf--p graf-after--p">ならまあ、供養しとこうかな、ということでここに載せることにしました。</p><p name="a2b5" id="a2b5" class="graf graf--p graf-after--p">ちなみに穴が空きそうな時間は40分だったので、技術のテーマではその時間を埋めれる自信がなかったので、歴史とエモい話に振ってみた次第です。</p><p name="1d2e" id="1d2e" class="graf graf--p graf-after--p graf--trailing">ではどうぞ</p></div></div></section><section name="590d" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="c76b" id="c76b" class="graf graf--h3 graf--leading">作り、造られ、創る</h3><p name="b5e6" id="b5e6" class="graf graf--p graf-after--h3">今回はbuildersconというものを作った時の気持ちについて話したいと思います。</p><p name="a8cf" id="a8cf" class="graf graf--p graf-after--p">そもそも僕は2005年くらいからカンファレンスというものに関わり始めて、2008年～2009年あたりから主宰的な立場でプログラミング言語関連の活動をしていました。</p><p name="6562" id="6562" class="graf graf--p graf-after--p">気づいたらこれはもうはるか昔ですね。</p><p name="6236" id="6236" class="graf graf--p graf-after--p">で、結局2019年くらいまで10年くらい主宰として自分のカンファレンスを切り盛りして、コンテンツとかの方向性を調整したりしてました。</p><p name="709e" id="709e" class="graf graf--p graf-after--p">そもそもなんでこういうことをやりだしたのかというと、このころのカンファレンスって正直技術の大喜利みたいな感じで、発表者が誰もかれも発表するときに作る喜びに溢れてたんですね。作る情熱に溢れた人の話というのは、たとえそれがどんなにくだらない話であったとしても聞いている人の心を動かしてくれるものなんですよね。</p><p name="a0f7" id="a0f7" class="graf graf--p graf-after--p">エンジニアたちの「俺はこんな面白いものを作ったぜ！」「こんな失敗しちゃったぜ！」という話をするときの顔はとても晴れやかで素敵でした。そして僕はそういう話が大好きだったので、ずっと主宰をやっていました。</p><p name="75b0" id="75b0" class="graf graf--p graf-after--p">まぁ実を言うと、主宰をやっているとあまりトークを見に行く時間がなくてみんなが絶賛しているトークも見たことがなかったりします。</p><p name="11e6" id="11e6" class="graf graf--p graf-after--p">ですが、私の場合、10年くらいずっとLTの司会はやっていたので、LTはよく見ていて、そこでたくさんのエンジニアたちの楽しいオーラを浴びてきました。</p><p name="e87c" id="e87c" class="graf graf--p graf-after--p">LTは5分ってひとつのネタを突き詰めてそれをほぼで落ちでドン！とやるパフォーマンスなんで、趣味や拘りを全面に押し出したトークが多かったので本当に面白い枠でした。僕がやってた時もここだけは必ず満員御礼でしたね。</p><p name="95fa" id="95fa" class="graf graf--p graf-after--p">LLMとか出てくる前にマインスイーパーを自動的に解かせる話とか、wとWの文字だけでコード書けるようにするとか、本当に面白い話が多かったです。</p><figure name="5531" id="5531" class="graf graf--figure graf--iframe graf-after--p"><iframe src="https://www.youtube.com/embed/3C7Ngq6bM4M?feature=oembed" width="700" height="393" frameborder="0" scrolling="no"></iframe></figure><figure name="c5c3" id="c5c3" class="graf graf--figure graf--iframe graf-after--figure"><iframe src="https://www.youtube.com/embed/BFzMlHMbl80?feature=oembed" width="700" height="393" frameborder="0" scrolling="no"></iframe></figure><p name="97a4" id="97a4" class="graf graf--p graf-after--figure">あと今はわりと有名なM氏が最初に私がやってたYAPC::Asia TokyoでLT登壇したときのネタは、ただただある有名人のサスペンダーをブラウザ上で動かすってだけですからね。</p><figure name="3c2d" id="3c2d" class="graf graf--figure graf--iframe graf-after--p"><iframe src="https://www.youtube.com/embed/1j_kHFF5x0M?feature=oembed" width="700" height="393" frameborder="0" scrolling="no"></iframe></figure><p name="c742" id="c742" class="graf graf--p graf-after--figure">でもそれだって立派な作る行為で、彼は作る情熱を昇華させて、それで観客を楽しませてくれたわけです。</p><p name="6eba" id="6eba" class="graf graf--p graf-after--p">作る喜びというのは別にプログラミングに限った話じゃなくて、例えばYAPC::Asia Tokyo 2015のネットワークを設計・運用してくれたCONBUの皆さんのネットワーク高速設置パフォーマンスなんて、ネットワークの構築という「作る」行為を演劇に近い創作にまで昇華させたいい例だと思います。</p><figure name="da7d" id="da7d" class="graf graf--figure graf--iframe graf-after--p"><iframe src="https://www.youtube.com/embed/Vp2bnHQevCI?start=129&amp;feature=oembed&amp;start=129" width="700" height="393" frameborder="0" scrolling="no"></iframe></figure><p name="d426" id="d426" class="graf graf--p graf-after--figure">まぁそんなわけでこういう話が面白くて私はずっとやってきました。</p><p name="1a37" id="1a37" class="graf graf--p graf-after--p">さて、私が主宰をしていた10年間の間、私や、観客の皆様の多くの方々が在籍しているIT業界は怒涛の勢いで成長し、そしてその帰結のひとつとして、急速に工業化していきました。</p><p name="29c1" id="29c1" class="graf graf--p graf-after--p">そしてその事実を映し出すかのように、少しずつ我々が執り行うカンファレンスで発表される内容も変わっていきます。</p><p name="1bc8" id="1bc8" class="graf graf--p graf-after--p">これを一口で説明するのは難しいのですが、乱暴に言うと、最初はプログラミングっておもしろいぞ～、じゃあプログラミングでおもしろいものや便利なものを作って他の人にも見せちゃおう！という流れだったのが、「プログラミングを使ってビジネスをスケールさせるには？」とか、「プログラミングをする際の効率を極限まであげる方法とは？」みたいな話が増えてきました。</p><p name="ea4a" id="ea4a" class="graf graf--p graf-after--p">これらのテーマが一概に悪いと言っているわけではないです。プログラマーの仕事という側面から考えた場合、これらは避けて通れない命題ですね。</p><p name="0951" id="0951" class="graf graf--p graf-after--p">例えば</p><ul class="postList"><li name="5e04" id="5e04" class="graf graf--li graf-after--p">RoRみたいなフレームワークで開発フローを効率かするとか</li><li name="2bfb" id="2bfb" class="graf graf--li graf-after--li">エンジニアの短期目標や進捗の管理を行うスクラムとかとそのためのツールとか</li><li name="c951" id="c951" class="graf graf--li graf-after--li">サーバーの管理工数減らしたいからKubernetesみたいなヤマタノオロチみたいな化け物をうまく使う話とか</li></ul><p name="5d8d" id="5d8d" class="graf graf--p graf-after--li"><strong class="markup--strong markup--p-strong">仕事としてこの業界にいる以上、これらは避けて通れない話題です</strong>。だって我々は究極的には生活のためにこれを仕事にしており、なおかつ我々がいる業界というのは基本的に職人が一品ものを作る業界ではなく、建築や製造業のようにチームを組み、その上で社会や経済を回す仕組みを作っていく仕事ですから。</p><p name="9167" id="9167" class="graf graf--p graf-after--p">で、これはこれでね、もちろん面白い話もたくさんあるのですが、今まで話してきたように、<strong class="markup--strong markup--p-strong">基本的には物を作る話ではない</strong>のです。ビジネスを加速する話だったり、コストを削減する話だったり、開発効率をあげる話であったりするわけです。</p><p name="65b2" id="65b2" class="graf graf--p graf-after--p">これらはもはや資本主義的な行動様式の話なんですね。</p><p name="bef2" id="bef2" class="graf graf--p graf-after--p">工業化していくIT業界に身を置くプログラマは当然その工業化に追従していかなければいけないから、身近な話題としてこういう話に興味があるのは当然です。そしてそれについて共有して知見を得るのはもちろんいいことです。</p><p name="eff2" id="eff2" class="graf graf--p graf-after--p">こういう会をサポートしてくれる企業はもちろん資本主義の世界で競争しているわけですから、そういう話題や、それについて詳しい人材を得るために協賛してくれるのもわかりますし、大変ありがたいことです。</p><p name="4df7" id="4df7" class="graf graf--p graf-after--p">繰り返しになりますが、これらの話題が悪いわけじゃないです。むしろ需要はあるし、いい話もたくさんあると思います。そしてそういう話も聞いていきたいと思います。</p><p name="18b7" id="18b7" class="graf graf--p graf-after--p">でも、カンファレンスに来て聞ける話の8割がそういう話、という状況にはなってほしくない。</p><p name="8ac8" id="8ac8" class="graf graf--p graf-after--p">最初に言ったように僕が主宰をしていて<strong class="markup--strong markup--p-strong">見たいのは物を作る人の情熱なんです</strong>よ。</p><p name="430d" id="430d" class="graf graf--p graf-after--p">作る。</p><p name="060a" id="060a" class="graf graf--p graf-after--p">あなたが悩み、苦しみ、挫折したり、工夫した結果成功したりして、作ったそれを見たい。その話を聞きたい。</p><p name="f4c1" id="f4c1" class="graf graf--p graf-after--p">その便利な、いや、便利じゃなくてもいい、くだらないものを思いついたところから、なんらかの形で完成させてビルドするところまでこぎつけたあなたの情熱の炎を僕らにも少しだけわけてほしい。</p><p name="8400" id="8400" class="graf graf--p graf-after--p">もう少し突き詰めると、作るという行為はプログラミングにかぎったはなしではありませんよね。</p><p name="47e7" id="47e7" class="graf graf--p graf-after--p">僕はここ5年くらい職業プログラマをやっていませんでした。</p><p name="5696" id="5696" class="graf graf--p graf-after--p">その間に紆余曲折あって、他の作る行為に没頭してました。</p><p name="18ba" id="18ba" class="graf graf--p graf-after--p">まずはパンを作ること。材料、水分量、グルテンの生成、成形、焼成。作りたいパンのイメージから始め、これらの工程を経てパンを焼くわけですが、全ての工程に理屈があり、本当に欲しいものを焼くには全ての工程に工夫とコツが必要です。失敗を繰り返し、本質をつかみ、自分の欲しい（創りたい）パンに近づけるまで（作る）工程を繰り返す。</p><div name="8c5c" id="8c5c" class="graf graf--mixtapeEmbed graf-after--p"><a href="../2023-02-20-c3d9dd1b8c5d/index.html" data-href="../2023-02-20-c3d9dd1b8c5d/index.html" class="markup--anchor markup--mixtapeEmbed-anchor" title="../2023-02-20-c3d9dd1b8c5d/index.html"><strong class="markup--strong markup--mixtapeEmbed-strong">1年7か月で100個のサワードウを焼いた記録</strong><br><em class="markup--em markup--mixtapeEmbed-em">サワードウを焼くために初めて小麦粉と水だけで天然酵母をしこんだのが2021年5月のことでした。それから約1年7ヶ月、目標だった100個に向けてパンを焼き続け、2022年12月26日にようやっと達成しました。</em>medium.com</a><a href="../2023-02-20-c3d9dd1b8c5d/index.html" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="6a6dfd74231b2e000653247bc15ad4e1" data-thumbnail-img-id="1*vQypZa2ZfUxGf9TPAVUaVQ.jpeg" style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/1*vQypZa2ZfUxGf9TPAVUaVQ.jpeg);"></a></div><p name="13aa" id="13aa" class="graf graf--p graf-after--mixtapeEmbed">また1年くらい前から3Dプリンティングにドはまりしており、連載記事を書くまでになっております。3Dプリンティングもモデリング、出力、組み立て、全ての工程で悩み、苦しみ、そしてほとんど失敗しますが、何十回もやりなおしていると段々わかってきます。そしてパーツの作り方がわかり、あらたなものを創れるようになります。</p><figure name="ee14" id="ee14" class="graf graf--figure graf--iframe graf-after--p"><iframe src="https://www.youtube.com/embed/videoseries?list=PLrTrLGa8Nl3YFdFx3gpOAxprPrOvKXgCi" width="700" height="394" frameborder="0" scrolling="no"></iframe></figure><p name="4647" id="4647" class="graf graf--p graf-after--figure">このように、作るという行為は当たり前ですがプログラミングに限った話じゃありません。ですので、buildersconにはいろんな分野のいろんな技術の話の人が集まってほしいと思って、このカンファレンスを始めました。</p><p name="a745" id="a745" class="graf graf--p graf-after--p">builderscon 最初の開催時にはまだLLMがない時代のゲームのAIについてききました。</p><figure name="c83f" id="c83f" class="graf graf--figure graf--iframe graf-after--p"><iframe src="https://www.youtube.com/embed/DNDm72bvPXE?feature=oembed" width="700" height="393" frameborder="0" scrolling="no"></iframe></figure><p name="0b15" id="0b15" class="graf graf--p graf-after--figure">数年前にはカミオカンデの話も聞けました。</p><figure name="518a" id="518a" class="graf graf--figure graf--iframe graf-after--p"><iframe src="https://www.youtube.com/embed/Fh8fIv8IE_0?feature=oembed" width="700" height="393" frameborder="0" scrolling="no"></iframe></figure><p name="03db" id="03db" class="graf graf--p graf-after--figure">いつかロケット業界の人を是非呼んできてほしいと思います。そして異業種での交わり、作る情熱の共有をしていただきたいと思います。</p><p name="b44b" id="b44b" class="graf graf--p graf-after--p">作る。</p><p name="5f1b" id="5f1b" class="graf graf--p graf-after--p">造る。</p><p name="ee92" id="ee92" class="graf graf--p graf-after--p">創る。ビルドする。</p><p name="46fa" id="46fa" class="graf graf--p graf-after--p">そういう人達の話を持ち寄ってほしい。ビルドする人達、ビルダーたち、その人達のbuildersconです。今後も是非作る人達の情熱を感じられる場所に育てていってください。</p><p name="2322" id="2322" class="graf graf--p graf-after--p graf--trailing">ありがとうございました。</p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2024-08-10-be8aa3cc354d/index.html"><time class="dt-published" datetime="2024-08-10T10:41:11.632Z">August 10, 2024</time></a>.</p></footer></article></body></html>

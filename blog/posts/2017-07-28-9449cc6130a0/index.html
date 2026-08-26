@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Pondering about keeping model layer and protobuf messages in sync.</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">Pondering about keeping model layer and protobuf messages in sync.</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+So you have a service that you would like to expose using gRPC. You need to write your .proto file and define message types and service/rpc…
+</section>
+<section data-field="body" class="e-content">
+<section name="d351" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="1fd8" id="1fd8" class="graf graf--h3 graf--leading graf--title">Pondering about keeping model layer and protobuf messages in sync.</h3><p name="c7a9" id="c7a9" class="graf graf--p graf-after--h3">So you have a service that you would like to expose using gRPC. You need to write your .proto file and define message types and service/rpc types, etc, etc…</p><p name="400e" id="400e" class="graf graf--p graf-after--p">Where I get hung up is connecting this service layer with the model layer of your application.</p><p name="a1c7" id="a1c7" class="graf graf--p graf-after--p">So suppose you are writing a Go application that manages “Book” entries. It’s fairly straight forward to write a .proto file to do CRUD:</p><pre name="87e9" id="87e9" class="graf graf--pre graf-after--p">syntax = &quot;proto3&quot;;</pre><pre name="233a" id="233a" class="graf graf--pre graf-after--pre">package rpc;</pre><pre name="1e12" id="1e12" class="graf graf--pre graf-after--pre">message Book {<br>   string id = 1;<br>   string title = 2;<br>   string author = 3;<br>}</pre><pre name="8883" id="8883" class="graf graf--pre graf-after--pre">service BookSvc {<br>   rpc Create(CreateBookReq) returns (CreateBookResp);<br>   rpc Lookup(LookupBookReq) returns (LookupBookResp);<br>   rpc Update(UpdateBookReq) returns (UpdateBookResp);<br>   rpc Delete(DeleteBookReq) returns (DeleteBookResp);<br>}</pre><pre name="cae0" id="cae0" class="graf graf--pre graf-after--pre">// ... definition of requests/responses follow...</pre><p name="fda1" id="fda1" class="graf graf--p graf-after--pre">Then you run <code class="markup--code markup--p-code">protoc --go_out=plugins=grpc:rpc *.proto</code> or whatever, and voila, you just generated your server/client stubs for this service.</p><p name="222f" id="222f" class="graf graf--p graf-after--p">Now, that’s fine and dandy, but I’m sure you will have structures within your code that describes a <code class="markup--code markup--p-code">Book</code> , that is not necessarily tied to the protocol buffer layer. Maybe something like this:</p><pre name="f502" id="f502" class="graf graf--pre graf-after--p">package model // whatever, just putting this to make it explicit for<br>              // this example.</pre><pre name="b1a9" id="b1a9" class="graf graf--pre graf-after--pre">type Book struct {<br>  ID     string `json:&quot;id&quot;`<br>  Title  string `json:&quot;title&quot;`<br>  Author string `json:&quot;author&quot;`<br>}</pre><p name="9064" id="9064" class="graf graf--p graf-after--pre">Initially writing the .proto definitions along with the above Go struct definition manually will feel just fine. But as you go on writing more services, rpcs, and more models, wouldn’t it become harder and harder to maintain the two in sync?</p><p name="6b49" id="6b49" class="graf graf--p graf-after--p">I can almost feel that for majority of the cases where a simple CRUD is sufficient, it may just suit to generate the basic .proto files from the Go struct definitions… But then again, I’m too used to parsing Go AST to generate something else, and I might just be blind to other, better ways.</p><p name="4a89" id="4a89" class="graf graf--p graf-after--p graf--trailing">So what’s the best way? Do you even keep these things in sync automatically? Or do you just do it by hand?</p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2017-07-28-9449cc6130a0/index.html"><time class="dt-published" datetime="2017-07-28T11:08:14.007Z">July 28, 2017</time></a>.</p></footer></article></body></html>

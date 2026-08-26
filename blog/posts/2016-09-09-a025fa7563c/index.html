@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>WTF Was Wrong With My Go Code</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">WTF Was Wrong With My Go Code</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+After being primarily a Perl/C programmer for over 16 years, I started writing Go code about 3 to 4 years ago.
+</section>
+<section data-field="body" class="e-content">
+<section name="6cf8" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="fa93" id="fa93" class="graf graf--h3 graf--leading graf--title">WTF Was Wrong With My Go Code</h3><p name="a208" id="a208" class="graf graf--p graf-after--h3">After being primarily a Perl/C programmer for over 16 years, I started writing Go code about 3 to 4 years ago.</p><p name="8bd2" id="8bd2" class="graf graf--p graf-after--p">At the time I was still trying to learn how to write code that feels right in Go, and back then I was thinking that I was doing an alright job. After having written a few hundred thousand lines of Go, I had a chance to look at one of the earliest libraries that I wrote back then: <strong class="markup--strong markup--p-strong">Boy, WTF was I thinking?</strong></p><p name="5cc6" id="5cc6" class="graf graf--p graf-after--p">I was looking at this code again because I had a need for it today — and boy, was I reluctant to include this in the list of dependencies for my app. So I rewrote it to fit the standards which I follow today when writing Go.</p><p name="b442" id="b442" class="graf graf--p graf-after--p">In this article, I’m going to pick up a few items and describe what I think I did wrong, and why I rewrote it the way I did this time, in hopes that somebody will find it useful.</p><h3 name="86f8" id="86f8" class="graf graf--h3 graf-after--p">Apache Log Format in Go</h3><p name="7072" id="7072" class="graf graf--p graf-after--h3"><a href="https://github.com/lestrrat/go-apache-logformat" data-href="https://github.com/lestrrat/go-apache-logformat" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">The library in question</strong></a> is a utility library that generates access logs. The trick is that it’s a fully configurable logger which accepts Apache-style log formats, so you can just copy over your favorite log format from your Apache web server and use it in your Go http server.</p><h3 name="29ca" id="29ca" class="graf graf--h3 graf-after--p">Naming Things</h3><p name="8de8" id="8de8" class="graf graf--p graf-after--h3">Previously, the constructor for my library was <strong class="markup--strong markup--p-strong">apachelog.NewApacheLog()</strong>. That is way too redundant. I have no idea why I made it that way 3 years ago. This was definitely a silly mistake in hindsight. Now it’s just <strong class="markup--strong markup--p-strong">apachelog.New()</strong>.</p><p name="d784" id="d784" class="graf graf--p graf-after--p">Furthermore, the URL of the package has almost nothing to do with the actual package name. I can see <em class="markup--em markup--p-em">why</em> I named the repository “<strong class="markup--strong markup--p-strong">go-apache-logformat</strong>” — because it matches the original Perl module that ported from (“Apache::LogFormat::Compiler”), but this was a bad decision. I don’t want to change the repository name at this point, but this is definitely one of the things that I would change if I could.</p><h3 name="e537" id="e537" class="graf graf--h3 graf-after--p">Pooled Resources</h3><p name="397d" id="397d" class="graf graf--p graf-after--h3">Pieces of data that are very short lived but are allocated very frequently can be managed with sync.Pool. This allows you to re-utilize a previously allocated piece of data, thereby avoiding a costly re-allocation.</p><p name="9196" id="9196" class="graf graf--p graf-after--p">When I was initially writing the library, either <em class="markup--em markup--p-em">sync.Pool</em> did not exist, or it just got released. I used to use <em class="markup--em markup--p-em">sync.Pool</em> like this:</p><figure name="b2fa" id="b2fa" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*QhUK5YVcV87Ip696FhqZig.png" data-width="309" data-height="100" src="image-afea14eb5ad28cb4.png"></figure><p name="14c1" id="14c1" class="graf graf--p graf-after--figure">But after having written this pattern for a while, I have now settled on a pattern to write a resource pool. Namely, I create three functions: <strong class="markup--strong markup--p-strong">allocXXX()</strong>, <strong class="markup--strong markup--p-strong">getXXX()</strong>, and <strong class="markup--strong markup--p-strong">releaseXXX()</strong>, and only access the pool via the <strong class="markup--strong markup--p-strong">getXXX()</strong> and <strong class="markup--strong markup--p-strong">releaseXXX()</strong> functions:</p><figure name="f686" id="f686" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*0JpxHbcMUyVio7CSHUHyUA.png" data-width="347" data-height="385" src="image-e025508bf5c7d37c.png"></figure><p name="7a65" id="7a65" class="graf graf--p graf-after--figure">There are three reasons for this.</p><p name="b6da" id="b6da" class="graf graf--p graf-after--p">First, you no longer have to type-assert by hand every time you fetch the data.</p><p name="9468" id="9468" class="graf graf--p graf-after--p">Second, the way you release the data protects you from passing a wrong value to <strong class="markup--strong markup--p-strong">Put()</strong> (which takes <em class="markup--em markup--p-em">interface{}</em>, so nothing prevents you from shoving in a completely unrelated piece of data into the pool). (UPDATE: This should probably be Reset()+Grow(0), not Reset())</p><p name="e05c" id="e05c" class="graf graf--p graf-after--p">And finally, you get the benefit of automatically reseting the piece of data when you release it. In the above example, we always call <strong class="markup--strong markup--p-strong">Reset()</strong> so that you don’t accidentally store large chunk of data along with your main data.</p><p name="e63e" id="e63e" class="graf graf--p graf-after--p">I feel that this is by far the cleanest and safest way to use <em class="markup--em markup--p-em">sync.Pool</em>.</p><h3 name="d0a5" id="d0a5" class="graf graf--h3 graf-after--p">Using Interfaces</h3><p name="6cd8" id="6cd8" class="graf graf--p graf-after--h3">The way we map a highly customizable log format to actual code is by parsing the format and generating a list of <em class="markup--em markup--p-em">things</em> that can generate the corresponding string that goes along with the specified format.</p><p name="1659" id="1659" class="graf graf--p graf-after--p">Back then this was stored as callback functions. This is fine and dandy, but I was having to generate code like this where SpecialFormatter was an instance of an object, and FormatFunc was a method associated with it. This just didn’t quite feel Go-ish:</p><figure name="3ecf" id="3ecf" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*HUeQdJepmRAduPokqVWDBg.png" data-width="462" data-height="127" src="image-15647096a2432d5f.png"></figure><p name="52fd" id="52fd" class="graf graf--p graf-after--figure">The obvious answer is, then is to implement it in terms of an interface. This allows you to specify anything that implements the interface to be pushed into the callbacks list, and now this definitely feels more Go-ish.</p><figure name="a5f6" id="a5f6" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*atfnAjMMJxXR1-NQ0Cb2kQ.png" data-width="316" data-height="188" src="image-25dcb667dda63620.png"></figure><h3 name="21e0" id="21e0" class="graf graf--h3 graf-after--figure">And the API…</h3><p name="e45d" id="e45d" class="graf graf--p graf-after--h3">Yeah, so for whatever reason I had back then, I made a really messy API.</p><p name="95c8" id="95c8" class="graf graf--p graf-after--p">I had a <strong class="markup--strong markup--p-strong">CombinedLog</strong> global which also stored as its instance value the destination <em class="markup--em markup--p-em">io.Writer</em> to write the logs, which made for an interesting case when you wanted to use <strong class="markup--strong markup--p-strong">CombinedLog</strong> in couple of different locations in the same program. This has now been fixed by completely ripping out the log destination from our library, and instead implementing a <strong class="markup--strong markup--p-strong">WriteLog(io.Writer, LogCtx)</strong> method where you can specify the <em class="markup--em markup--p-em">io.Writer</em> to write to. It’s much more Go-ish.</p><p name="d402" id="d402" class="graf graf--p graf-after--p">In order to glue this on to the net/http framework, I created a function called WrapLoggingHandler Back then. WTF is WrapLoggingHandler? This has also been changed. Now it’s just <strong class="markup--strong markup--p-strong">ApacheLog.Wrap(http.Handler)</strong>, which returns another <em class="markup--em markup--p-em">http.Handler</em>.</p><h3 name="9ea1" id="9ea1" class="graf graf--h3 graf-after--p">Conclusion</h3><p name="0a80" id="0a80" class="graf graf--p graf-after--h3 graf--trailing">Well, TBH the conclusion is that, my Go-fu sucked a few years back. I’m still on my way, but I’m definitely getting better. Hope this saves new Gophers a few hours of unproductive hacking time in the future.</p></div></div></section><section name="dc6c" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="613e" id="613e" class="graf graf--p graf--leading graf--trailing">Next: <a href="../2016-09-15-75b1bb7297fe/index.html#.oicmzakvc" data-href="../2016-09-15-75b1bb7297fe/index.html#.oicmzakvc" class="markup--anchor markup--p-anchor" target="_blank">WTF Was Wrong With My Go Code, Part 2</a></p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2016-09-09-a025fa7563c/index.html"><time class="dt-published" datetime="2016-09-09T05:51:47.748Z">September 9, 2016</time></a>.</p></footer></article></body></html>

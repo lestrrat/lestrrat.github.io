@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Accessing The Kubernetes API, sans The Proxy</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">Accessing The Kubernetes API, sans The Proxy</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+For various reasons, I wanted to access the Kubernetes API from outside of the cluster, but I didn’t want to (couldn’t) use kubectl proxy…
+</section>
+<section data-field="body" class="e-content">
+<section name="6da6" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="77f1" id="77f1" class="graf graf--h3 graf--leading graf--title">Accessing The Kubernetes API, sans The Proxy</h3><p name="5fd8" id="5fd8" class="graf graf--p graf-after--h3">For various reasons, I wanted to access the Kubernetes API from outside of the cluster, but I didn’t want to (couldn’t) use <code class="markup--code markup--p-code">kubectl proxy</code> which is the easiest and recommended in various forums.</p><div name="3efd" id="3efd" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://www.amazon.co.jp/gp/product/1491935677/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=d604-22&amp;creative=1211&amp;linkCode=as2&amp;creativeASIN=1491935677&amp;linkId=3fc338d8307638e3f2c19e6b90b3194f" data-href="https://www.amazon.co.jp/gp/product/1491935677/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=d604-22&amp;creative=1211&amp;linkCode=as2&amp;creativeASIN=1491935677&amp;linkId=3fc338d8307638e3f2c19e6b90b3194f" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://www.amazon.co.jp/gp/product/1491935677/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=d604-22&amp;creative=1211&amp;linkCode=as2&amp;creativeASIN=1491935677&amp;linkId=3fc338d8307638e3f2c19e6b90b3194f"><strong class="markup--strong markup--mixtapeEmbed-strong">Kubernetes: Up and Running; Dive into the Future of Infrastructure</strong><br><em class="markup--em markup--mixtapeEmbed-em">Amazon配送商品ならKubernetes: Up and Running; Dive into the Future of Infrastructureが通常配送無料。更にAmazonならポイント還元本が多数。Kelsey…</em>www.amazon.co.jp</a><a href="https://www.amazon.co.jp/gp/product/1491935677/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=d604-22&amp;creative=1211&amp;linkCode=as2&amp;creativeASIN=1491935677&amp;linkId=3fc338d8307638e3f2c19e6b90b3194f" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="2811dda64e3122625add3176103aa378" data-thumbnail-img-id="0*6wr3Ful5e-oNnEnU." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*6wr3Ful5e-oNnEnU.);"></a></div><p name="38b3" id="38b3" class="graf graf--p graf-after--mixtapeEmbed">Here’s my memo. This is on Kubernetes 1.7, and please let me know if there are mistakes.</p><h3 name="eca3" id="eca3" class="graf graf--h3 graf-after--p">Where’s the Kubernetes API?</h3><pre name="a9bb" id="a9bb" class="graf graf--pre graf-after--h3">$ kubectl get endpoints | grep kubernetes</pre><p name="fc1e" id="fc1e" class="graf graf--p graf-after--pre">This will give you an IP address and a port number like <code class="markup--code markup--p-code">1.2.3.4:443</code>.</p><h3 name="01ce" id="01ce" class="graf graf--h3 graf-after--p">How Does One Access The API?</h3><p name="a1a8" id="a1a8" class="graf graf--p graf-after--h3">There are various ways, but I find the way using Service Accounts the most straight forward.</p><p name="e6a2" id="e6a2" class="graf graf--p graf-after--p">Basically, you create a Service Account on the Kubernetes Cluster, and find the JWT that is associated with this account. Then you include that in the Authorization HTTP header.</p><h4 name="6b68" id="6b68" class="graf graf--h4 graf-after--p">Create The Account</h4><pre name="11ee" id="11ee" class="graf graf--pre graf-after--h4">$ kubectl create serviceaccount my-service-account</pre><p name="0443" id="0443" class="graf graf--p graf-after--pre">Be sure to change <code class="markup--code markup--p-code">my-service-account</code> to something more useful.</p><h4 name="ece3" id="ece3" class="graf graf--h4 graf-after--p">Find The Associated Secret</h4><p name="d160" id="d160" class="graf graf--p graf-after--h4">There are various ways to do this, but here I’m going to use <a href="https://stedolan.github.io/jq/" data-href="https://stedolan.github.io/jq/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">jq</a>.</p><pre name="fda3" id="fda3" class="graf graf--pre graf-after--p">$ kubectl get serviceaccount my-service-account -o json | jq -Mr &#39;.secrets[].name&#39;</pre><p name="0f57" id="0f57" class="graf graf--p graf-after--pre">This will give you the name of the <code class="markup--code markup--p-code">secret</code> that contains the relevant information. Use that name to find the corresponding JWT.</p><pre name="c226" id="c226" class="graf graf--pre graf-after--p">$ kubectl get secrets $name-of-the-secret -o json | jq -Mr &#39;.data.token&#39; | base64 -D</pre><p name="0bd4" id="0bd4" class="graf graf--p graf-after--pre">The <code class="markup--code markup--p-code">base64</code> bit is necessary, as secrets will be base64 encoded.</p><h3 name="11c1" id="11c1" class="graf graf--h3 graf-after--p">Using Curl (Attempt #1)</h3><p name="a615" id="a615" class="graf graf--p graf-after--h3">The token that you got in the previous step should be passed to the API via the “Authorization” header. Given the Kubernetes API server <code class="markup--code markup--p-code">1.2.3.4:443</code>, you would do:</p><pre name="cd42" id="cd42" class="graf graf--pre graf-after--p">$ curl https://1.2.3.4 -H &quot;Authorization: Bearer $jwt-token&quot;</pre><p name="e570" id="e570" class="graf graf--p graf-after--pre">This is almost right, but you probably got curl screaming at you saying something along the lines of:</p><pre name="be3e" id="be3e" class="graf graf--pre graf-after--p">curl: (60) SSL certificate problem: Invalid certificate chain</pre><p name="14bb" id="14bb" class="graf graf--p graf-after--pre">Well, duh. You either need use the <code class="markup--code markup--p-code">--insecure</code> flag, or provide a CA certificate file. If you are in a hurry, and you know for sure — I mean, absolutely sure — that you are accessing the correct server, it’s okay to use the <code class="markup--code markup--p-code">--insecure</code> flag. But don’t put it in any script, that’s just silly.</p><h3 name="de1d" id="de1d" class="graf graf--h3 graf-after--p">Using Curl (Attempt #2)</h3><p name="e894" id="e894" class="graf graf--p graf-after--h3">In order to fix the certificate problem properly, you need to get the CA certificate that Kubernetes provides you. Luckily, this can be obtained in almost the same way we obtained the JWT. Drum rolls… it’s in the same <code class="markup--code markup--p-code">secret</code> as the JWT.</p><pre name="8eba" id="8eba" class="graf graf--pre graf-after--p">$ kubectl get secrets $name-of-the-secret -o json | jq -Mr &#39;.data[&quot;ca.crt&quot;]&#39; | base64 -D &gt; ca.crt</pre><p name="82b3" id="82b3" class="graf graf--p graf-after--pre">This will allow you to save the CA certificate in a file called <code class="markup--code markup--p-code">ca.crt</code>. Now you just need to give curl the appropriate flags:</p><pre name="000f" id="000f" class="graf graf--pre graf-after--p">curl https://1.2.3.4 --cacert ca.crt -H &quot;Authorization: Bearer $jwt-token&quot;</pre><p name="1ffd" id="1ffd" class="graf graf--p graf-after--pre graf--trailing">Voila, you should start seeing something. Navigate to the desired API.</p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2017-09-22-b24af1eb18a4/index.html"><time class="dt-published" datetime="2017-09-22T12:51:56.654Z">September 22, 2017</time></a>.</p></footer></article></body></html>
