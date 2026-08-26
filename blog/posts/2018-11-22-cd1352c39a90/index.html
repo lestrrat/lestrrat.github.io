@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>初心者のための物流システムの基本</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">初心者のための物流システムの基本</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+最初に物流システムを組み上げようとするとほぼ必ず「あれ？何も動かないぞ？」となるはずだ。本記事ではどうやって物流システムを組むかを解説する。
+</section>
+<section data-field="body" class="e-content">
+<section name="8188" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="a4bb" id="a4bb" class="graf graf--h3 graf--leading graf--title">初心者のための物流システムの基本</h3></div><div class="section-inner sectionLayout--fullWidth"><figure name="a1c2" id="a1c2" class="graf graf--figure graf--layoutFillWidth graf-after--h3"><img class="graf-image" data-image-id="1*w2RTekUcgnlk2hmbql7-wA.png" data-width="2880" data-height="1800" data-is-featured="true" src="image-adc051c19e72f1e9.png"></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="4837" id="4837" class="graf graf--p graf-after--figure">最初に物流システムを組み上げようとするとほぼ必ず「あれ？何も動かないぞ？」となるはずだ。本記事ではどうやって物流システムを組むかを解説する。</p><h3 name="608d" id="608d" class="graf graf--h3 graf-after--p">スイーパ</h3><p name="e716" id="e716" class="graf graf--p graf-after--h3">まずスイーパ単体を見てみる。自動掃除機の役割は、本体を中心とした9 x 9タイルの中での物の移動だ。一部屋の中ではこれだけである意味物流システムを組める。</p><figure name="03cb" id="03cb" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Re7O2f6zrgmz13Px0QgsyA.png" data-width="2880" data-height="1800" src="image-918ee8712f10f18e.png"></figure><p name="1513" id="1513" class="graf graf--p graf-after--figure">例えば、岩石粉砕機で生成した石灰を精錬装置に送り込むとか、電気グリルで調理した食物を冷蔵庫に入れる、逆に冷蔵庫にある食材をグリルに送る、などという行為がスイーパ単体で実現できる。</p><p name="976f" id="976f" class="graf graf--p graf-after--p">また、スイーパの届く範囲内であれば、これから新たに作られる施設とかの素材もスイーパが提供することができる。</p><p name="b729" id="b729" class="graf graf--p graf-after--p">スイーパの届く範囲は9x9タイルだが、途中に障害物となるタイルがあるとそこから先には届かない。設置するときにはスイーパの有効範囲をちゃんと確認してからにすること。</p><figure name="d0b4" id="d0b4" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*izoMAsCjZ4b7AAmZFcn0ew.png" data-width="2880" data-height="1800" src="image-739092eb13a2ee06.png"></figure><h3 name="37a3" id="37a3" class="graf graf--h3 graf-after--figure">ローダ、レセプタ</h3><p name="ae12" id="ae12" class="graf graf--p graf-after--h3">これに対してローダとレセプタは、単体では容量の少ない格納庫にすぎない。</p><p name="77c0" id="77c0" class="graf graf--p graf-after--p">ローダは何を格納するのか指定すると、それを格納することができる。</p><figure name="8d83" id="8d83" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Wvfee3FTstAvVbhC44zI7Q.png" data-width="2880" data-height="1800" src="image-8417be88568ac5e9.png"></figure><p name="5737" id="5737" class="graf graf--p graf-after--figure">さらにローダとレセプタの間をレールで繋げることにより、複製人間ないしスイーパが入口（ローダ）に何かを入れると、出口（レセプタ）からそれを取り出せるようになる。</p><p name="fd86" id="fd86" class="graf graf--p graf-after--p">レセプタ側では何を受け取るのか指定することはできない。</p><figure name="33d9" id="33d9" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*yX1pgrLSsCEeclxxoQh5pA.png" data-width="2880" data-height="1800" src="image-bef188bc9611ab62.png"></figure><p name="2308" id="2308" class="graf graf--p graf-after--figure">ローダもレセプタもデフォルト状態ではスイーパが使う前提となっており、複製人間がそこに物を入れることも取り出すこともできない。もしこれを許容したかったら、手動での使用を許可する設定にしないといけない。</p><p name="2022" id="2022" class="graf graf--p graf-after--p">ローダとレセプタの間のレールに関しては液体パイプ等と同じように物流が詰まる現象が起こり得るので注意だ。</p><p name="ea7e" id="ea7e" class="graf graf--p graf-after--p">物品が流れる方向の決定ルール等は<a href="../2018-11-17-86aac3ff0854/index.html" data-href="../2018-11-17-86aac3ff0854/index.html" class="markup--anchor markup--p-anchor" target="_blank">配管マスターへの道</a>で説明したのと同じなのでそちらを参照してほしい。</p><div name="09dc" id="09dc" class="graf graf--mixtapeEmbed graf-after--p"><a href="../2018-11-17-86aac3ff0854/index.html" data-href="../2018-11-17-86aac3ff0854/index.html" class="markup--anchor markup--mixtapeEmbed-anchor" title="../2018-11-17-86aac3ff0854/index.html"><strong class="markup--strong markup--mixtapeEmbed-strong">配管マスターへの道（水流設計編）</strong><br><em class="markup--em markup--mixtapeEmbed-em">水流を正しく作るためのコツ</em>medium.com</a><a href="../2018-11-17-86aac3ff0854/index.html" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="7e65eb1a6cda5534d5f5e74415e80cd8" data-thumbnail-img-id="1*Y0A6cGdcTtMcPjbJ72WGmA.png" style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/1*Y0A6cGdcTtMcPjbJ72WGmA.png);"></a></div><p name="9a98" id="9a98" class="graf graf--p graf-after--mixtapeEmbed">スイーパとローダ・レセプタを組み合わせると、畑で栽培したものを冷蔵庫に送り、それを自動的に電気グリルに提供。さらに電気グリルで調理したものを食堂横の冷蔵庫に送るというような物流システムを組める。</p><h3 name="63c7" id="63c7" class="graf graf--h3 graf-after--p">優先順位の設定</h3><p name="abb8" id="abb8" class="graf graf--p graf-after--h3">スイーパとレセプタの組み合わせで注意したいのはレセプタと目的地の格納庫の優先順位だ。レセプタも一瞬の格納庫なので、ゲームシステム的には「物品Xをどちらの格納庫に送るべきか」を判断するときに優先順位の高い方に送る。</p><p name="2fb1" id="2fb1" class="graf graf--p graf-after--p">レセプタと冷蔵庫があって、レセプタの優先順位が5、目的地の冷蔵庫も5だとしたら、ゲームシステム的にはどちらに物品があっても問題ない状態になっているので、レセプタから冷蔵庫への移動は行われない。</p><figure name="d0e6" id="d0e6" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*FZTyleLQJkCuFIRXxMx9Qg.png" data-width="2880" data-height="1800" src="image-2a2b0976ca9efd09.png"></figure><p name="9bcd" id="9bcd" class="graf graf--p graf-after--figure">そこでレセプタを4とすれば、こんどは冷蔵庫の方が優先度が高いのでスイーパがレセプタから冷蔵庫に物品を移動してくれる。</p><h3 name="7bfc" id="7bfc" class="graf graf--h3 graf-after--p">輸送中の物品</h3><p name="0459" id="0459" class="graf graf--p graf-after--h3">レールを伝って輸送中の物品は基本「丸裸」の状態と同じである。なので移送している物品の特性に気をつけつつ移動させる必要がある。</p><p name="e4a9" id="e4a9" class="graf graf--p graf-after--p">例えばここで水の中にあったヘドロをレール上に移動させて水の外にだすと、汚染酸素を排出する。</p><p name="5b4e" id="5b4e" class="graf graf--p graf-after--p">ヘドロ置き場からマッシュルーム畑にヘドロを送るような場合にはこの汚染酸素によって二酸化炭素の位置が気圧でずれないように注意する必要がある。</p><p name="46bc" id="46bc" class="graf graf--p graf-after--p">逆にこのヘドロを塩素の中を通るように輸送すれば、その間に殺菌される。</p><h3 name="9b8c" id="9b8c" class="graf graf--h3 graf-after--p">危険な場所・士気ペナルティのあるエリアでの作業</h3><p name="f2b6" id="f2b6" class="graf graf--p graf-after--h3">単純に物品を自動的に移動させるだけでも複製人間の手が空いてすばらしいのだが、この物流システムの構築が目に見えて役に立つのは、いわゆる「複製人間を入れたくない場所」ともっと勝手の良い場所の間の資源を移動を行わせる時だ。</p><p name="0acd" id="0acd" class="graf graf--p graf-after--p">例えば間欠泉から高温の金属が湧き出てくる場所にはあまり複製人間を送り込みたくない。</p><p name="cfc0" id="cfc0" class="graf graf--p graf-after--p">できれば、その部屋は断熱タイルで囲ってしまいたいところだ。そうすると複製人間はもう入れない。</p><p name="a6ec" id="a6ec" class="graf graf--p graf-after--p">そこで、スイーパ、ローダ、そして自動掘削機を入れておく。</p><figure name="f2b7" id="f2b7" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*i5R-conaqxp8zXsrIJmx8A.png" data-width="2880" data-height="1800" src="image-5a899e2de7c70173.png"></figure><p name="89d9" id="89d9" class="graf graf--p graf-after--figure">ただ、金属マグマはそのまま流れさせておくと持ち運べないので冷却する必要がある。</p><figure name="9aec" id="9aec" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*P6xK0qxwQPI4acJFZgZq-w.png" data-width="2880" data-height="1800" src="image-116d7cdb5b79a41b.png"></figure><p name="8bda" id="8bda" class="graf graf--p graf-after--figure">マグマを使って水蒸気を発生させて云々、という方法もあるのだが、自分は水蒸気の扱いが下手なので、冷却には間欠泉が活動をとめないギリギリの量の汚染水を流し込み続け、（完全に水没すると活動が止まる）そこから出てくる水蒸気は即座にさらなる汚染水で冷却して真水にしてしまう（上記画像のパイプ部分）。なお、この設計のポイントは水が完全にひからびないようにしつつ、排水を続ける段差の設置です。</p><p name="5467" id="5467" class="graf graf--p graf-after--p">このようにしておけば、マグマが流れ出るそばから汚染水に接触＋凝固して精錬済み金属に変化する。蒸気はすぐ水になって落ちてくる。</p><p name="7a02" id="7a02" class="graf graf--p graf-after--p">それをスイーパがどんどんローダに積み込んでいき、どこかしらかの格納庫に保存する（本当なら完全に蓋をしたいところだが、この例ではそこまでできていない）</p><figure name="4c98" id="4c98" class="graf graf--figure graf-after--p graf--trailing"><img class="graf-image" data-image-id="1*16S2aLsVrpozcrTZAPEGCQ.png" data-width="2880" data-height="1800" src="image-c02944b4ab56fec6.png"></figure></div></div></section><section name="c24b" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="58a2" id="58a2" class="graf graf--p graf--leading graf--trailing">このように、スイーパ、ローダ、レセプタを使って物流システムを組むと色々と便利なことができるので、是非使い方を覚えよう</p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2018-11-22-cd1352c39a90/index.html"><time class="dt-published" datetime="2018-11-22T10:09:05.645Z">November 22, 2018</time></a>.</p></footer></article></body></html>

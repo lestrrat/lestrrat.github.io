@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>水蒸気タービンの設置方法</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">水蒸気タービンの設置方法</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+Oxygen Not Includedで水蒸気タービンを動かす条件は意外と込み入ってて、初見だと全然わからない。ここでは基本的な水蒸気タービンの動かし方を説明する。
+</section>
+<section data-field="body" class="e-content">
+<section name="71fb" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="b99e" id="b99e" class="graf graf--h3 graf--leading graf--title">水蒸気タービンの設置方法</h3><p name="3d71" id="3d71" class="graf graf--p graf-after--h3 graf--trailing">注：本記事はQoL Upgrade Mk3 以前の記事です。現時点で水蒸気タービンは仕様が変わっており、この方法は全く使えません</p></div></div></section><section name="06b3" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="7fd3" id="7fd3" class="graf graf--p graf--leading">Oxygen Not Includedで水蒸気タービンを動かす条件は意外と込み入ってて、初見だと全然わからない。ここでは基本的な水蒸気タービンの動かし方を説明する。</p><figure name="0cd0" id="0cd0" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Hjo0DnPOgNOaM7PmgBLZuQ.jpeg" data-width="1920" data-height="1080" data-is-featured="true" src="image-56c52f95d04d6b4e.jpeg"></figure><h3 name="5857" id="5857" class="graf graf--h3 graf-after--figure">水蒸気タービンを動かす条件</h3><p name="be6e" id="be6e" class="graf graf--p graf-after--h3">まずは水蒸気タービンを動かすための基本条件から。これがわからなくてただの石と化している水蒸気タービンがマップに鎮座している人も多いだろう。</p><ol class="postList"><li name="a43e" id="a43e" class="graf graf--li graf-after--p">水蒸気タービンの真下のマスに水蒸気があること（QoL Upgrade Mk2の時点では、全てのマスでなくても、ひとつでもいいのでマスに水蒸気があれば良い、みたい）</li><li name="aa41" id="aa41" class="graf graf--li graf-after--li">水蒸気タービンの水蒸気が最低226.9℃以上あること</li><li name="d1a1" id="d1a1" class="graf graf--li graf-after--li">水蒸気タービンの真上と真下のマスの水蒸気の気圧差が最低3000g以上あること（真上のほうが真下より気圧が低くないといけない）</li></ol><p name="1221" id="1221" class="graf graf--p graf-after--li">この条件を満たしている間は水蒸気タービンが動く。</p><p name="f2db" id="f2db" class="graf graf--p graf-after--p">なお水蒸気タービンを安定稼働させて電気を得る事は当然可能だが、ONIでは水蒸気タービンの主目的は発電ではなく、<strong class="markup--strong markup--p-strong">冷却</strong>と認識すべきだ。</p><p name="f095" id="f095" class="graf graf--p graf-after--p">後述するが、水蒸気タービンは浄水器等と同じで、消費する水蒸気の温度が何度であっても一定の温度で排出する。この温度差の分の熱が電気になり、現象的には冷却が起こることになる。水蒸気を温めるための熱がここで消えるわけだ。</p><p name="6965" id="6965" class="graf graf--p graf-after--p">なので、電気のために水蒸気タービンを建てるのではなく、<strong class="markup--strong markup--p-strong">冷却を行うついでに発電する</strong>、という形を作ることになる。水蒸気タービンを使う時はその点を心にとどめておいてほしい。</p><h3 name="7444" id="7444" class="graf graf--h3 graf-after--p">水蒸気の手配</h3><p name="c702" id="c702" class="graf graf--p graf-after--h3">まだやったことがないなら最初のハードルは水蒸気を作るところだろう。</p><p name="3319" id="3319" class="graf graf--p graf-after--p">真水から水蒸気を作るなら最低103℃、汚染水なら最低119.4℃まで熱しないといけない。そこからさらに226.85℃まで温度をあげる必要がある。なお、水を水蒸気に変えるとかなりの気圧になるので、水蒸気タービンを回す目的の場合は本当に少しずつ水を熱源に追加するようにするべきだ。</p><h4 name="d072" id="d072" class="graf graf--h4 graf-after--p">自然を使う</h4><p name="46a9" id="46a9" class="graf graf--p graf-after--h4">マップにランダムに生成される高熱間欠泉500℃、金属火山や通常の火山なら2000℃前後のの溶解した成分を放出するので、ここに水をかけると一瞬で水蒸気を得ることができる</p><p name="9095" id="9095" class="graf graf--p graf-after--p">だが、これら自然由来の施設はなかなか扱いが難しいので要注意だ。</p><p name="75d9" id="75d9" class="graf graf--p graf-after--p">なぜならこれらの仕組みはいつ噴火するか制御できない。これが人工施設ならセンサーと組み合わせることにより、好きなタイミングでオン・オフできるので、加熱したいとき、冷却したい時で比較的自由に制御できる。</p><p name="d68c" id="d68c" class="graf graf--p graf-after--p">同じ理由で金属火山等を使う場合は温度を226.85℃にあげるのがなかなか難しい。基本的にはある程度水をいれておいて、あとは温度が上がるのを待ち続けるしかない。</p><p name="2829" id="2829" class="graf graf--p graf-after--p">水の量、熱源の特性にもよるが、臨界温度に達するまで50～100サイクルくらいはゆうにかかる。</p><p name="bc12" id="bc12" class="graf graf--p graf-after--p">発電開始を待つ時間があって、なおかつ設計・その他にある程度自信があるなら、こちらでも問題はないと思う。</p><h4 name="96c0" id="96c0" class="graf graf--h4 graf-after--p">機械を使う</h4><p name="47a3" id="47a3" class="graf graf--p graf-after--h4">これを読んでいる人は初級〜中級者だろうから、とりあえず安定して水蒸気タービンを運用するには機械類を使って熱を作るべきだろう。</p><p name="d1c8" id="d1c8" class="graf graf--p graf-after--p">機械を使う場合は前もってある程度ゲーム内の素材等の熱特性を調べておくべきだが、それさえ押さえていれば確実に必要な水蒸気を作れる。</p><p name="9c99" id="9c99" class="graf graf--p graf-after--p">素材の熱特性というのは例えば、断熱にはセラミック以上の素材を使うべき、というようなことや、一旦稼働し始めた水蒸気タービン部屋でプラスチック素材を使った機械の解体はやめた方がいい（回収する間もなく、溶けてナフタになってしまう）という類のことだ。</p><p name="4a27" id="4a27" class="graf graf--p graf-after--p graf--trailing">ただ、機械を使う方法では熱源となる機械を動かす電源が必要となる。液体クーラーだと1200W使うので結構なものだ。もしこちらの方法をとるなら、液体クーラー自体の昨日をちゃんと扱える状態で行う事。</p></div></div></section><section name="9f53" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="3029" id="3029" class="graf graf--p graf--leading">機械で意図的に水蒸気を発生させにはまずゲーム内で鋼鉄を順調に生産できるまで待つべきだ。</p><p name="2db7" id="2db7" class="graf graf--p graf-after--p">鋼鉄で作った機械類はオーバーヒート温度が+200℃というボーナスが付くので、他の素材で作った場合は75℃で壊れる機械でも鋼鉄なら275℃まで耐えられることになり、センサー等で防御してやれば比較的安全に水蒸気用の高熱環境を実現できる。</p><p name="cadd" id="cadd" class="graf graf--p graf-after--p">前述の液体クーラーは1200Wの電力を使うことにより、14℃分の熱を液体から奪い、機械本体に移す。機械が熱くなった分は環境に伝わるので、すぐに該当の部屋は熱くなる。</p><p name="a7ac" id="a7ac" class="graf graf--p graf-after--p">この機械に水を垂らしてやれば比較的すぐに水蒸気ができあがるはずだ。あとはそのまま226.85℃まで加熱しつづける。</p><h3 name="9ecf" id="9ecf" class="graf graf--h3 graf-after--p">気圧差を作る</h3><p name="4252" id="4252" class="graf graf--p graf-after--h3">次に必要な条件は3000gの気圧差だ。これが意外と難しい。</p><p name="737d" id="737d" class="graf graf--p graf-after--p">とりあえず普通に上の部屋と下の部屋にわけて、吸気ポンプで上→下へと水蒸気を送り続けて気圧差を作るとする。</p><p name="7192" id="7192" class="graf graf--p graf-after--p">一旦3000gの気圧差が生まれれば、水蒸気タービンが動き出すが、同時に上に発電に利用した後の水蒸気が出てきてその分気圧がたかまり、そのうちまたタービンは止まってしまうだろう。</p><p name="f0f8" id="f0f8" class="graf graf--p graf-after--p">じつは水蒸気タービンの下部にある水蒸気インテイクは各マスひとつに付き2kg/secの水蒸気が吸い込まれ、上部から151.85℃ででてくる。インテイクが全部有効になっていれば、10kg/secである。3000gの気圧差なんて一瞬で相殺されてしまう。</p><p name="2024" id="2024" class="graf graf--p graf-after--p">ちなみに浄水器等と同じで吸入される水蒸気の温度がどんなに高くても排出温度は一定である（らしい）。</p><p name="d4cd" id="d4cd" class="graf graf--p graf-after--p">つまり、仮に水蒸気タービンをずっと稼働させたい場合、10kg分の移動ができる吸気ポンプが必要なわけで、吸気ポンプはひとつにつき500g/sec吸入できるので20台必要… に… なる… 無理だろ、これ。仮にインテイクをひとつだけ有効にしていた場合でも4台必要になる。</p><p name="aeb9" id="aeb9" class="graf graf--p graf-after--p">そこで古の先人達が編み出したのが、装置上部で水蒸気を冷却して真水に戻したり、ドアの自動開閉によるポンプであったり、水蒸気を宇宙に捨てたり… という様々な方法だ。</p><p name="4108" id="4108" class="graf graf--p graf-after--p">やり方はひとつではないので、お好きな方法を使ってもらっていいのだが、ここでは「部屋に別の気体を注入する」という方法を紹介する。</p><h3 name="3b72" id="3b72" class="graf graf--h3 graf-after--p">気体混入方式</h3><p name="f29c" id="f29c" class="graf graf--p graf-after--h3">いくつかある方法の中で気体混入方式を自分が選ぶ理由のは、このゲームではマップ内の任意のマスには一種類の気体しか存在できない特性があるからだ。</p><p name="0224" id="0224" class="graf graf--p graf-after--p">つまり、水蒸気の気圧より明らかに低い気圧の別の気体を水蒸気タービン上部にいれておけば、常に3000gの気圧差を維持できるわけだ。</p><p name="ab77" id="ab77" class="graf graf--p graf-after--p">水蒸気をポンプやドアなどをの仕掛けや電気を使うとどうしても水蒸気が動き終わるまでの時間がかかるが、この方法だと比較的早く、しかもコストゼロで気圧差を作れる。</p><p name="044e" id="044e" class="graf graf--p graf-after--p">これが気体混入方式の基本だ。</p><h3 name="2afa" id="2afa" class="graf graf--h3 graf-after--p">気体混入方式水蒸気タービン部屋の実装</h3><p name="702a" id="702a" class="graf graf--p graf-after--h3">水蒸気タービン部屋は必ず断熱タイルで囲む。少なくともセラミック以上の断熱性能がある素材にする。</p><p name="ea02" id="ea02" class="graf graf--p graf-after--p">部屋を作る際にまず気をつけたいのが、部屋の形だ。水蒸気より軽い機体を水蒸気タービンの上に保持しないといけないので、水蒸気タービンは部屋の一番上にあるべきだ。上に気体が抜ける道を作ってしまうとあとあと面倒くさい。</p><p name="10b0" id="10b0" class="graf graf--p graf-after--p">例えば、以下の形の部屋は明らかに失敗だった。右上のハシゴの先に出入り口があるのだが、このせいで調整をする度に気体が上に漏れて非常に面倒くさかった。</p><figure name="575d" id="575d" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*OurUF03UamZfT8j26Xfwbw.jpeg" data-width="1920" data-height="1080" src="image-a7ca2c49b4476b45.jpeg"></figure><p name="902b" id="902b" class="graf graf--p graf-after--figure">部屋の形を整えたら、部屋を密閉する。液体ロックなら真水・汚染水ではなく原油くらいの沸点の高さの液体を使う。</p><p name="abac" id="abac" class="graf graf--p graf-after--p">さらに余裕があるなら一旦部屋を真空にすると良いと思う。下手に二酸化炭素やらなにやらが入っているとたまに面倒くさいことになる。</p><p name="200a" id="200a" class="graf graf--p graf-after--p">準備ができたら水蒸気より軽い機体を水蒸気タービン部屋に入れる。これは水素でもいいし、酸素とかでもよい。自分は面倒なので今のところ酸素で通している。</p><p name="b48d" id="b48d" class="graf graf--p graf-after--p">この気体は、 最終的に水蒸気タービンの一番上のマスと被っていればよい。屋根の位置さえよければ正直どれくらい少量であっても1マス使う事になるので、重要なのは正しい位置にその気体が入っているということだ。</p><p name="4312" id="4312" class="graf graf--p graf-after--p">逆に気体を入れすぎると気圧差を作るために大量の水蒸気を作る必要があり、それはそれで面倒くさい。加熱により時間がかかるということ以外水蒸気はたくさんあってもいいので、急いでいなければ特に問題はない。</p><p name="53e9" id="53e9" class="graf graf--p graf-after--p">水蒸気タービンの上部から気体が逃げないように囲う。もちろん、ただ部屋の天井部分に隣接するように作るだけでもよい。とにかく気体が変なところに逃げていかないで、水蒸気タービン上部にとどまる形にする。</p><p name="01b5" id="01b5" class="graf graf--p graf-after--p">水蒸気タービンは下のインテイク全部を使う必要はないので、必要なところ以外はブロックしてしまうと良い。少なくとも現時点では発電量に差はなさそう。将来的にはわからないが。</p><p name="fca3" id="fca3" class="graf graf--p graf-after--p">水蒸気タービン上部と下のインテイクをつなぐパスは一方向に限定して、途中に熱源を配置する。こうすることによって、冷却された水蒸気が必ず熱源を通ってからインテイク側に移動する。</p><p name="79fb" id="79fb" class="graf graf--p graf-after--p">諸々できたら、熱源を稼働させて少量の水を垂らす。いきなり大量の水は入れないように注意。前述の通り、大量の水蒸気があってもいいのだが、とりあえず最初は少なめから始めたほうがよいからだ。</p><figure name="1431" id="1431" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*OkS7t7i64NfkXmy92tUHvA.png" data-width="2880" data-height="1800" src="image-5e54350da5f438eb.png"></figure><p name="9fa2" id="9fa2" class="graf graf--p graf-after--figure">あとは待つだけ。そのうち発電が始まるはずだ。</p><p name="0447" id="0447" class="graf graf--p graf-after--p">上記画像の例では熱が230℃以上にならない前提の発電施設になっているそれ以上の熱を帯びるなら、素材も気をつけないといけないし、原油が気化してしまう可能性がでてくるので、完全に部屋を完成させてタイルで密封してしまうほうがいいかもしれない。</p><p name="6fbf" id="6fbf" class="graf graf--p graf-after--p">熱が高ければ高いほど、当然発電量は多くなる。ただ、前述の通り、発電そのものを目的とするより、なんらかしらの冷却のついでに発電できる、という程度の認識でいたほうが幸せになれる。</p><figure name="1c15" id="1c15" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*wS-YMxf9sUkd3sCsmXCdng.png" data-width="2880" data-height="1800" src="image-48a95aa3f6c359bd.png"></figure><p name="77c4" id="77c4" class="graf graf--p graf-after--figure">これで水蒸気タービンも怖くない！</p><p name="dddb" id="dddb" class="graf graf--p graf-after--p graf--trailing">追記：その後色々やってみたが、まだ一番効率が良い気体混入量がわからない。気体を満載にしてしまうとそれはそれで動かないっぽいし、少し余裕を持たせるのがいいのかもしれない…</p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2019-02-09-66bc5fb5ae74/index.html"><time class="dt-published" datetime="2019-02-09T12:16:02.398Z">February 9, 2019</time></a>.</p></footer></article></body></html>

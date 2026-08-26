@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>memo about Botkit v4 (4.10.0)</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../../../#profile">Profile</a></li>
+      <li><a href="../../index.html">Blog</a></li>
+      <li><a href="../../../#talks">Talks/Presentations</a></li>
+      <li><a href="../../../#events">Events</a></li>
+    </ul>
+  </div>
+</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
+<header>
+<h1 class="p-name">memo about Botkit v4 (4.10.0)</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+So I inherited a bot that used run on an ancient version of Botkit. There were problems and we needed to upgrade the whole thing to Botkit…
+</section>
+<section data-field="body" class="e-content">
+<section name="8cf0" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="6eaa" id="6eaa" class="graf graf--h3 graf--leading graf--title">memo about Botkit v4 (4.10.0)</h3><p name="d6ea" id="d6ea" class="graf graf--p graf-after--h3">So I inherited a bot that used run on an ancient version of Botkit. There were problems and we needed to upgrade the whole thing to Botkit v4. I found the Botkit documentation to be utterly lacking and confusing, so I decided to leave my notes here so I don’t have to look them up again.</p><p name="a088" id="a088" class="graf graf--p graf-after--p graf--trailing">(Note: this is a work in progress, as I’m still in the middle of work)</p></div></div></section><section name="452d" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="b9bc" id="b9bc" class="graf graf--h3 graf--leading">Botkit Mock</h3><p name="bf67" id="bf67" class="graf graf--p graf-after--h3">It only works with newer versions of Botkit. Upgrade if you were in the same boat as I was.</p><h3 name="2eb4" id="2eb4" class="graf graf--h3 graf-after--p">storage (Redis)</h3><p name="ab3f" id="ab3f" class="graf graf--p graf-after--h3">At least as of this writing, there is no Redis storage backend for v4. Write your own. Use <code class="markup--code markup--p-code">MemoryStorage</code> until you are ready.</p><h3 name="8f81" id="8f81" class="graf graf--h3 graf-after--p">Writing the event handlers in Typescript</h3><p name="d91c" id="d91c" class="graf graf--p graf-after--h3">If you are using Typescript to write the event handlers, you are going to need to somehow give the handler object parameters some type information. That is, this won’t work:</p><pre name="9624" id="9624" class="graf graf--pre graf-after--p">controller.hears(&quot;foo&quot;, &quot;message&quot;, async(bot, message) =&gt; {<br>  ...<br>});</pre><p name="204c" id="204c" class="graf graf--p graf-after--pre">You need to give <code class="markup--code markup--p-code">bot</code> and <code class="markup--code markup--p-code">message</code> some type. This information is not immediately obvious from the Botkit docs. Upon further inspection, you will find the definition for these in <code class="markup--code markup--p-code">botkit/src/core.ts</code> , then you can write:</p><pre name="fe86" id="fe86" class="graf graf--pre graf-after--p">import { Botkit, BotWorker, BotkitMessage } from &#39;botkit&#39;;</pre><pre name="540e" id="540e" class="graf graf--pre graf-after--pre">controller.hears(&quot;foo&quot;, &quot;message&quot;, async(bot :BotWorker, message :BotkitMessage) =&gt; {<br>  ...<br>});</pre><p name="b099" id="b099" class="graf graf--p graf-after--pre">The asymmetry in naming between the various <code class="markup--code markup--p-code">BotkitXXXXX</code> types and <code class="markup--code markup--p-code">BotWorker</code> is just so-o-o-o-o deliciously dangerous.</p><h3 name="67ab" id="67ab" class="graf graf--h3 graf-after--p">controller.on and controller.hears</h3><p name="7d83" id="7d83" class="graf graf--p graf-after--h3"><code class="markup--code markup--p-code">controller.on</code> responds to <em class="markup--em markup--p-em">event type </em>names. <code class="markup--code markup--p-code">controller.hears</code> responds to the <em class="markup--em markup--p-em">message text</em> that was received.</p><p name="e2df" id="e2df" class="graf graf--p graf-after--p">The doc is lying when they say <code class="markup--code markup--p-code">controller.on(&#39;event&#39;, ...)</code> because this does not match any event. Instead of <code class="markup--code markup--p-code">&#39;event&#39;</code> you need to specify the event name. So if you want to match a message, you need to say <code class="markup--code markup--p-code">controller.on(&#39;message&#39;, ...)</code> .</p><p name="b998" id="b998" class="graf graf--p graf-after--p">Also, if you have controllers that match the same event, the first one wins.</p><pre name="03a9" id="03a9" class="graf graf--pre graf-after--p">controller.hears(&#39;^hello&#39;, &#39;message&#39;, ....);<br>controller.on(&#39;message&#39;, ...);</pre><p name="bb00" id="bb00" class="graf graf--p graf-after--pre">In the above case, any message starting with the text “hello” will be intercepted by the <code class="markup--code markup--p-code">controller.hears</code> handler, and everything else will fallthrough to <code class="markup--code markup--p-code">controller.on</code> .</p><h3 name="2b1a" id="2b1a" class="graf graf--h3 graf-after--p">Matching against ‘app_mention’ events</h3><p name="42b5" id="42b5" class="graf graf--p graf-after--h3">You can’t. Typing <code class="markup--code markup--p-code">@bot foo</code> in Slack generates two events, one for an <code class="markup--code markup--p-code">app_mention</code> event type and one for <code class="markup--code markup--p-code">message</code> . The <code class="markup--code markup--p-code">message</code> type can be matched using <code class="markup--code markup--p-code">controller.hears(&#39;foo&#39;, &#39;message&#39;, ...)</code> but notice that the first string (the string that matches against the message text) is not anchored to the beginning of the string. This is because the message payload actually contains the bot’s user ID in the form of <code class="markup--code markup--p-code">&quot;&lt;@U********&gt; foo&quot;</code> and therefore you cannot safely anchor the pattern to the beginning of the line.</p><p name="8504" id="8504" class="graf graf--p graf-after--p">On the other hand, using the type <code class="markup--code markup--p-code">app_mention</code> in either <code class="markup--code markup--p-code">controller.hears()</code> or <code class="markup--code markup--p-code">controller.on()</code> does absolutely nothing, because the <code class="markup--code markup--p-code">message.type</code> field is populated with the value <code class="markup--code markup--p-code">&quot;event&quot;</code> and not <code class="markup--code markup--p-code">&quot;app_mention&quot;</code> .</p><p name="483f" id="483f" class="graf graf--p graf-after--p">The only way to safely match against events of type <code class="markup--code markup--p-code">&quot;app_mention&quot;</code> is to use <code class="markup--code markup--p-code">controller.on(&#39;event&#39;, ...)</code> then filter out for the <code class="markup--code markup--p-code">&quot;app_metion&quot;</code> type, but this needs more introspection, because the fields in the <code class="markup--code markup--p-code">message</code> object just aren’t populated correctly.</p><p name="f86b" id="f86b" class="graf graf--p graf-after--p">You are going to have to write something that resembles the following:</p><pre name="1a02" id="1a02" class="graf graf--pre graf-after--p">controller.on(&#39;event&#39;, async(bot :BotWorker, message :BotkitMessage) =&gt; {<br>  // message.incoming_message.channelData contains the raw<br>  // data from the incoming message<br>  let chData = message.incoming_message.channelData;<br>  if (chData.type == &#39;app_mention&#39;) {<br>    // Inspecting the message object reveals that when<br>    // &quot;<a href="http://twitter.com/bot" data-href="http://twitter.com/bot" class="markup--anchor markup--pre-anchor" title="Twitter profile for @bot" rel="noopener" target="_blank">@bot</a> foo&quot; is issued in Slack, this hook receives a<br>    // message with message.text == null<br>    //<br>    // So we extract the raw text from and remove the<br>    // bot&#39;s user ID from the beginning of the text so<br>    // it&#39;s easier to match against the text pattern<br>    let botID = message.incoming_message.recipient.id;<br>    let text = chData.text;<br>    if (text.startsWith(&#39;&lt;@&#39; + botID + &#39;&gt; &#39;)) {<br>      text = text.slice(botID.length + 4);<br>    }<br>    message.text = text; // Overwrite</pre><pre name="87c6" id="87c6" class="graf graf--pre graf-after--pre">    // now match against message.text, do whatever<br>  }<br>});</pre><h3 name="c6f1" id="c6f1" class="graf graf--h3 graf-after--pre">Starting Slack Thread Conversations</h3><p name="a576" id="a576" class="graf graf--p graf-after--h3">As of this writing, no document properly explains this.</p><p name="c48e" id="c48e" class="graf graf--p graf-after--p">First, do not believe the documentation that you can find by searching for <code class="markup--code markup--p-code">startConversationInThread()</code> because they are all lies. Well, they are about older versions of the library.</p><p name="4714" id="4714" class="graf graf--p graf-after--p">The way to do this as of this writing is by importing the <code class="markup--code markup--p-code">SlackBotWorker</code> type, and casting the <code class="markup--code markup--p-code">bot</code> parameter to it.</p><pre name="96a9" id="96a9" class="graf graf--pre graf-after--p">import { Botkit, BotWorker, BotkitMessage } from &#39;botkit&#39;;<br>import { SlackBotWorker } from &#39;botbuilder-adapter-slack&#39;;</pre><pre name="519c" id="519c" class="graf graf--pre graf-after--pre">controller.on(..., (bot :BotWorker, message :BotkitMessage) =&gt; {<br>  let sbot = bot as SlackBotWorker;<br>  await sbot.startConversationInThread(...);<br>  await sbot.reply(...)<br>});</pre><p name="0ca5" id="0ca5" class="graf graf--p graf-after--pre graf--trailing">To be continued…</p></div></div></section>
+</section>
+<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2021-09-07-a7108d6f6e70/index.html"><time class="dt-published" datetime="2021-09-07T06:57:16.017Z">September 7, 2021</time></a>.</p></footer></article></body></html>
