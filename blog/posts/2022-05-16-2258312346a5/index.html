@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Working with JWT in Go</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">Working with JWT in Go</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-github.com/lestrrat-go/jwx (JWX) is a complete package that covers the entirety of Javascript Object Signing and Encryption (JOSE) for Go…
-</section>
-<section data-field="body" class="e-content">
-<section name="ba08" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="f605" id="f605" class="graf graf--h3 graf--leading graf--title">Working with JWT in Go</h3><figure name="ed11" id="ed11" class="graf graf--figure graf-after--h3"><img class="graf-image" data-image-id="1*9VHPd1SQ5qkjQtIOQjhPlw.png" data-width="1920" data-height="540" data-is-featured="true" src="image-14d8f451131f6f7b.png"></figure><p name="d593" id="d593" class="graf graf--p graf-after--figure"><a href="https://github.com/lestrrat-go/jwx" data-href="https://github.com/lestrrat-go/jwx" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">github.com/lestrrat-go/jwx</a> (JWX) is a complete package that covers the entirety of <a href="https://datatracker.ietf.org/doc/html/rfc7165" data-href="https://datatracker.ietf.org/doc/html/rfc7165" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Javascript Object Signing and Encryption (JOSE)</a> for Go. It is (for unknown reasons) often used when JWK handling is required. But yes, it does handle JWTs, and if you are using JWX for JWKs, you should also use it for JWTs.</p><p name="9fa0" id="9fa0" class="graf graf--p graf-after--p">Let me show you a few simple steps to sign and verify JWTs using JWX</p><div name="53b7" id="53b7" class="graf graf--mixtapeEmbed graf-after--p graf--trailing"><a href="https://github.com/lestrrat-go/jwx" data-href="https://github.com/lestrrat-go/jwx" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat-go/jwx"><strong class="markup--strong markup--mixtapeEmbed-strong">GitHub - lestrrat-go/jwx: Implementation of various JWx (Javascript Object Signing and…</strong><br><em class="markup--em markup--mixtapeEmbed-em">Go module implementing various JWx (JWA/JWE/JWK/JWS/JWT, otherwise known as JOSE) technologies. If you are using this…</em>github.com</a><a href="https://github.com/lestrrat-go/jwx" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="20aec938b2c4d01bc04280776dd4a9a7" data-thumbnail-img-id="0*QlnUH4gvBqNfB-Qz" style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*QlnUH4gvBqNfB-Qz);"></a></div></div></div></section><section name="e566" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="7e59" id="7e59" class="graf graf--h3 graf--leading">TL;DR:</h3><ul class="postList"><li name="d42e" id="d42e" class="graf graf--li graf-after--h3">If you are using github.com/lestrrat-go/jwx/v2/jwk somewhere in your code, you might as well use github.com/lestrrat-go/jwx/v2/jwt to handle your JWTs</li><li name="eef5" id="eef5" class="graf graf--li graf-after--li">It will be one less dependency, and everything works seamlessly out of the box. No extra external packages required just to load a JWK!</li><li name="3197" id="3197" class="graf graf--li graf-after--li graf--trailing">All examples below can be found in the <code class="markup--code markup--li-code"><a href="https://github.com/lestrrat-go/jwx/tree/develop/v2/examples" data-href="https://github.com/lestrrat-go/jwx/tree/develop/v2/examples" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">examples</a></code> directory for JWX. And there are a lot of documentation both <a href="https://github.com/lestrrat-go/jwx/tree/develop/v2/docs" data-href="https://github.com/lestrrat-go/jwx/tree/develop/v2/docs" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">in the repository itself</a>, and the <code class="markup--code markup--li-code"><a href="https://pkg.go.dev/github.com/lestrrat-go/jwx/v2" data-href="https://pkg.go.dev/github.com/lestrrat-go/jwx/v2" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">go doc</a></code></li></ul></div></div></section><section name="533a" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="a2a3" id="a2a3" class="graf graf--h3 graf--leading">Parsing a JWK or JWKS</h3><p name="8b7d" id="8b7d" class="graf graf--p graf-after--h3">First, you will need to obtain a JWK to sign or verify a token.</p><p name="2ef4" id="2ef4" class="graf graf--p graf-after--p">Using JWX, you can parse either a single JWK or a JWK Set (JWKS).</p><ol class="postList"><li name="e932" id="e932" class="graf graf--li graf-after--p">Parse from a JSON <code class="markup--code markup--li-code">[]byte</code> sequence, or</li><li name="8f30" id="8f30" class="graf graf--li graf-after--li">Parse from a file containing the key.</li></ol><p name="d46a" id="d46a" class="graf graf--p graf-after--li">And you could even do the above if the above two are represented as PEM-encoded ASN.1 DER format.</p><p name="fecc" id="fecc" class="graf graf--p graf-after--p">Here’s how to parse a JWK JSON <code class="markup--code markup--p-code">[]byte</code> sequence containing a single key:</p><figure name="21ad" id="21ad" class="graf graf--figure graf--iframe graf-after--p"></figure><p name="62f8" id="62f8" class="graf graf--p graf-after--figure">Here’s how to parse a file containing JWKS in JSON<code class="markup--code markup--p-code">[]byte</code> sequence.</p><figure name="c448" id="c448" class="graf graf--figure graf--iframe graf-after--p"></figure><p name="5608" id="5608" class="graf graf--p graf-after--figure">And finally, here’s how to read from a file containing JWKS in PEM-encoded ASN.1 DER format. Notice the optional parameter <code class="markup--code markup--p-code">jwk.WithPEM(true)</code> . You can pass this into <code class="markup--code markup--p-code">jwk.ParseKey</code> or <code class="markup--code markup--p-code">jwk.Parse</code> and achieve the same effect</p><figure name="c070" id="c070" class="graf graf--figure graf--iframe graf-after--p"></figure><p name="2af6" id="2af6" class="graf graf--p graf-after--figure">There are other tricks to get JWK/JWKS using JWX, such as creating a JWK directly from the “<a href="https://github.com/lestrrat-go/jwx/blob/129e8b1d3bc86038ded5b41e8720b120194074f8/docs/04-jwk.md#using-jwkfromraw" data-href="https://github.com/lestrrat-go/jwx/blob/129e8b1d3bc86038ded5b41e8720b120194074f8/docs/04-jwk.md#using-jwkfromraw" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">raw</a>” key, or minimize fetching using the <code class="markup--code markup--p-code">jwk.Cache</code> (but also keep the keys up-to-date). Please read the documentation (<a href="https://pkg.go.dev/github.com/lestrrat-go/jwx/v2@v2.0.1/jwk#Cache" data-href="https://pkg.go.dev/github.com/lestrrat-go/jwx/v2@v2.0.1/jwk#Cache" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">1</a>, <a href="https://github.com/lestrrat-go/jwx/blob/129e8b1d3bc86038ded5b41e8720b120194074f8/docs/04-jwk.md#auto-refreshing-remote-keys" data-href="https://github.com/lestrrat-go/jwx/blob/129e8b1d3bc86038ded5b41e8720b120194074f8/docs/04-jwk.md#auto-refreshing-remote-keys" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">2</a>) for more details.</p><h3 name="c2c8" id="c2c8" class="graf graf--h3 graf-after--p">Building JWTs</h3><p name="864d" id="864d" class="graf graf--p graf-after--h3">Building JWTs using JWX is simple and intuitive. Just use <code class="markup--code markup--p-code">jwt.Builder</code> , and you’re set. Notice that you don’t need to create your custom <code class="markup--code markup--p-code">struct</code> to include private claims. Using JWX, tokens with arbitrary private parameters are supported out of the box.</p><figure name="d897" id="d897" class="graf graf--figure graf--iframe graf-after--p"></figure><h3 name="61c6" id="61c6" class="graf graf--h3 graf-after--figure">Accessing JWT claims</h3><p name="22ca" id="22ca" class="graf graf--p graf-after--h3">Claims stored in JWTs can be accessed via either the predefined accessors or the generic <code class="markup--code markup--p-code">.Get()</code> method. Since JWTs in JWX can handle any private claims, you can use the same API to access any of the fields.</p><p name="4eba" id="4eba" class="graf graf--p graf-after--p">The example also contains an example to convert specific fields into a custom type.</p><figure name="7406" id="7406" class="graf graf--figure graf--iframe graf-after--p"></figure><h3 name="0792" id="0792" class="graf graf--h3 graf-after--figure">Signing JWTs</h3><p name="71c2" id="71c2" class="graf graf--p graf-after--h3">Now that you have JWT and a JWK, you can sign JWTs. <code class="markup--code markup--p-code">jwt.Sign()</code> , that’s it! Note that you can use either the raw key or the key generated by calling <code class="markup--code markup--p-code">jwt.FromRaw</code> . JWX Does The Right Thing with the provided keys.</p><figure name="76cc" id="76cc" class="graf graf--figure graf--iframe graf-after--p"></figure><h3 name="10ae" id="10ae" class="graf graf--h3 graf-after--figure">Verifying JWTs</h3><p name="18ba" id="18ba" class="graf graf--p graf-after--h3">The one thing that I pride myself in the JWX library is the symmetric API design. If you were able to sign JWTs, then it should be easy to learn how to verify it.</p><p name="d62f" id="d62f" class="graf graf--p graf-after--p">Below example shows how to verify a JWT… actually, verification is part of the parsing process, and will be performed unless you explicitly disable it. So in the spirit of symmetry, all you need to do is to use <code class="markup--code markup--p-code">jwt.Parse</code> with the <code class="markup--code markup--p-code">jwt.WithKey</code> option to verify it.</p><p name="14af" id="14af" class="graf graf--p graf-after--p">Note that in this example we are also setting <code class="markup--code markup--p-code">jwt.WithValidate(false)</code> to bypass <a href="https://github.com/lestrrat-go/jwx/blob/6b1f5fee0dfea4e0b03b668f8e20b7b9f0bc0403/docs/01-jwt.md#validation" data-href="https://github.com/lestrrat-go/jwx/blob/6b1f5fee0dfea4e0b03b668f8e20b7b9f0bc0403/docs/01-jwt.md#validation" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">JWT validation</a> for demonstration purposes.</p><figure name="325b" id="325b" class="graf graf--figure graf--iframe graf-after--p graf--trailing"></figure></div></div></section><section name="e8e1" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="8e75" id="8e75" class="graf graf--p graf--leading">It’s simple, it’s built-in, and it’s straight forward.</p><p name="f7b9" id="f7b9" class="graf graf--p graf-after--p graf--trailing">Please use the built-in JWT package if you are already using github.com/lestrrat-go/jwx for your JWK needs!</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2022-05-16-2258312346a5/index.html"><time class="dt-published" datetime="2022-05-16T09:00:07.587Z">May 16, 2022</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/working-with-jwt-in-go-2258312346a5">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/working-with-jwt-in-go-2258312346a5">https://medium.com/@lestrrat/working-with-jwt-in-go-2258312346a5</a>.</p>
+  </body>
+</html>

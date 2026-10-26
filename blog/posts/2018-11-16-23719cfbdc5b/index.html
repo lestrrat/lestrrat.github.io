@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Generating Flip-flop Signals With Automation Tools</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">Generating Flip-flop Signals With Automation Tools</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-I always forget how to make a flip-flop mechanism with automation in Oxygen Not Included. This is my memo.
-</section>
-<section data-field="body" class="e-content">
-<section name="85ba" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="dc94" id="dc94" class="graf graf--h3 graf--leading graf--title">Generating Signals To Toggle On/Off At Intervals With Automation Tools</h3><p name="4e2a" id="4e2a" class="graf graf--p graf-after--h3">I <em class="markup--em markup--p-em">always</em> forget how to generate signals that flip-flop (on/off) at certain intervals with automation in Oxygen Not Included. This is my memo.</p></div><div class="section-inner sectionLayout--fullWidth"><figure name="9d4f" id="9d4f" class="graf graf--figure graf--layoutFillWidth graf-after--p"><img class="graf-image" data-image-id="1*9ALisKFLwEjpbqgJOlAdyA.png" data-width="2158" data-height="1139" src="image-fe62e3385de02605.png"></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="a45e" id="a45e" class="graf graf--p graf-after--figure">From this setup you can keep receiving &quot;Off&quot; signal for a user specified duration of <strong class="markup--strong markup--p-strong">X</strong> seconds, followed by the &quot;On&quot; signal for duration <strong class="markup--strong markup--p-strong">Y</strong>, and the cycle repeats forever.</p><p name="9c35" id="9c35" class="graf graf--p graf-after--p graf--trailing">It’s rather uninteresting for me to just show you the schematics and be done with it, so let’s go over how it works.</p></div></div></section><section name="6733" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="5635" id="5635" class="graf graf--p graf--leading">The gates that we will be using are Filter, Buffer, and Not.</p></div><div class="section-inner sectionLayout--outsetColumn"><figure name="80b7" id="80b7" class="graf graf--figure graf--layoutOutsetCenter graf-after--p"><img class="graf-image" data-image-id="1*f0dFrsOsHLY152d-uzY8PA.jpeg" data-width="1024" data-height="768" src="image-473a669caeaca8ab.jpeg"></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="a892" id="a892" class="graf graf--p graf-after--figure">It’s easier to think of this as starting from the <strong class="markup--strong markup--p-strong">Not gate</strong>.</p><p name="8423" id="8423" class="graf graf--p graf-after--p">We start out with Off signal to the Not gate. This will be immediately negated, and you will get an On state as the output.</p><figure name="d31a" id="d31a" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*9DueioxTcNhzxemtV4OZhg.jpeg" data-width="1024" data-height="768" src="image-ee7f1f382e1aab3b.jpeg"></figure><p name="cc88" id="cc88" class="graf graf--p graf-after--figure">This On signal feeds into a Filter gate, which holds sending the On signal for X amount of time. After this time passes, the output changes from Off to On.</p><figure name="5277" id="5277" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*C0RBC2qZuoW7EfMIK9engg.jpeg" data-width="1024" data-height="768" src="image-133af4c26c47dea8.jpeg"></figure><p name="afeb" id="afeb" class="graf graf--p graf-after--figure">This activates the Buffer gate, which immediately starts sending an On signal and keeps it that way for Y amount of time.</p><figure name="b237" id="b237" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*HRJULs0GH_h_1InN5JXSmw.jpeg" data-width="1024" data-height="768" src="image-a78ca53897cd5d2e.jpeg"></figure><p name="feeb" id="feeb" class="graf graf--p graf-after--figure">The output is sent back to the Not gate. The Not gate becomes inactive and sends the Off signal.</p><figure name="6202" id="6202" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*7F9ticp0ddlkjAdZRvaZDg.jpeg" data-width="1024" data-height="768" src="image-ede134f880d209bc.jpeg"></figure><p name="9a10" id="9a10" class="graf graf--p graf-after--figure">The Filter gate becomes inactive, and sends an Off signal.</p><p name="43b1" id="43b1" class="graf graf--p graf-after--p">This is fed into the Buffer gate again. Assuming that duration Y has not passed since the Buffer gate became active, the Buffer gate ignores the incoming Off signal and keeps itself active until the specified duration has passed.</p><figure name="c8f7" id="c8f7" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*q-P9SuksqQJ4Y4NevMli4w.jpeg" data-width="1024" data-height="768" src="image-5402bbfae1d70461.jpeg"></figure><p name="b65e" id="b65e" class="graf graf--p graf-after--figure">And then the process starts over again with the Not gate receiving the Off signal.</p><figure name="a7ec" id="a7ec" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*PFNslvHdZpP0n5xlAj6bwQ.jpeg" data-width="1024" data-height="768" src="image-df0773cc678f38ff.jpeg"></figure><p name="5f36" id="5f36" class="graf graf--p graf-after--figure">The consumer should take the output from the Buffer gate’s output.</p><p name="868e" id="868e" class="graf graf--p graf-after--p">And voila, we now have a blinking light.</p><figure name="139b" id="139b" class="graf graf--figure graf-after--p graf--trailing"><img class="graf-image" data-image-id="1*A_CxuzXJNLCichXKsade4A.png" data-width="2880" data-height="1800" src="image-990d3ee00d0fe791.png"></figure></div></div></section><section name="6c0e" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="6327" id="6327" class="graf graf--p graf--leading">One last thing, If you want to turn this entire logic off using a manual switch, you need to prepend the input to the Filter gate with an And gate.</p><p name="def5" id="def5" class="graf graf--p graf-after--p">One of the inputs to the And gate should come from the Not gate, and the other should be from your choice of input.</p><figure name="8451" id="8451" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Jt3O4NKyBEgol_hNs49g3Q.png" data-width="2880" data-height="1800" data-is-featured="true" src="image-a5ee3d1dfb295989.png"></figure><p name="192a" id="192a" class="graf graf--p graf-after--figure graf--trailing">If you use this logic, you only get the flip-flop effect when your other input into the And gate is active</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2018-11-16-23719cfbdc5b/index.html"><time class="dt-published" datetime="2018-11-16T09:35:55.379Z">November 16, 2018</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/generating-flip-flop-signals-with-automation-tools-23719cfbdc5b">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/generating-flip-flop-signals-with-automation-tools-23719cfbdc5b">https://medium.com/@lestrrat/generating-flip-flop-signals-with-automation-tools-23719cfbdc5b</a>.</p>
+  </body>
+</html>

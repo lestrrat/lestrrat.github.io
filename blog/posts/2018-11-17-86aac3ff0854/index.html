@@ -1,87 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>配管マスターへの道（水流設計編）</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">配管マスターへの道（水流設計編）</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-水流を正しく作るためのコツ
-</section>
-<section data-field="description" class="p-summary">
-ゲーム序盤は比較的シンプルな配管のみで液体を移動できるが、中盤になると様々な分岐や結合が生まれてくることになるが、その際うまく配管を行わないと水流が止まったり逆流したりと意図しない挙動となることがある。今回はそれらを防ぐための手法について考える。
-</section>
-<section data-field="body" class="e-content">
-<section name="e037" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="8349" id="8349" class="graf graf--h3 graf--leading graf--title">配管マスターへの道（水流設計編）</h3></div><div class="section-inner sectionLayout--fullWidth"><figure name="e689" id="e689" class="graf graf--figure graf--layoutFillWidth graf-after--h3"><img class="graf-image" data-image-id="1*Y0A6cGdcTtMcPjbJ72WGmA.png" data-width="2880" data-height="1800" data-is-featured="true" src="image-d7ba9b210d07ef9d.png"></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="4407" id="4407" class="graf graf--p graf-after--figure">ゲーム序盤は比較的シンプルな配管のみで液体を移動できるが、中盤になると様々な分岐や結合が生まれてくることになるが、その際うまく配管を行わないと水流が止まったり逆流したりと意図しない挙動となることがある。今回はそれらを防ぐための手法について考える。</p><p name="750b" id="750b" class="graf graf--p graf-after--p">なお、前の記事と同じく、本記事で表記を統一するために特段明記しない限りすべて液体を扱ってるものとするが、気体でも基本は一緒である。</p><div name="4bc4" id="4bc4" class="graf graf--mixtapeEmbed graf-after--p"><a href="../2018-11-17-903ad2561be5/index.html" data-href="../2018-11-17-903ad2561be5/index.html" class="markup--anchor markup--mixtapeEmbed-anchor" title="../2018-11-17-903ad2561be5/index.html"><strong class="markup--strong markup--mixtapeEmbed-strong">配管マスターへの道（ブリッジによる分岐編）</strong><br><em class="markup--em markup--mixtapeEmbed-em">Oxygen Not Includedにおいて、ゲーム中盤で加速度的に難易度が増してくるのが、気体・液体を目的への場所へと運ぶための配管だ。本記事では配管を正しく、そして効率よく設置するための情報をまとめる。</em>medium.com</a><a href="../2018-11-17-903ad2561be5/index.html" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="fe57eceaa9418b7dec32e5e75176dd22" data-thumbnail-img-id="1*GJnYh2mrug9x10dq2Ut4Kw.png" style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/1*GJnYh2mrug9x10dq2Ut4Kw.png);"></a></div><h3 name="6546" id="6546" class="graf graf--h3 graf-after--mixtapeEmbed">大原則</h3><p name="bfcd" id="bfcd" class="graf graf--p graf-after--h3">まず身も蓋もないかもしれないが、大原則を先に伝える。</p><p name="837e" id="837e" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">シンプルな配管に勝るものはない。</strong></p><p name="facc" id="facc" class="graf graf--p graf-after--p">分岐・結合は可能な限りしない。<strong class="markup--strong markup--p-strong">出発点から目的地まで一直線に流れる配管こそが最も効率がよい</strong>。</p><p name="3b28" id="3b28" class="graf graf--p graf-after--p">なので、ゲーム中盤にさしかかったときには、<strong class="markup--strong markup--p-strong">必要と感じたら、正しくシンプルな配管に付け替える勇気が必要</strong>だ。</p><p name="4bee" id="4bee" class="graf graf--p graf-after--p">とはいえ、そう言ってもどうしても色々必要な場合もある。シンプルな配管ができない場合について次から考えていく。</p><h3 name="d32a" id="d32a" class="graf graf--h3 graf-after--p">パイプによる結合</h3><p name="ac59" id="ac59" class="graf graf--p graf-after--h3">まず最もシンプルな結合である、ブリッジを使わずに通常パイプのみで複数のパイプからの流入を結合する場合を考える。</p><figure name="ba0a" id="ba0a" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*TSQTgaqfplRk4uKzOo2hLQ.png" data-width="2880" data-height="1800" src="image-147d43623b05d0e6.png"></figure><p name="7b52" id="7b52" class="graf graf--p graf-after--figure">この設計の場合、基本それぞれのパイプからの流入物が交互に排出されていく動きになる。上記の画像の場合は、右、左、右、左という感じになるはずだ。</p><p name="0819" id="0819" class="graf graf--p graf-after--p">ただ、流入してくる液体の種類が同じという場合と異なる場合で微妙に挙動がかわる。</p><p name="4da7" id="4da7" class="graf graf--p graf-after--p">液体の種類が同じ場合、合流地点のその管の最大流量に達するまで液体が順番に合流していく。液体の種類が違う場合、このゲームで液体は混ざることがないので、それぞれが交互に排出されていく。</p><p name="a154" id="a154" class="graf graf--p graf-after--p">ここで注意したいのは、片方から10kgずつ、もう片方から100kgずつ排出されてきたものが合流する場合、10kg、100kg、10kg、100kgの内容物になるということ。要は効率はよくない。</p><h3 name="d51e" id="d51e" class="graf graf--h3 graf-after--p">排出口、取り込み口の位置関係</h3><p name="87de" id="87de" class="graf graf--p graf-after--h3">前述の合流は、あくまで他のすべての条件が正しく設定されている場合のみである。</p><p name="e5ad" id="e5ad" class="graf graf--p graf-after--p">というとも、ブリッジによる分岐・結合、そしてポンプ等の機器に接続する場合、<strong class="markup--strong markup--p-strong">白（取り込み口）</strong>と<strong class="markup--strong markup--p-strong">緑（排出口）</strong>が存在するわけだが、パイプに対してこれらがどのような配置になっているかによっては正しく液体が流れないからだ。</p><p name="6adf" id="6adf" class="graf graf--p graf-after--p">基本ルールは二つ：</p><ol class="postList"><li name="4d86" id="4d86" class="graf graf--li graf-after--p"><strong class="markup--strong markup--li-strong">排出口からパイプに入った液体は取り込み口に向かって流れようとする</strong></li><li name="3965" id="3965" class="graf graf--li graf-after--li">連続するパイプ群において、<strong class="markup--strong markup--li-strong">全ての排出口から見て一つの方向にしか取り込み口がないようにしないと水流が止まる</strong></li></ol><p name="03d8" id="03d8" class="graf graf--p graf-after--li">と、言ってもわかりにくいと思うので、具体例を見ていこう。</p><figure name="cda8" id="cda8" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*kI1vP8PNXYqyZDwTERM5bQ.png" data-width="1651" data-height="1208" src="image-29a1ac6aa5a21d4f.png"></figure><p name="6430" id="6430" class="graf graf--p graf-after--figure">これらはどれも当然動く。</p><p name="9fe5" id="9fe5" class="graf graf--p graf-after--p">だが、ここで気をつけてみてほしいのは、排出口から取り込み口までの経路はどの排水口からみても同じ方向ということである。</p><p name="8fd4" id="8fd4" class="graf graf--p graf-after--p">例えば、一番下の二個ポンプがつながっている例。</p><p name="9ade" id="9ade" class="graf graf--p graf-after--p">一見複数の排水口があっておかしなことになりそうに見えていても、どちらの排水口から見ても、取り込み口に向かう方向は同じく右側であるだ。</p><p name="15f5" id="15f5" class="graf graf--p graf-after--p">このように水流の方向が一定の方向に一意に決定できるときは効率の問題があったとしても、必ず動作する。</p><p name="2f14" id="2f14" class="graf graf--p graf-after--p">ところが以下の例ではひとつの排水口から、左右どちらに行っても取り込み口が存在する。</p><p name="fc44" id="fc44" class="graf graf--p graf-after--p">これだと水流がどちらに行くのかわからなくなってしまい、水が流れない。</p><figure name="fb9d" id="fb9d" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*2XEooykrsteiUky9e8cSxQ.png" data-width="1686" data-height="1024" src="image-89195175afe6b92c.png"></figure><p name="9174" id="9174" class="graf graf--p graf-after--figure">上記の例を見てもわかるように、排出口・取り込み口はそれがポンプであっても、ブリッジであっても、動作は同じである。どれも水流の方向を決定づけることができる組み立てをする必要がある。</p><h3 name="9eed" id="9eed" class="graf graf--h3 graf-after--p">パイプ結合の原則パターン</h3><p name="7681" id="7681" class="graf graf--p graf-after--h3">以上をふまえた上で、パイプを結合する際の大原則は以下の通り</p><ol class="postList"><li name="53be" id="53be" class="graf graf--li graf-after--p">全体の大きい流れが一定方向に向かうようにする（例：「このパイプ群は時計回りに液体を流す」と決める）</li><li name="37f5" id="37f5" class="graf graf--li graf-after--li">連続する通常パイプの先端と終端がそれぞれ排水口のみか、取り込み口のみ、という構成にする</li></ol><p name="624b" id="624b" class="graf graf--p graf-after--li">この原則を頭にいれつつ反時計回りに流れるループ配管の設計を考えてみる。</p><p name="45c8" id="45c8" class="graf graf--p graf-after--p">まず、何も考えずに環状にパイプを連結してみる。</p><figure name="a8e7" id="a8e7" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*FCQ43Gcz92MZCpUhlS_hyQ.png" data-width="1424" data-height="1354" src="image-bd2bdd0427f26dc7.png"></figure><p name="e15e" id="e15e" class="graf graf--p graf-after--figure">そこに左右からパイプを結合していく。</p><figure name="2459" id="2459" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*SPQtp0zLL6cXioD8T04tPw.png" data-width="1592" data-height="878" src="image-2c96a77d77a6f685.png"></figure><p name="9dea" id="9dea" class="graf graf--p graf-after--figure">この作りの場合、それぞれの排水口から分岐点までは一意に水流の方向を決定できるが、そこから先には排出口がないのでどうにもできない。第一、我々はループさせたいのだ。排出口は基本いらない。</p><p name="d89e" id="d89e" class="graf graf--p graf-after--p">ではここで水流を発生させるにはどうするか？簡単である。連続する通常パイプをぶった切って、先端と終端を作ってやればよい。</p><figure name="2153" id="2153" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*sE7h2QvLHdFrPsL3Iixo1A.png" data-width="1523" data-height="922" src="image-a37b14ee9f65bae0.png"></figure><p name="a936" id="a936" class="graf graf--p graf-after--figure">ブリッジの右側が排水口その１、そして反時計回りに右ポンプからの排水口、左ポンプの排水口と続き、同じブリッジの取り込み口、という流れができた。これで反時計回りの水流が生まれる。</p><p name="a1e8" id="a1e8" class="graf graf--p graf-after--p">基本、パイプを結合して水流が発生しない、という場合はこのようなこのような環状の流れ（ループしているかどうか、ではなく、全体の流れが、という意味）ではなく、木のように複雑に枝分かれしている形になっているはずだ。</p><p name="9c24" id="9c24" class="graf graf--p graf-after--p">なので、</p><ol class="postList"><li name="a948" id="a948" class="graf graf--li graf-after--p">まずその流れを整理して、環状に、一定方向に液体を流れ指すことが可能か考える</li><li name="19df" id="19df" class="graf graf--li graf-after--li">その上で、ひとつのパイプ群の中で先端に排水口、終端に取り込み口をつける</li></ol><p name="e258" id="e258" class="graf graf--p graf-after--li">そんな形にすれば自然と水流が発生するはずだ。例えば以下の例なら、</p><figure name="d1fd" id="d1fd" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*k4fWEnpwCxEZwACCTYArDw.png" data-width="1435" data-height="541" src="image-0cdef17d1c1c86d7.png"></figure><p name="588b" id="588b" class="graf graf--p graf-after--figure">以下のように反時計回りの設計にしてしまうのはひとつの解だ。</p><figure name="f152" id="f152" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*kElPuxK-BNXGxQp4gOY2Kg.png" data-width="1457" data-height="524" src="image-04fa5114af469f69.png"></figure><p name="a1b0" id="a1b0" class="graf graf--p graf-after--figure">ここに結合が発生する場合は、必ず最初の取り込み口の「前」に結合する。</p><figure name="d301" id="d301" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*XZHQ3Vtmj6cqjyj4gPygfw.png" data-width="1430" data-height="573" src="image-fb2f650539f88d96.png"></figure><p name="8e3a" id="8e3a" class="graf graf--p graf-after--figure">すると、なんと↑こんなアホみたいな配管でも動作する。</p><p name="2e2d" id="2e2d" class="graf graf--p graf-after--p">どうしても取り込み口の後に結合したい場合はブリッジでパイプを区切って、先端を作ってしまう。</p><figure name="4c84" id="4c84" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*zevIiSXv04cpcohr8XF1uw.png" data-width="1440" data-height="535" src="image-8eb78e0170ecdf2e.png"></figure><p name="534f" id="534f" class="graf graf--p graf-after--figure graf--trailing">こうすると、論理的にパイプ群が最初の取り込み口（＋ブリッジ）までの流れ、とブリッジから二つ目の取り込み口までの2群に分けられ、それぞれの中で先端と終端が自明なので水流が生まれる。</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2018-11-17-86aac3ff0854/index.html"><time class="dt-published" datetime="2018-11-17T09:23:17.660Z">November 17, 2018</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/%E9%85%8D%E7%AE%A1%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%81%B8%E3%81%AE%E9%81%93-%E6%B0%B4%E6%B5%81%E8%A8%AD%E8%A8%88%E7%B7%A8-86aac3ff0854">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/%E9%85%8D%E7%AE%A1%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%81%B8%E3%81%AE%E9%81%93-%E6%B0%B4%E6%B5%81%E8%A8%AD%E8%A8%88%E7%B7%A8-86aac3ff0854">https://medium.com/@lestrrat/%E9%85%8D%E7%AE%A1%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%81%B8%E3%81%AE%E9%81%93-%E6%B0%B4%E6%B5%81%E8%A8%AD%E8%A8%88%E7%B7%A8-86aac3ff0854</a>.</p>
+  </body>
+</html>

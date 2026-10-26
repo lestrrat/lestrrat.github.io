@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>いまさら Yubikey を試す</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">いまさら Yubikey を試す</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-子供達と自分のインフルパンデミックが終わって社会復帰しました。みなさん、インフルとは辛いものですね。
-</section>
-<section data-field="body" class="e-content">
-<section name="3502" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="03c2" id="03c2" class="graf graf--h3 graf--leading graf--title">いまさら Yubikey を試す</h3><p name="b00d" id="b00d" class="graf graf--p graf-after--h3">子供達と自分のインフルパンデミックが終わって社会復帰しました。みなさん、インフルとは辛いものですね。</p><p name="35a7" id="35a7" class="graf graf--p graf-after--p">現在、自分は各種サイトのログインは 1passwordで管理してます。</p><div name="dfb1" id="dfb1" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://1password.com" data-href="https://1password.com" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://1password.com"><strong class="markup--strong markup--mixtapeEmbed-strong">1Password</strong><br><em class="markup--em markup--mixtapeEmbed-em">Edit description</em>1password.com</a><a href="https://1password.com" class="js-mixtapeImage mixtapeImage mixtapeImage--empty u-ignoreBlock" data-media-id="8c85257df0824fd2641bead9b920bf0f"></a></div><p name="d749" id="d749" class="graf graf--p graf-after--mixtapeEmbed">そしてそれらで2FA とか割とちゃんと設定しています。2FAは面倒くさいなー、とは思いつつも、SMSで事足りてる感があったので特にそれ以上の事をやろうとは思っていませんでした。</p><p name="7713" id="7713" class="graf graf--p graf-after--p">というところに、諸事情があり<strong class="markup--strong markup--p-strong">Yubikey</strong>を試すことになりました。FIDO U2Fをやるための仕組みなわけですが、僕はプロトコルを説明されても「ふーん」でした。自分が分かるようにかみ砕くと、YubikeyおよびFIDO U2Fというのは（僕の認識では）平文の2FAを送りつけるより安全かつ簡単に2FAを行うのを助けてくれるデバイスです。</p><div name="af5b" id="af5b" class="graf graf--mixtapeEmbed graf-after--p"><a href="http://amzn.to/2mjJI4A" data-href="http://amzn.to/2mjJI4A" class="markup--anchor markup--mixtapeEmbed-anchor" title="http://amzn.to/2mjJI4A"><strong class="markup--strong markup--mixtapeEmbed-strong">Yubico セキュリティキー FIDO U2F準拠</strong><br><em class="markup--em markup--mixtapeEmbed-em">FIDO U2F Security KeyYubicoのFIDO U2F Security KeyはFIDO U2FプロトコルをサポートするUSBデバイスです。Security Keyはタッチするだけで、それぞれの消費者から、世界最大規…</em>amzn.to</a><a href="http://amzn.to/2mjJI4A" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="50be87b9058a833efe719c2fc0357df2" data-thumbnail-img-id="0*ZAzb9Rflt8fT_vTV." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*ZAzb9Rflt8fT_vTV.);"></a></div><p name="617b" id="617b" class="graf graf--p graf-after--mixtapeEmbed">というわけで早速オーダー。ちなみにインフルにかかる直前にオーダーしてたんだけど、インフルのせいでこの記事を書くのが2週間遅れた。1個3000円くらい。Amazonでオーダーするとすぐ届きました。</p><figure name="fcbe" id="fcbe" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*qYUl5PanSrzA2jVkdf0aWA.jpeg" data-width="2160" data-height="2482" src="image-f117ea7f02788b4a.jpeg"></figure><p name="3008" id="3008" class="graf graf--p graf-after--figure">例のごとくでかめの袋に入って送られてきますが、開けてみると中身はこれだけ。</p><figure name="e9a0" id="e9a0" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*aj4qzPo7vn_bhjZvXR8hdg.jpeg" data-width="2160" data-height="2468" src="image-a43fe6d4a32384bd.jpeg"></figure><p name="bfa2" id="bfa2" class="graf graf--p graf-after--figure">正直に言うと、この時点では不安感しかない。勝手な言い分だけど、やっぱり包装が簡易だと「<strong class="markup--strong markup--p-strong">これでいいんだっけ？</strong>」という不安が…。だけど過剰包装でも「えー」と思っちゃうし、正直この辺りの消費者心理は我が儘すぎる。まぁ今回一回買って大丈夫だったので次回また買うことがあっても安心して買いますけどね。</p><figure name="7eb7" id="7eb7" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*8jx6Gu9OByDcHW5wo0ejzw.jpeg" data-width="3840" data-height="1732" src="image-4e08b73604e60915.jpeg"></figure><p name="a674" id="a674" class="graf graf--p graf-after--figure">厚さ（目視）4mmくらいの製品が入ってるだけ。左側の部分に一瞬説明書が入ってるのかな？と思ったけど、ただの厚紙でしたね！まぁこれを使う人はWebで探せて当たり前なんでしょう。</p><p name="2f12" id="2f12" class="graf graf--p graf-after--p">ただ、ハッキリ言ってこのデバイス、なんも予備知識無しかつ自分みたいなハードウェアようわからん系の人がこれをそのままぽっともらっても「<strong class="markup--strong markup--p-strong">どこに入れるのかわからん</strong>」と言うのが正直な感想。経験知からこれは絶対にUSBポートに入る大きさだ！ってわかりますけど、分かりますけど…</p><figure name="681f" id="681f" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Bh7qkVpLyAiOPFPGi1TtVw.jpeg" data-width="3840" data-height="1413" src="image-ca540ab3ddd5e7d3.jpeg"></figure><p name="ad95" id="ad95" class="graf graf--p graf-after--figure">というわけでUSBに滑り込ませました。ちょっとカワイイ。</p><figure name="8ca3" id="8ca3" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*RSzi3cS1rlyK40IaETEraQ.jpeg" data-width="3840" data-height="1575" src="image-7744b3150eba9af2.jpeg"></figure><p name="4331" id="4331" class="graf graf--p graf-after--figure">真ん中の鍵マークをタップすると光ります。これが「起動した」状態。この状態にするとFIDO U2F機能がなんかバーンとしてガツっとなってうまいことやってくれます。</p><p name="adec" id="adec" class="graf graf--p graf-after--p">ただ、もちろんこれだけでは光る以外何も起こりません。ダンジョンの外でリレミトを唱える感じです。何かを起こすためにはこの後このデバイスをサポートしているサイトと連携させる必要があります。</p><p name="02c8" id="02c8" class="graf graf--p graf-after--p">Google, Facebook, Githubを含む様々なサイトでこの規格はサポートされているので設定すればいいだけです。正直言うと、この手のデバイスを使う際に「もし設定に失敗したり、デバイスを無くしたりしたら超重要なアカウントからロックアウトされちゃうから嫌だなぁ」って不安に思って手を出していなかったんで、今回試すのにも一瞬躊躇しました。まぁでもGithubなら最悪データは全部あるから大丈夫だお、ということでGithubで試すことに。</p><p name="abd1" id="abd1" class="graf graf--p graf-after--p"><a href="https://www.yubico.com/support/knowledge-base/categories/articles/use-yubikey-github/" data-href="https://www.yubico.com/support/knowledge-base/categories/articles/use-yubikey-github/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Github連携の設定の仕方はここ</a>。日本語の説明ないのかな？自分は必要ないけど、嫌がる人が多そうだ。</p><div name="d689" id="d689" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://www.yubico.com/support/knowledge-base/categories/articles/use-yubikey-github/" data-href="https://www.yubico.com/support/knowledge-base/categories/articles/use-yubikey-github/" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://www.yubico.com/support/knowledge-base/categories/articles/use-yubikey-github/"><strong class="markup--strong markup--mixtapeEmbed-strong">How to Use Your YubiKey with GitHub | Yubico</strong><br><em class="markup--em markup--mixtapeEmbed-em">Knowledge Base How To How to Use Your YubiKey with GitHub Requirements Latest version of Google Chrome browser. GitHub…</em>www.yubico.com</a><a href="https://www.yubico.com/support/knowledge-base/categories/articles/use-yubikey-github/" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="5b859d2e835055a3a0bc166fc85c0722" data-thumbnail-img-id="0*L6zk3z6sIAd20m0n." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*L6zk3z6sIAd20m0n.);"></a></div><figure name="6c2b" id="6c2b" class="graf graf--figure graf-after--mixtapeEmbed"><img class="graf-image" data-image-id="1*3wsKyfUTIlPolyE_4PoIqQ.png" data-width="562" data-height="736" src="image-94e6e67691343254.png"></figure><p name="52e5" id="52e5" class="graf graf--p graf-after--figure">まずGithubでSettingsに行き…</p><figure name="4fab" id="4fab" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*waMKSkYVKDqddfwhGRdR1g.png" data-width="530" data-height="616" src="image-7e89a1a6af34b96f.png"></figure><p name="cd57" id="cd57" class="graf graf--p graf-after--figure">Securityに行き…</p><figure name="b20a" id="b20a" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*QvQ3bhMJndhWE3pw6M7kbA.png" data-width="1520" data-height="236" src="image-c5b5893c6f429d3d.png"></figure><p name="686c" id="686c" class="graf graf--p graf-after--figure">2FAの設定のところに行きます。もし2FAをすでに設定していない場合は設定しておいてください。2FA、色々意見はあると思うけど、設定しておいたほうがいいと思いますよ。</p><figure name="5b04" id="5b04" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*6xtb_B6ITIqpBmwCXySmXA.png" data-width="1470" data-height="392" src="image-12717eeca75b4b77.png"></figure><p name="0634" id="0634" class="graf graf--p graf-after--figure">で、Security KeysというところでRegister new deviceをクリックします。デバイスをどうこうしろと言われるはずなので、Yubikeyを差し込んで、タップしてやると連携完了です。「<strong class="markup--strong markup--p-strong">え、これだけ？</strong>」って感じで終わります。心理障壁は割とたかかったけど、物理的な導入障壁は正直存在しない感じ。</p><p name="f9c8" id="f9c8" class="graf graf--p graf-after--p">さて、試したいですよね。ということでGithubにログインしてみましょう。今使ってるブラウザはすでにログイン済みだから違うブラウザを立ち上げてログインしてみようかな…</p><figure name="1c79" id="1c79" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*rBSyjEoRnFrFKBDjH6Lg1g.png" data-width="764" data-height="992" src="image-af01ad190836b529.png"></figure><p name="773d" id="773d" class="graf graf--p graf-after--figure">ログインしたら、携帯がブーブー言い出しました。あれ、2FAのコードが送られてる？そういうの無くすためのデバイスじゃないの？</p><figure name="f981" id="f981" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*TekHZDhqA5mifwFgwpQd6g.png" data-width="780" data-height="1106" src="image-9da12bae3b1b3329.png"></figure><p name="efdd" id="efdd" class="graf graf--p graf-after--figure">でもこの画面を見るとUse your security key deviceってあるので、きっとこれを使うと良いことがありそうです。クリックしてみると…</p><figure name="bcc5" id="bcc5" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*1yIXiDY2LurbvzyI9jjYwQ.png" data-width="746" data-height="1090" src="image-481d72e71c9610ef.png"></figure><p name="35ce" id="35ce" class="graf graf--p graf-after--figure">なんだと！<strong class="markup--strong markup--p-strong">Safariでは使えないのか！！！！！！</strong>そういえば、デバイスを登録する時の説明に「<strong class="markup--strong markup--p-strong">最新のChromeを使え</strong>」って書いてあったけど、そういうことか… しょうがないのでChromeでサインアウトしてそっちからやってみます。</p><figure name="7678" id="7678" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*SplJgZNktQy6ZAHBIGAqAw.png" data-width="776" data-height="1122" src="image-90f54768dd73173f.png"></figure><p name="d5fb" id="d5fb" class="graf graf--p graf-after--figure">さて、Chromeでログインしてみました。お、なんか違うの出た！スマホもブーブー鳴りません。ここでYubikeyの鍵ボタンをタップします。そうするとするっとログインできた！</p><p name="8ded" id="8ded" class="graf graf--p graf-after--p">ちなみにEnter a two-factor code from your phoneをおせばいつものSMSが届くはずです。これでログインできることも確認できたので万が一Yubikeyを無くしてもロックアウトはない、というのはわかりました。</p><p name="2c10" id="2c10" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">なるほど、これは便利</strong>。スマホが鳴らないというの、細かいけど割と嬉しいですね。</p><p name="b613" id="b613" class="graf graf--p graf-after--p">で、Yubikeyの利点を考えると、これデバイス自体にはなんの情報も入ってないので、Yubikeyを無くしてもサイト上の認証情報はわりと安全、というのがあります。スマホを無くすとわりと全部バレバレですけど。むしろ個人レベルより組織レベルで使うといいのかな、という気も。</p><p name="5935" id="5935" class="graf graf--p graf-after--p">使い終わったYubikeyはいつも持ち歩いている非常時用のUSBデバイスと一緒にしてみることにしました。これ、気になるのはポケットに入れっぱなしの場合にYubikeyの金属部分が劣化して読み取りができなくなるとかないかなーとかあるんですが、まぁとりあえずしばらく運用してみたいと思います。</p><figure name="9f8b" id="9f8b" class="graf graf--figure graf-after--p graf--trailing"><img class="graf-image" data-image-id="1*VdNj3wtkvHQp2nJEJ93aJg.jpeg" data-width="2160" data-height="2971" src="image-638943e662fcf849.jpeg"></figure></div></div></section><section name="260e" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="76e4" id="76e4" class="graf graf--p graf--leading">というわけで初Yubikeyレポートでした。セキュリティって難しいですよね。でも考える事を放棄してしまうとこれからの世の中本当に色々大変になる気がします。</p><p name="6046" id="6046" class="graf graf--p graf-after--p">なお、今夏開催の<strong class="markup--strong markup--p-strong">builderscon tokyo 2017</strong>では Cloudflare社でWebのセキュリティの最前線で体を張っているTrey Guinn氏が来てくれるので、乞うご期待！セキュリティ関連のセッションも一般から応募があるといいな〜。セッション公募は多分5月くらいからです！</p><div name="5cd5" id="5cd5" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://builderscon.io/tokyo/2017" data-href="https://builderscon.io/tokyo/2017" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://builderscon.io/tokyo/2017"><strong class="markup--strong markup--mixtapeEmbed-strong">builderscon tokyo 2017</strong><br><em class="markup--em markup--mixtapeEmbed-em">builderscon is a conference to celebrate the &quot;builders&quot; of our age, the engineers, the programmers, and the technology…</em>builderscon.io</a><a href="https://builderscon.io/tokyo/2017" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="d8940d8845e672479d3311954091189e" data-thumbnail-img-id="0*cMo3v9AOBAaVQu70." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*cMo3v9AOBAaVQu70.);"></a></div><div name="c68f" id="c68f" class="graf graf--mixtapeEmbed graf-after--mixtapeEmbed graf--trailing"><a href="http://amzn.to/2lEh1Cf" data-href="http://amzn.to/2lEh1Cf" class="markup--anchor markup--mixtapeEmbed-anchor" title="http://amzn.to/2lEh1Cf"><strong class="markup--strong markup--mixtapeEmbed-strong">Yubico セキュリティキー FIDO U2F準拠</strong><br><em class="markup--em markup--mixtapeEmbed-em">FIDO U2F Security KeyYubicoのFIDO U2F Security KeyはFIDO U2FプロトコルをサポートするUSBデバイスです。Security Keyはタッチするだけで、それぞれの消費者から、世界最大規…</em>amzn.to</a><a href="http://amzn.to/2lEh1Cf" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="a1ecfce8851767d9222940b3f3298c0a" data-thumbnail-img-id="0*ZEVHp9BBlMdNxMe2." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*ZEVHp9BBlMdNxMe2.);"></a></div></div></div></section><section name="fe69" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="acc8" id="acc8" class="graf graf--p graf--leading">追記</p><figure name="7708" id="7708" class="graf graf--figure graf--iframe graf-after--p"><blockquote class="twitter-tweet"><a href="https://twitter.com/hoto17296/status/834215531804663808"></a></blockquote></figure><figure name="ecac" id="ecac" class="graf graf--figure graf--iframe graf-after--figure graf--trailing"><blockquote class="twitter-tweet"><a href="https://twitter.com/lestrrat/status/834216849550086145"></a></blockquote></figure></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2017-02-22-685c507a21c/index.html"><time class="dt-published" datetime="2017-02-22T01:26:59.115Z">February 22, 2017</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/%E3%81%84%E3%81%BE%E3%81%95%E3%82%89-yubikey-%E3%82%92%E8%A9%A6%E3%81%99-685c507a21c">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/%E3%81%84%E3%81%BE%E3%81%95%E3%82%89-yubikey-%E3%82%92%E8%A9%A6%E3%81%99-685c507a21c">https://medium.com/@lestrrat/%E3%81%84%E3%81%BE%E3%81%95%E3%82%89-yubikey-%E3%82%92%E8%A9%A6%E3%81%99-685c507a21c</a>.</p>
+  </body>
+</html>

@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Generating Go Code For Slack</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">Generating Go Code For Slack</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-Back when I first wanted to write a Go application that talks to Slack, there was github.com/nlopes/slack . Back then this library had a…
-</section>
-<section data-field="body" class="e-content">
-<section name="b2f2" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="ceab" id="ceab" class="graf graf--h3 graf--leading graf--title">Generating Go Code For Slack</h3><p name="90e6" id="90e6" class="graf graf--p graf-after--h3">Back when I first wanted to write a Go application that talks to Slack, there was <code class="markup--code markup--p-code">github.com/nlopes/slack</code> . Back then this library had a couple of problems including the fact that there was no way to specify an HTTP Client (which means you couldn’t use it under Google App Engine which forces you to use the <code class="markup--code markup--p-code">gooogle.golang.org/appengine/urlfetch</code> package to make outbound connections), and it also didn’t have a way to work with <code class="markup--code markup--p-code">context.Context</code>.</p><p name="561b" id="561b" class="graf graf--p graf-after--p">After a couple of pull requests to the above library to see what I could do, I decided that what I wanted was a major API change: That means breakage, and it wasn’t really my wish to cause havoc to other users just to scratch my itch. So I decided to fork it to <a href="https://github.com/lestrrat-go/slack" data-href="https://github.com/lestrrat-go/slack" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">github.com/lestrrat-go/slack</a>.</p><div name="b1fa" id="b1fa" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/lestrrat-go/slack" data-href="https://github.com/lestrrat-go/slack" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat-go/slack"><strong class="markup--strong markup--mixtapeEmbed-strong">lestrrat-go/slack</strong><br><em class="markup--em markup--mixtapeEmbed-em">slack - Slack client for go</em>github.com</a><a href="https://github.com/lestrrat-go/slack" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="22371b33558edd15cbbd3cf6d3153cc1" data-thumbnail-img-id="0*nWljI9VtcPjc0wqC." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*nWljI9VtcPjc0wqC.);"></a></div><h3 name="da4e" id="da4e" class="graf graf--h3 graf-after--mixtapeEmbed">The Early Days</h3><p name="7352" id="7352" class="graf graf--p graf-after--h3">I started this project around April 2017, and immediately it proved to be a very painful (albeit simple in its nature) task. Taking each of the many Slack API endpoints, finding the necessary parameters, translating them into go, testing them… This was tedious, and very error prone task.</p><p name="0995" id="0995" class="graf graf--p graf-after--p">Every API call in slack is basically the same:</p><ol class="postList"><li name="d596" id="d596" class="graf graf--li graf-after--p">You build your request</li><li name="7e78" id="7e78" class="graf graf--li graf-after--li">You send your request</li><li name="7bd8" id="7bd8" class="graf graf--li graf-after--li">You parse the response</li></ol><p name="f82b" id="f82b" class="graf graf--p graf-after--li">However, having to figure out the list of parameters (and thus the API) for each API endpoint, designing it properly… doing this manually sometimes generated code that sometimes forget to place the parameters in a consistent order, sometimes the parameter list was so huge it was hard to create a sane method signature… it was rather a mess.</p><p name="9f1c" id="9f1c" class="graf graf--p graf-after--p">It took me about 2 weeks of doing this work for me say <strong class="markup--strong markup--p-strong">“I’m not doing this anymore: I’m automating it”</strong></p><h3 name="c77e" id="c77e" class="graf graf--h3 graf-after--p">Enter Code Generation</h3><p name="f88e" id="f88e" class="graf graf--p graf-after--h3">Before plunging into code generation head on, first I made sure I knew what were the common parts that each API method shared, while I was still doing things manually.</p><p name="48f8" id="48f8" class="graf graf--p graf-after--p">After the dust settled somewhat, on around end of April 2017, I started whipping out simple command line “scripts” in Go under <code class="markup--code markup--p-code">internal/cmd/*</code> . These commands were placed here because the casual user should not need to see them in <code class="markup--code markup--p-code">godoc</code> or the like, but it should at the same time be controlled in the same repository.</p><p name="03a6" id="03a6" class="graf graf--p graf-after--p">These commands were then hooked to <code class="markup--code markup--p-code">go generate</code>.</p><figure name="f8ef" id="f8ef" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*fvwpfavFOrjpm1bu2jUGKg.png" data-width="842" data-height="261" src="image-268ba0b822b79693.png"></figure><p name="d792" id="d792" class="graf graf--p graf-after--figure">The commands are nothing more than some simple tools to read some type of source such as a JSON file, and spit out formatted Go code to appropriate files.</p><p name="2fd9" id="2fd9" class="graf graf--p graf-after--p">For the client methods that talk to Slack, I created a file called <code class="markup--code markup--p-code">endpoints.json</code> . This file contained a list of all methods that we currently support, along with their request parameters and return values. The <code class="markup--code markup--p-code">genmethods</code> command reads this and spews out Go code which is nicely formatted by <code class="markup--code markup--p-code">format.Source</code> function before being written to appropriate files.</p><h3 name="fc2b" id="fc2b" class="graf graf--h3 graf-after--p">API Organization</h3><p name="1ea0" id="1ea0" class="graf graf--p graf-after--h3">Now that we are generating code instead of manually writing it, it’s time to change the API into an automation-friendly one. For this, I chose to follow the code style used in Google Cloud Platform’s Go API binding.</p><p name="bece" id="bece" class="graf graf--p graf-after--p">The details are somewhat more complicated, but here’s a very simplistic overview of this API:</p><ol class="postList"><li name="4c71" id="4c71" class="graf graf--li graf-after--p"><code class="markup--code markup--li-code">Client</code> is the object that the user needs to instantiate, which handles common/global procedures, such as auth(n|z) and setting a base URL for the endpoints</li><li name="642d" id="642d" class="graf graf--li graf-after--li"><code class="markup--code markup--li-code">Client</code> object contains one or more <code class="markup--code markup--li-code">Service</code> objects. <code class="markup--code markup--li-code">Service</code> objects are logical groupings of the leaf methods.</li><li name="cace" id="cace" class="graf graf--li graf-after--li"><code class="markup--code markup--li-code">Service</code> objects can create <code class="markup--code markup--li-code">Call</code> objects. <code class="markup--code markup--li-code">Call</code> objects represent a particular API endpoint, and knows about details to make API calls and parse response objects. The API endpoints request is NOT fired until a <code class="markup--code markup--li-code">Do</code> method is invoked on this <code class="markup--code markup--li-code">Call</code> object.</li><li name="c7f3" id="c7f3" class="graf graf--li graf-after--li">When <code class="markup--code markup--li-code">Call</code> objects are created, they are instantiated with mandatory parameters. Optional parameters may be passed via method calls, which all return the receiver object (so method chaining is possible).</li><li name="f7ec" id="f7ec" class="graf graf--li graf-after--li">When <code class="markup--code markup--li-code">Do</code> is called on the <code class="markup--code markup--li-code">Call</code> objects, the object assembles the necessary bits to construct an HTTP request. It makes the request, parses the response, and hands back the caller the results.</li></ol><p name="2bc1" id="2bc1" class="graf graf--p graf-after--li">When I first saw the APIs under <code class="markup--code markup--p-code">google.golang.org/api</code> I was actually pretty weirded out by the design. I had never seen Go API like this elsewhere, but after learning how to navigate through its documentation and code, it made perfect sense because <strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">everything was so predictable</em></strong>.</p><p name="d3fe" id="d3fe" class="graf graf--p graf-after--p">For large REST/RPC method sets, this predictability and standardization made a world’s difference. So I chose to adopt it for my new library.</p><figure name="f4b9" id="f4b9" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*dxtu2JV59hTBfY6Cjg7JUw.png" data-width="1250" data-height="634" src="image-929ebbbac0128dcd.png"><figcaption class="imageCaption">Chat() is the service, PostMessage() creates a ChatPostMessageCall object, Text() is an optional parameter.</figcaption></figure><p name="bc6b" id="bc6b" class="graf graf--p graf-after--figure">Speaking of Google-ish API, this library also adopted the <code class="markup--code markup--p-code">Options</code> pattern to specify optional parameters at construction time (See “Optional Parameters” <a href="../2016-09-15-75b1bb7297fe/index.html" data-href="../2016-09-15-75b1bb7297fe/index.html" class="markup--anchor markup--p-anchor" target="_blank">in this article</a>)</p><h3 name="11e7" id="11e7" class="graf graf--h3 graf-after--p">Generating a Server</h3><p name="a7ba" id="a7ba" class="graf graf--p graf-after--h3">After I started writing apps using <code class="markup--code markup--p-code">github.com/lestrrat/go-slack</code>, I noticed at one point that there was a problem: When I deployed multiple instances of the same app, if I don’t create a new Slack application for it and properly configure it, multiple messages may be sent to the team Slack, which is needless to say, extremely annoying.</p><p name="5ff0" id="5ff0" class="graf graf--p graf-after--p">Of course, one way to mitigate this is to properly configure each application. But if every developer had a sandbox to play, do you really want them each to have to configure their app…?</p><p name="a753" id="a753" class="graf graf--p graf-after--p">At this point I just thought: why don’t I just create a proxy that intercepts all API methods marked as having side-effects (such as posting a chat message), while passing through everything else to the real server?</p><p name="d246" id="d246" class="graf graf--p graf-after--p">Of course, this is annoying if we had to do it by hand. But since I was already generating client methods, it was fairly simple to create a tool to generate an entire server.</p><figure name="8c59" id="8c59" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*MkZ1-8d6Jz-uurVaiGfCcg.png" data-width="1964" data-height="906" src="image-43a9f9c9a8bdff9c.png"></figure><p name="9337" id="9337" class="graf graf--p graf-after--figure">Now it was trivial to configure deployments to refer to the real Slack endpoint while development versions are directed to the above proxy.</p><h3 name="ac0e" id="ac0e" class="graf graf--h3 graf-after--p">Current Status</h3><p name="09ea" id="09ea" class="graf graf--p graf-after--h3">The library is pretty stable at this point, except that it does not implement the entire Slack API method set. I keep track of what’s there and what’s missing in this issue. Because everything is auto-generated, it is extremely easy to add new API endpoints.</p><div name="bb63" id="bb63" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/lestrrat-go/slack/issues/4" data-href="https://github.com/lestrrat-go/slack/issues/4" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat-go/slack/issues/4"><strong class="markup--strong markup--mixtapeEmbed-strong">Add missing REST methods · Issue #4 · lestrrat-go/slack</strong><br><em class="markup--em markup--mixtapeEmbed-em">List of currently unimplemented REST methods. They are only unimplemented because the author had no immediate need for…</em>github.com</a><a href="https://github.com/lestrrat-go/slack/issues/4" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="55c33f9c5e0c0b5638e10ff5bf34bfbc" data-thumbnail-img-id="0*nIUgDFNQ45DHBRne." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*nIUgDFNQ45DHBRne.);"></a></div><p name="fb3b" id="fb3b" class="graf graf--p graf-after--mixtapeEmbed">The server component should be considered alpha, but it currently works. If you have features that you would like to see, please let me know.</p><p name="f817" id="f817" class="graf graf--p graf-after--p graf--trailing">And finally, RTM isn’t that well defined, as I don’t use it much. I also welcome input on this area, please file an issue or PR.</p></div></div></section><section name="b8d3" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="fddc" id="fddc" class="graf graf--p graf--leading graf--trailing">Overall, I think this library could be very beneficial if you prefer consistency and predictability in the API. I’d love to hear your opinion.</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2018-01-20-9ed850209d70/index.html"><time class="dt-published" datetime="2018-01-20T05:49:41.046Z">January 20, 2018</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/generating-go-code-for-slack-9ed850209d70">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/generating-go-code-for-slack-9ed850209d70">https://medium.com/@lestrrat/generating-go-code-for-slack-9ed850209d70</a>.</p>
+  </body>
+</html>

@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>配管マスターへの道（ブリッジによる分岐編）</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">配管マスターへの道（ブリッジによる分岐編）</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-Oxygen Not Includedにおいて、ゲーム中盤で加速度的に難易度が増してくるのが、気体・液体を目的への場所へと運ぶための配管だ。本記事では配管を正しく、そして効率よく設置するための情報をまとめる。
-</section>
-<section data-field="body" class="e-content">
-<section name="e956" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="1268" id="1268" class="graf graf--h3 graf--leading graf--title">配管マスターへの道（ブリッジによる分岐編）</h3></div><div class="section-inner sectionLayout--fullWidth"><figure name="3784" id="3784" class="graf graf--figure graf--layoutFillWidth graf-after--h3"><img class="graf-image" data-image-id="1*GJnYh2mrug9x10dq2Ut4Kw.png" data-width="2880" data-height="1800" data-is-featured="true" src="image-975f5d3f0051044a.png"></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="689c" id="689c" class="graf graf--p graf-after--figure">Oxygen Not Includedにおいて、ゲーム中盤で加速度的に難易度が増してくるのが、気体・液体を目的への場所へと運ぶための配管だ。本記事では配管を正しく、そして効率よく設置するための情報をまとめる。</p><p name="df1e" id="df1e" class="graf graf--p graf-after--p">本記事で表記を統一するために特段明記しない限りすべて液体を扱ってるものとするが、気体でも基本は一緒である。</p><p name="23aa" id="23aa" class="graf graf--p graf-after--p">ゲームを始めた瞬間はブリッジはあくまでパイプが交差するときに使うもの、という認識かもしれないが、実はブリッジには様々な特殊な仕様がある。</p><p name="dc0b" id="dc0b" class="graf graf--p graf-after--p">その中で今回取り上げるのは丁字配管時の優先順位だ。</p><h3 name="94a8" id="94a8" class="graf graf--h3 graf-after--p">パイプによる丁字配管</h3><p name="3de3" id="3de3" class="graf graf--p graf-after--h3">配管時に水流を２方向に分岐したい場合、これを通常のパイプ二つで分岐するのと、ブリッジとパイプで分岐する方法が考えられる。</p><figure name="d4e7" id="d4e7" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*L4Tz0FexfETGIYEK_374Ag.png" data-width="2880" data-height="1800" src="image-e59bb1b30c53b315.png"></figure><p name="53f6" id="53f6" class="graf graf--p graf-after--figure">通常のパイプで分岐する場合、流入する内容物は分岐部分でラウンドロビン形式でそれぞれの方向に分岐される。</p><p name="07de" id="07de" class="graf graf--p graf-after--p">ここで注意すべきなのは二点。</p><p name="f61d" id="f61d" class="graf graf--p graf-after--p">まずこの方法だと、流入してきた水量がパイプの最大流量だったとしても、<strong class="markup--strong markup--p-strong">分岐後のパイプは50%のキャパシティしか利用できない</strong>こと。内容物の消費側がたくさんのリソースを欲してるときにはキャパシティが使いきれないのはよくない場合がある。</p><p name="d7f0" id="d7f0" class="graf graf--p graf-after--p">もう一つは水流が通るパイプはあくまで順番に選ばれる、という点だ。例えば10kg、100kg、10kg、100kg…という順番で液体が送られてくる場合、55kgずつ両方のパイプに分岐されるのではなく、片方には10kg、片方には100kgという<strong class="markup--strong markup--p-strong">不公平な割り当てがされる</strong>ということだ。</p><p name="44dc" id="44dc" class="graf graf--p graf-after--p">この際、どちらが多くなるか、はあくまで運なので、確実に内容物を送り届けたい場合は微妙な選択となる。</p><h3 name="6e9e" id="6e9e" class="graf graf--h3 graf-after--p">ブリッジとパイプによる分岐</h3><p name="a4df" id="a4df" class="graf graf--p graf-after--h3">ところが分岐の片側をブリッジ、片側をパイプにする設計の場合、すべての液体はまず、ブリッジのほうに流れていく。</p><figure name="23ce" id="23ce" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*MvgR5I5D0gIBYOWBNX9HFQ.png" data-width="2880" data-height="1800" src="image-c01b3ed36c82ee68.png"></figure><p name="2737" id="2737" class="graf graf--p graf-after--figure">ブリッジ側のパイプが分岐部分まで完全に詰まった時のみ、通常パイプの側に液体がながれる。</p><p name="1a58" id="1a58" class="graf graf--p graf-after--p">つまり、ブリッジ側が最優先となり、そこが使えないときの排水弁として通常パイプが機能するわけだ。</p><p name="0127" id="0127" class="graf graf--p graf-after--p">この方式をまず最初に使うことになるのは循環式トイレを作るときだろう。</p><figure name="cc82" id="cc82" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*QqeuvM5veth3lueXDE2dYA.png" data-width="2880" data-height="1800" src="image-a35418a37b14cf7a.png"></figure><p name="3f69" id="3f69" class="graf graf--p graf-after--figure">循環式トイレとは、水洗トイレから排出した汚水を浄水器を通し、そこから得られる真水をまたトイレに戻す方式のトイレである。</p><p name="a196" id="a196" class="graf graf--p graf-after--p">この方式を用いる際に気をつけなければいけない点は、水洗トイレは排出のために使う真水の倍程度の汚水を排出すると言うことだ。</p><p name="0664" id="0664" class="graf graf--p graf-after--p">つまり、トイレ→下水管→浄水器→上水管→トイレという<strong class="markup--strong markup--p-strong">逃げ場のないループを作ると、いつかはすべてのパイプが最大流量の限界に達してしまい、排水すら出来なくなる</strong>ということである。</p><p name="dd56" id="dd56" class="graf graf--p graf-after--p">このため、通常は排水溝を作り、そこに汚水ないし真水を排水しておく。そこからさらにポンプを使い、循環システムの中に戻す。</p><p name="4d65" id="4d65" class="graf graf--p graf-after--p">こうすることによりパイプが満杯になることは避けられるが、それでもまだ水の総量が増え続けることには変わりないので、いつかは排水溝が溢れてしまうだろう。</p><p name="7c6b" id="7c6b" class="graf graf--p graf-after--p">これを避けるために浄水済みの真水を、たとえば作物のために使う（この真水は菌に汚染されているため、飲み水等には使わない方が良い）。</p><p name="9161" id="9161" class="graf graf--p graf-after--p">ただ、ここで通常パイプのみでトイレと作物とに分岐すると、真水が枯渇しつつある時にトイレ側に送られる水量がたりない可能性がでてくる。</p><p name="0806" id="0806" class="graf graf--p graf-after--p">トイレは事実上水を作っている装置なので、まずトイレに充分水が回っていることを保証する必要がある。</p><p name="d353" id="d353" class="graf graf--p graf-after--p">ここで、ようやくブリッジの登場となる。</p><p name="12a9" id="12a9" class="graf graf--p graf-after--p">真水を貯めた排水溝から水をくみ出す際に、トイレ側にブリッジを使い、作物側に通常パイプを使う。これで、水が足りなくなった場合は作物が育たなくなるが、トイレが使えない、という状態は回避することができる。</p><figure name="e2a6" id="e2a6" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*ciBK-gKKSt2UMNy4LwnV7w.png" data-width="2880" data-height="1800" src="image-6097defe26f32d83.png"></figure><p name="37ac" id="37ac" class="graf graf--p graf-after--figure">こちらが一応の完成形。中央のポンプからくみ出された真水は、まずブリッジ側に移動しようとする。そのため上部のトイレに最初水が送り出される。</p><p name="b8ce" id="b8ce" class="graf graf--p graf-after--p">トイレ側が満タンになり、それ以上水が通せなくなると初めて右側の作物方面にいく。基本はそのまま水を渡せばよいだけなのだが、この真水は40℃弱まで温度があがっているので一旦冷やしておき、そのご作物におくられる。多すぎる分の水は凍る前に排水溝のほうに戻される。</p><p name="ba4d" id="ba4d" class="graf graf--p graf-after--p">次回は結合等をした際に正しく水流が流れるための設計について</p><div name="7997" id="7997" class="graf graf--mixtapeEmbed graf-after--p graf--trailing"><a href="../2018-11-17-86aac3ff0854/index.html" data-href="../2018-11-17-86aac3ff0854/index.html" class="markup--anchor markup--mixtapeEmbed-anchor" title="../2018-11-17-86aac3ff0854/index.html"><strong class="markup--strong markup--mixtapeEmbed-strong">配管マスターへの道（水流設計編）</strong><br><em class="markup--em markup--mixtapeEmbed-em">水流を正しく作るためのコツ</em>medium.com</a><a href="../2018-11-17-86aac3ff0854/index.html" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="7e65eb1a6cda5534d5f5e74415e80cd8" data-thumbnail-img-id="1*Y0A6cGdcTtMcPjbJ72WGmA.png" style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/1*Y0A6cGdcTtMcPjbJ72WGmA.png);"></a></div></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2018-11-17-903ad2561be5/index.html"><time class="dt-published" datetime="2018-11-17T04:30:39.416Z">November 17, 2018</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/%E9%85%8D%E7%AE%A1%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%81%B8%E3%81%AE%E9%81%93-%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%81%AB%E3%82%88%E3%82%8B%E5%88%86%E5%B2%90%E7%B7%A8-903ad2561be5">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/%E9%85%8D%E7%AE%A1%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%81%B8%E3%81%AE%E9%81%93-%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%81%AB%E3%82%88%E3%82%8B%E5%88%86%E5%B2%90%E7%B7%A8-903ad2561be5">https://medium.com/@lestrrat/%E9%85%8D%E7%AE%A1%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%81%B8%E3%81%AE%E9%81%93-%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%81%AB%E3%82%88%E3%82%8B%E5%88%86%E5%B2%90%E7%B7%A8-903ad2561be5</a>.</p>
+  </body>
+</html>

@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>QoLアップグレードMk1からの変更点</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">QoLアップグレードMk1からの変更点</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-2018/12/14にQoLアップグレードMk1が正式リリースされ、様々な細かい仕様が変わった。βブランチから合わせて70時間くらいプレイしたのでこれまでOxygen Not Includedをプレイしていた人達向けに気づいた変更点をまとめる。
-</section>
-<section data-field="body" class="e-content">
-<section name="b3fe" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="1472" id="1472" class="graf graf--h3 graf--leading graf--title">QoLアップグレードMk1からの変更点</h3><figure name="fe58" id="fe58" class="graf graf--figure graf-after--h3"><img class="graf-image" data-image-id="1*w5Ar2Tx9AM6i8qfZ3iKOyA.png" data-width="1914" data-height="872" data-is-featured="true" src="image-7f27dce2057b6ffd.png"></figure><p name="b74f" id="b74f" class="graf graf--p graf-after--figure">2018/12/14にQoLアップグレードMk1が正式リリースされ、様々な細かい仕様が変わった。βブランチから合わせて70時間くらいプレイしたのでこれまでOxygen Not Includedをプレイしていた人達向けに気づいた変更点をまとめる。</p><h3 name="e20c" id="e20c" class="graf graf--h3 graf-after--p">電気グリル、岩石粉砕器、精錬機等のキューイング</h3><p name="4913" id="4913" class="graf graf--p graf-after--h3">これらの施設で複数のアイテムを生成するのに、いちいち複数個同じ施設を作る必要がなくなった。</p><p name="e66a" id="e66a" class="graf graf--p graf-after--p">例えば電気グリルで何個か作りたいものと作りたい個数を入れておけば、原材料が手に入った段階でそれらを順番に作ってくれる。今見てる限りではそれぞれの作成物に対して優先順位はつけられない。</p><figure name="b485" id="b485" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*8FxgBdKO4h7KvxFxCFQZ2g.png" data-width="948" data-height="938" src="image-7684655184f84045.png"></figure><h3 name="9f4f" id="9f4f" class="graf graf--h3 graf-after--figure">電解機の温度</h3><p name="db23" id="db23" class="graf graf--p graf-after--h3">電解機はQoLアップグレードから大きく温度まわりの仕様が変わった。</p><p name="382f" id="382f" class="graf graf--p graf-after--p">20℃くらいの水を送っていても酸素を生成していると本体が60℃くらいになり、確実に40℃以上の酸素が出てくるようになった。</p><p name="a187" id="a187" class="graf graf--p graf-after--p">これはつまり、以前の記事で紹介した「序盤の進め方」で書いたように最初のうちに酸素供給装置を作る、ということが事実上できなくなった、ということである。</p><div name="fc0e" id="fc0e" class="graf graf--mixtapeEmbed graf-after--p"><a href="../2018-11-06-cec9651c6562/index.html" data-href="../2018-11-06-cec9651c6562/index.html" class="markup--anchor markup--mixtapeEmbed-anchor" title="../2018-11-06-cec9651c6562/index.html"><strong class="markup--strong markup--mixtapeEmbed-strong">Oxygen Not Include 序盤の進め方</strong><br><em class="markup--em markup--mixtapeEmbed-em">このフェーズでの全体方針</em>medium.com</a><a href="../2018-11-06-cec9651c6562/index.html" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="bbbff535b10986446e614340582090a0" data-thumbnail-img-id="1*As6JLHBxYIiTkOMXBX57Gw.png" style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/1*As6JLHBxYIiTkOMXBX57Gw.png);"></a></div><p name="63a8" id="63a8" class="graf graf--p graf-after--mixtapeEmbed">40℃の酸素はなんとか耐えられても、60℃の施設が基地の中心部にあると、キチンと断熱ないし冷却しないと一瞬で基地が煮えてしまう。</p><h3 name="e4da" id="e4da" class="graf graf--h3 graf-after--p">テラリウムの有効活用</h3><p name="d712" id="d712" class="graf graf--p graf-after--h3">酸素供給装置が作りにくくなったと同時に、テラリウムの効率がよくなった気がする。以前のデータを持っていないのでなんとも言えないのだが、なんとなく。</p><p name="af37" id="af37" class="graf graf--p graf-after--p">テラリウムそのものに自動的に水をかけ（これは以前からできた。勝手に水を吸収してくれる）、汚染水を人力で抽出したのち、その汚染水を回収しないで放置する。</p><p name="60ea" id="60ea" class="graf graf--p graf-after--p">さらにそのまわりに脱臭機を置いておくことによって、テラリウムからの酸素と、汚染水から発生する酸素を変換して得られる酸素を供給できる。さらにライトをあてれば10％の効率アップにもなる。</p><figure name="713e" id="713e" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*GSb3K9AEhk-rLYJKkxFphQ.png" data-width="2880" data-height="1800" src="image-b09c998d940962ae.png"></figure><p name="43b8" id="43b8" class="graf graf--p graf-after--figure">ゲーム序盤〜中盤は正直これだけでいける気がする。</p><h3 name="ba6b" id="ba6b" class="graf graf--h3 graf-after--p">芸術家の作成物</h3><p name="c44c" id="c44c" class="graf graf--p graf-after--h3">QoLアップグレード以前では「見習い」レベルでも、複製人間の資質によって、最高グレードの装飾品が作成されていた。これがQoLアップグレードで廃止となり、「マスター」にならないと最高グレードの装飾品が作成されなくなった。</p><p name="ff3c" id="ff3c" class="graf graf--p graf-after--p">これまでゲーム序盤で簡単に装飾値をあげて士気を高めることが可能だったが、これで地道に複製人間のレベルを上げていく必要がでてきた。</p><h3 name="aa38" id="aa38" class="graf graf--h3 graf-after--p">ストレス値があがりにくくなった？</h3><p name="fade" id="fade" class="graf graf--p graf-after--h3">感覚値だけど、以前は装飾品を沢山置かないとストレス値がグングンあがっていった。しかしQoLアップグレードからは若干ストレスの上がり方がやさしくなった気がする。</p><p name="bf19" id="bf19" class="graf graf--p graf-after--p">装飾品を作るのが難しくなったからかもしれない。もしくは自分が上手になったせいか…</p><h3 name="4896" id="4896" class="graf graf--h3 graf-after--p">キャンバスのレシピ</h3><p name="831e" id="831e" class="graf graf--p graf-after--h3">絵画用キャンバスのレシピがリードファイバー＋金属鉱物になった。リードファイバーはティンブルリードか、ドレコから得るため、最低限見習い坑夫職業を得ないとそれらが得られるバイオームに行く事ができない。</p><figure name="4a02" id="4a02" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*EdIFceB-tCXTMiuoUZLAJQ.png" data-width="612" data-height="500" src="image-1bf23e42ebce1b8e.png"></figure><h3 name="44f4" id="44f4" class="graf graf--h3 graf-after--figure">エクソスーツのレシピ</h3><p name="c401" id="c401" class="graf graf--p graf-after--h3">エクソスーツのレシピにリードファイバー＋銅が必要となった。ゲーム中盤以降のために銅鉱石を残しておかないと詰む。</p><h3 name="0bae" id="0bae" class="graf graf--h3 graf-after--p">銅を精製しないほうがいい？</h3><p name="1045" id="1045" class="graf graf--p graf-after--h3">…というわけで、エクソスーツに銅鉱石が必要になった。鉄鉱石とかではない。銅鉱石オンリーだ。銅鉱石は初期バイオームにしか存在しないので、いい気になって銅鉱石を全部銅に精製してしまうと後でエクソスーツを作れない状況になってしまう。辛い。</p><p name="647f" id="647f" class="graf graf--p graf-after--p">自分は最初はどうしても銅鉱石で作らざるを得ない電線やドアを後から全部解体して鉄や金で作り直して銅を確保してる。</p><h3 name="dc0f" id="dc0f" class="graf graf--h3 graf-after--p">装飾のための植物</h3><p name="efa5" id="efa5" class="graf graf--p graf-after--h3">QoLアップグレードから装飾用の植物がたくさん増えた。観葉植物用のポットを作成して植え替えることができる。これらはゲーム序盤〜中盤において、芸術家にへたっぴな作品を作らせるよりよっぽど効率がよい。</p><p name="3c05" id="3c05" class="graf graf--p graf-after--p">特に大ホールを序盤に作るにはポットをずらっと並べるだけでなんとかなる。</p><figure name="f635" id="f635" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*CTvwCCUKCDOhlG0cA5bq8g.png" data-width="2880" data-height="1800" src="image-c34909019ad36767.png"></figure><h3 name="6dcb" id="6dcb" class="graf graf--h3 graf-after--figure">生物の個体数センサー</h3><p name="1990" id="1990" class="graf graf--p graf-after--h3">QoLアップグレードから厩舎内にいる生物の数を感知できるセンサーができた。これを使うと、一定の数以上に増えた生物を逃がしたり殺したりできる。</p><p name="b81f" id="b81f" class="graf graf--p graf-after--p">例えば以下の部屋では、部屋を二つにわけて、外側の部屋は8匹以上のハッチがいた場合、真ん中の部屋に通じるドアが開くようになってる。中の部屋では一匹でもハッチが入ってきたら、外側のドアを閉じて、下のドアがあくようになっている。</p><figure name="ddc2" id="ddc2" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*VwVtOSX84tPGWpR0EDmn3Q.png" data-width="2880" data-height="1800" src="image-58d9ee12c08069fc.png"></figure><p name="f88c" id="f88c" class="graf graf--p graf-after--figure">下の部屋には水が溜まっており、ここに落ちたハッチはそのうち溺死する。これを取り除くための掃除機をつけておけば、肉が勝手に冷蔵庫に送られてくるようになる。</p><p name="952b" id="952b" class="graf graf--p graf-after--p">なお、落とし床にあたるドアは縦に置かないといけない。横にすると何故かハッチが落ちていかない。</p><h3 name="0aae" id="0aae" class="graf graf--h3 graf-after--p">バグ</h3><p name="688b" id="688b" class="graf graf--p graf-after--h3 graf--trailing">複製人間が突然動かなくなるバグがある。動けないので、酸素のないところでこれが発生すると、そのうち死亡する。が、死んでいるのにスプライトは生きてるままで足踏みした状態で生きてるように見えるし、ベッドのアサインは解かれない。怖い。</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2018-12-19-b6b5eeadefaf/index.html"><time class="dt-published" datetime="2018-12-19T03:56:55.591Z">December 19, 2018</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/qol%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89mk1%E3%81%8B%E3%82%89%E3%81%AE%E5%A4%89%E6%9B%B4%E7%82%B9-b6b5eeadefaf">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/qol%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89mk1%E3%81%8B%E3%82%89%E3%81%AE%E5%A4%89%E6%9B%B4%E7%82%B9-b6b5eeadefaf">https://medium.com/@lestrrat/qol%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89mk1%E3%81%8B%E3%82%89%E3%81%AE%E5%A4%89%E6%9B%B4%E7%82%B9-b6b5eeadefaf</a>.</p>
+  </body>
+</html>

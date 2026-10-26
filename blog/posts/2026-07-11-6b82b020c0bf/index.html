@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Coding Agents Are Stochastic — So Increase Reliability by Designing Protocol</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">Coding Agents Are Stochastic — So Increase Reliability by Designing Protocol</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-TL;DR:
-</section>
-<section data-field="body" class="e-content">
-<section name="3941" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="720c" id="720c" class="graf graf--h3 graf--leading graf--title">Coding Agents Are Stochastic — So Increase Reliability by Designing Protocol</h3><h3 name="2f81" id="2f81" class="graf graf--h3 graf-after--h3">TL;DR:</h3><ul class="postList"><li name="2322" id="2322" class="graf graf--li graf-after--h3">I want a (relatively) trustworthy workflow for agentic coding, where I could have my hands off driving it.</li><li name="deff" id="deff" class="graf graf--li graf-after--li">Writing features / fixing bugs <em class="markup--em markup--li-em">initially</em> requires user input, but once goals/specifications/requirements are set, seeing it to merge should be autonomous.</li><li name="df80" id="df80" class="graf graf--li graf-after--li">Wrote a Claude Code plugin that provides <code class="markup--code markup--li-code"><a href="https://github.com/lestrrat-ai/claude-code-plugins/blob/main/plugins/gauntlet/skills/campaign/README.md" data-href="https://github.com/lestrrat-ai/claude-code-plugins/blob/main/plugins/gauntlet/skills/campaign/README.md" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">/gauntlet:campaign</a></code> which autonomously drives a PR through multiple rounds of reviews and fixes (if need be) until it reaches a threshold of confidence that allows it to merge it.</li></ul><div name="f33a" id="f33a" class="graf graf--mixtapeEmbed graf-after--li"><a href="https://github.com/lestrrat-ai/claude-code-plugins" data-href="https://github.com/lestrrat-ai/claude-code-plugins" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat-ai/claude-code-plugins"><strong class="markup--strong markup--mixtapeEmbed-strong">GitHub - lestrrat-ai/claude-code-plugins</strong><br><em class="markup--em markup--mixtapeEmbed-em">Contribute to lestrrat-ai/claude-code-plugins development by creating an account on GitHub.</em>github.com</a><a href="https://github.com/lestrrat-ai/claude-code-plugins" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="27e002f8f60ee8518db0a795759938c0" data-thumbnail-img-id="0*sM5dbxKSWaYTj6qQ" style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*sM5dbxKSWaYTj6qQ);"></a></div><h3 name="30e9" id="30e9" class="graf graf--h3 graf-after--mixtapeEmbed">Assumptions and Motivation</h3><p name="6d3a" id="6d3a" class="graf graf--p graf-after--h3">Just like most people, I started using coding agents by giving it instructions, seeing what it did, then reacting to it and giving it more instructions. That included reviewing changes.</p><p name="7b40" id="7b40" class="graf graf--p graf-after--p">Over time, I noticed that even when I ran reviews, the agents would occasionally miss relatively easy-to-find problems in the change set. Documentation misalignments, subtly changed assumptions, etc.</p><p name="d954" id="d954" class="graf graf--p graf-after--p">What’s happening is that since LLM-based agents are stochastic in nature, finding problems during a single review is left to pure chance.</p><p name="1aa6" id="1aa6" class="graf graf--p graf-after--p">Every time you ask your agent to review some PR (even if the models that back them up are powerful) there is a non-zero chance of agents completely going blind on specific areas of your code, thereby giving you the go ahead. But had the stars been aligned in a slightly different way, they could have found some major vulnerability or omission.</p><p name="e7a9" id="e7a9" class="graf graf--p graf-after--p">So what do you do? Run the review multiple times, of course!</p><h3 name="2299" id="2299" class="graf graf--h3 graf-after--p">Basic Workflow Ends With Two Consecutiv SATISFIED Reviews</h3><p name="3bbf" id="3bbf" class="graf graf--p graf-after--h3"><code class="markup--code markup--p-code">/gauntlet:campaign</code> works against a PR. So you would call it via something like <code class="markup--code markup--p-code">/gauntlet:campaign #12</code> to run it against PR #12. You can tell the agent to fold in more PRs, which opens up the possibility to “pipe” PRs from other skills, or to just say “fold in all PRs for this repository into a gauntlet:campaign”.</p><p name="ec7a" id="ec7a" class="graf graf--p graf-after--p">Here’s a screenshot right after a PR was added to the campaign (note that the table is not part of the skill — the agent just decided to draw it this time).</p><figure name="d4b0" id="d4b0" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*eyHAPJxbSaeu9W6vnYcNzw.png" data-width="901" data-height="591" src="image-b83cb9991702b351.png"></figure><p name="cb80" id="cb80" class="graf graf--p graf-after--figure">The skill also keeps track of current PRs and their review state, and it will automatically loop to check up on progress of each PR. For a given PR, the basic flow for the <code class="markup--code markup--p-code">/gauntlet:campaign</code> skill is as follows:</p><ol class="postList"><li name="ecbe" id="ecbe" class="graf graf--li graf-after--p">For the latest commit ID in the PR, the Reviewer reviews your code and reports with a SATISFIED or NOT SATISFIED (along with individual findings, if applicable)</li><li name="2386" id="2386" class="graf graf--li graf-after--li">If there are findings, the Orchestrator evaluates the review (most of the time it accepts the review, but it checks just in case), and launches a subagent to work on them.</li><li name="c98b" id="c98b" class="graf graf--li graf-after--li">Back to 1 with another Reviewer.</li></ol><figure name="b2dd" id="b2dd" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*1kOKgeqyoM8iSSMhBp4IMw.png" data-width="899" data-height="586" src="image-210f09175cfb3cee.png"></figure><h4 name="478c" id="478c" class="graf graf--h4 graf-after--figure">Termination Condition: Two Consecutive SATISFIEDs</h4><p name="3575" id="3575" class="graf graf--p graf-after--h4">The crux is that a PR merges only after two consecutive SATISFIEDs against the same git commit ID. The commit ID is what makes this meaningful. Any fix produces a new commit, and a SATISFIED verdict on the old code says nothing about the new code. So a NOT SATISFIED leads to a fix, the fix produces a new commit, and the count resets to zero. The Orchestrator is back to needing two clean reviews of an identical tree.</p><figure name="df76" id="df76" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*IBCqPbtw2YPCuoJXAe8kJw.png" data-width="896" data-height="617" src="image-122ac787dcb2fd98.png"></figure><figure name="b62a" id="b62a" class="graf graf--figure graf-after--figure"><img class="graf-image" data-image-id="1*RmNQ_K5yv3j7_jgZzouppg.png" data-width="903" data-height="531" src="image-1ce0295f6738df54.png"></figure><p name="4209" id="4209" class="graf graf--p graf-after--figure">This doesn’t necessarily mean that the probability of missing a problem becomes P squared (where P is the probability of missing a problem through a single review). The two reviews aren’t independent draws: they look at the same diff, and the Reviewers use the same model. However, sampling variance alone means the second pass looks at different things, and in practice it tends to cover areas the first review missed.</p><p name="2a0e" id="2a0e" class="graf graf--p graf-after--p">One detail in the flow above is that the Reviewer doesn’t have to be the same model that wrote the code. By default it’s Claude reviewing Claude, but it can be configured to use Codex. The default is Claude because I couldn’t realistically expect many people to be subscribed to Max plans for both vendors.</p><p name="3f67" id="3f67" class="graf graf--p graf-after--p">If you can afford it, though, I’d point the Reviewer at a different model. A different model gives you draws that fail in different places, which is a strictly better gate.</p><p name="cbe7" id="cbe7" class="graf graf--p graf-after--p">Whether you use Claude or Codex for review, the two consecutive SATISFIEDs as termination condition gives me confidence to let the agent merge PRs on my behalf. See the example in <em class="markup--em markup--p-em">Where It Shines</em> for a bit more detail on how it actually improved the quality of PRs. As an aside, I also use Claude as the reviewer when I run out of Codex tokens, and this workflow tends to work so much better for me compared to single reviews.</p><h3 name="b6fa" id="b6fa" class="graf graf--h3 graf-after--p">Where It Shines</h3><p name="f365" id="f365" class="graf graf--p graf-after--h3">The best part of this workflow is that it’s relatively trustworthy, and you can put it into autopilot while you do other stuff.</p><p name="107e" id="107e" class="graf graf--p graf-after--p">For example, here’s <code class="markup--code markup--p-code">/gauntlet:campaign</code> being relentless while I dogfooded the review-to-merge process. It started with a single commit, but the <code class="markup--code markup--p-code">gauntlet</code> skill kept finding edge cases and real defects (I suspect the situation was further exacerbated due to the fact that this was instructions against coding agents and not code, which is mechanically verifiable before sending it for review).</p><p name="995d" id="995d" class="graf graf--p graf-after--p">The image is from mid-campaign, but when I counted at the end, that was a total of 19 commits (18 additions on top of the initial PR commit). All these commits, and I didn’t so much as type a single instruction.</p><figure name="c678" id="c678" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*r1NQNdwcMz7KLD1Oo9YIMg.png" data-width="879" data-height="776" src="image-ce700bc053748256.png"></figure><p name="502c" id="502c" class="graf graf--p graf-after--figure">What’s more, many of these findings came up <em class="markup--em markup--p-em">after </em>the first review came back SATISFIED. This clearly shows the stochastic nature of the agent — review passing once was not enough to assure the correctness/completeness of the PR, and the fact that doing more reviews is the right call.</p><h3 name="6433" id="6433" class="graf graf--h3 graf-after--p">Where It Breaks Down</h3><p name="b857" id="b857" class="graf graf--p graf-after--h3">This workflow isn’t without its problems.</p><h4 name="97f4" id="97f4" class="graf graf--h4 graf-after--p">Turn-Based Review/Fix Is Slow</h4><p name="4f63" id="4f63" class="graf graf--p graf-after--h4">The most notable is probably the fact that it’s relatively slow. This is for several reasons.</p><p name="136f" id="136f" class="graf graf--p graf-after--p">First, it’s basically one commit → one full review, and it’s serialized per PR. That flow just takes time. For example, the dogfooding example where I had a total of 18 additional commits because of the review, that took a grand total of approximately 9 hours.</p><p name="4175" id="4175" class="graf graf--p graf-after--p">Of course, if you have multiple PRs, you can run them in parallel, increasing the throughput. But each PR still takes some time to process.</p><p name="595d" id="595d" class="graf graf--p graf-after--p">Part of the reason the reviews take so long is because I like to have Codex do the review while Claude Code writes the code. Therefore I have to shell out review processes from Claude, and Codex isn’t exactly lightning fast when its reasoning efforts are set to <code class="markup--code markup--p-code">xhigh</code> .</p><h4 name="b491" id="b491" class="graf graf--h4 graf-after--p">Token Costs Compound</h4><p name="3247" id="3247" class="graf graf--p graf-after--h4"><code class="markup--code markup--p-code">/gauntlet:campaign</code> is also a token-hog. It takes up a LOT of your tokens! I do NOT recommend you use this workflow unless you have Max plan subscriptions.</p><p name="bff8" id="bff8" class="graf graf--p graf-after--p">That’s just the nature of the beast. DO NOT attempt to use this if you don’t have access to a lot of tokens.</p><h3 name="5640" id="5640" class="graf graf--h3 graf-after--p">Try It!</h3><p name="b747" id="b747" class="graf graf--p graf-after--h3">Other than those two… I think it’s an extremely useful tool! You probably wouldn’t use it against a single line documentation fix (though you certainly could), but for anything that you just want to have your hands-off, it’s really quite useful.</p><p name="e830" id="e830" class="graf graf--p graf-after--p">I’d say it’s best when you combine it with a skill/instruction that generates many tasks. You could say something like:</p><blockquote name="df4f" id="df4f" class="graf graf--blockquote graf-after--p">Drive the effort to make this repository pass 100% of the **** conformance test. For each logical group of gaps, implement a fix, create a PR, and then run them through gauntlet:campaign to see them cross the finish line.</blockquote><p name="cb19" id="cb19" class="graf graf--p graf-after--blockquote">As evidence, it drove development of most of my recent projects.</p><ul class="postList"><li name="b073" id="b073" class="graf graf--li graf-after--p"><a href="https://github.com/lestrrat-go/jwx" data-href="https://github.com/lestrrat-go/jwx" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">github.com/lestrrat-go/jwx</a> (v4: an early version was used to flesh out bugs)</li><li name="57b0" id="57b0" class="graf graf--li graf-after--li"><a href="http://github.com/lestrrat-go/helium" data-href="http://github.com/lestrrat-go/helium" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">github.com/lestrrat-go/helium</a> (most of standards conformance bits were implemented using the prototype)</li><li name="b64d" id="b64d" class="graf graf--li graf-after--li"><a href="https://github.com/lestrrat-ai/claude-code-plugins" data-href="https://github.com/lestrrat-ai/claude-code-plugins" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">github.com/lestrrat-ai/claude-code-plugins</a> (dogfooding)</li><li name="6e77" id="6e77" class="graf graf--li graf-after--li"><a href="https://github.com/lestrrat-3d/sketch" data-href="https://github.com/lestrrat-3d/sketch" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">github.com/lestrrat-3d/sketch</a></li></ul><p name="9c57" id="9c57" class="graf graf--p graf-after--li">The installation instructions are in the GitHub README.</p><div name="6149" id="6149" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/lestrrat-ai/claude-code-plugins" data-href="https://github.com/lestrrat-ai/claude-code-plugins" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat-ai/claude-code-plugins"><strong class="markup--strong markup--mixtapeEmbed-strong">GitHub - lestrrat-ai/claude-code-plugins</strong><br><em class="markup--em markup--mixtapeEmbed-em">Contribute to lestrrat-ai/claude-code-plugins development by creating an account on GitHub.</em>github.com</a><a href="https://github.com/lestrrat-ai/claude-code-plugins" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="27e002f8f60ee8518db0a795759938c0" data-thumbnail-img-id="0*NLMVlIpqhG6m2O5y" style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*NLMVlIpqhG6m2O5y);"></a></div><p name="520f" id="520f" class="graf graf--p graf-after--mixtapeEmbed graf--trailing">Install my plugin, try it out for a few tasks, and when you’re confident, you should then be able to throw a bunch of tasks at it and safely go to bed knowing that your PRs will be merged after proper reviewing!</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2026-07-11-6b82b020c0bf/index.html"><time class="dt-published" datetime="2026-07-11T22:14:02.688Z">July 11, 2026</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/coding-agents-are-stochastic-so-increase-reliability-by-designing-protocol-6b82b020c0bf">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/coding-agents-are-stochastic-so-increase-reliability-by-designing-protocol-6b82b020c0bf">https://medium.com/@lestrrat/coding-agents-are-stochastic-so-increase-reliability-by-designing-protocol-6b82b020c0bf</a>.</p>
+  </body>
+</html>

@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>A Half-Baked Go Library For ePaper 2.13 inch</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">A Half-Baked Go Library For ePaper 2.13 inch</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-（日本語は英語のあと）
-</section>
-<section data-field="body" class="e-content">
-<section name="1a42" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="d1b0" id="d1b0" class="graf graf--h3 graf--leading graf--title">A Half-Baked Go Library For ePaper 2.13 inch</h3><p name="32e5" id="32e5" class="graf graf--p graf-after--h3">（日本語は英語のあと）</p><p name="d95f" id="d95f" class="graf graf--p graf-after--p">So the other day, I bought these</p><div name="35e9" id="35e9" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT" data-href="https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT"><strong class="markup--strong markup--mixtapeEmbed-strong">2.13inch e-Paper HAT - Waveshare Wiki</strong><br><em class="markup--em markup--mixtapeEmbed-em">Note: The raw panel require a driver board, If you are the first time use this e-Paper, we recommend you to buy the HAT…</em>www.waveshare.com</a><a href="https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="79f1217b34cfdaf945e62f743158f66c" data-thumbnail-img-id="0*_wh3qWwrCSOBGxG0." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*_wh3qWwrCSOBGxG0.);"></a></div><div name="ce67" id="ce67" class="graf graf--mixtapeEmbed graf-after--mixtapeEmbed"><a href="https://www.switch-science.com/catalog/3646/" data-href="https://www.switch-science.com/catalog/3646/" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://www.switch-science.com/catalog/3646/"><strong class="markup--strong markup--mixtapeEmbed-strong">Raspberry Pi Zero WH - スイッチサイエンス</strong><br><em class="markup--em markup--mixtapeEmbed-em">Raspberry Pi Zero WHは、無線LAN、BLE（Bluetooth Low Energy）機能を搭載したRaspberry Pi Zero Wにピンヘッダを実装したモデルです。</em>www.switch-science.com</a><a href="https://www.switch-science.com/catalog/3646/" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="7186625ce02f9143c9dcaf71fcf76a63" data-thumbnail-img-id="0*N2dDsKK0IUxNEEih." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*N2dDsKK0IUxNEEih.);"></a></div><p name="8213" id="8213" class="graf graf--p graf-after--mixtapeEmbed">Together you get a tiny PC with a ePaper display, which allows data written to it to stick even after you power-off the RaspberryPi.</p><p name="31fa" id="31fa" class="graf graf--p graf-after--p">I was going to use this for a project and wanted to write the codebase in Go, so I took the python library that came along and started porting it to Go</p><div name="653f" id="653f" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/lestrrat-go/epd" data-href="https://github.com/lestrrat-go/epd" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat-go/epd"><strong class="markup--strong markup--mixtapeEmbed-strong">lestrrat-go/epd</strong><br><em class="markup--em markup--mixtapeEmbed-em">epd - [WIP] Port of ePaper HAT binding</em>github.com</a><a href="https://github.com/lestrrat-go/epd" class="js-mixtapeImage mixtapeImage mixtapeImage--empty u-ignoreBlock" data-media-id="c18504e4ee8746ab782f8309728437fe"></a></div><p name="8551" id="8551" class="graf graf--p graf-after--mixtapeEmbed">But then we decided not to use this setup anymore. Bummer.</p><p name="ac6f" id="ac6f" class="graf graf--p graf-after--p">I originally intended to redesign the API and make necessary performance adjustments, after which I was going to announce it to the world, but I don’t think I will be developing this library in the near future. So here it is.</p><p name="1841" id="1841" class="graf graf--p graf-after--p graf--trailing">If you feel like hacking on it, please send me a PR.</p></div></div></section><section name="2397" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="2c10" id="2c10" class="graf graf--p graf--leading">先日RaspberryPi Zero WHとePaper 2.13 inchを購入したので、それについていたpythonライブラリをGoで置き換えるためにコードを書きました。本来はこれをもっとチューニングしてから世に送り出すつもりだったのですが、深淵なる事情によりこの機材は使わない事になりましたので、このライブラリの開発も一旦止まる事になりそうです。なので、こうしてエントリを書いておきました。</p><p name="9518" id="9518" class="graf graf--p graf-after--p">もしePaperをGoから制御するライブラリをお探しの場合は参考までどうぞ。また、PR等も受け付けますので、よろしくお願いいたします。</p><div name="aefd" id="aefd" class="graf graf--mixtapeEmbed graf-after--p graf--trailing"><a href="https://github.com/lestrrat-go/epd" data-href="https://github.com/lestrrat-go/epd" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat-go/epd"><strong class="markup--strong markup--mixtapeEmbed-strong">lestrrat-go/epd</strong><br><em class="markup--em markup--mixtapeEmbed-em">epd - [WIP] Port of ePaper HAT binding</em>github.com</a><a href="https://github.com/lestrrat-go/epd" class="js-mixtapeImage mixtapeImage mixtapeImage--empty u-ignoreBlock" data-media-id="c18504e4ee8746ab782f8309728437fe"></a></div></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2018-05-06-e4ab7ce689a/index.html"><time class="dt-published" datetime="2018-05-06T23:53:11.642Z">May 6, 2018</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/a-half-baked-go-library-for-epaper-2-13-inch-e4ab7ce689a">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/a-half-baked-go-library-for-epaper-2-13-inch-e4ab7ce689a">https://medium.com/@lestrrat/a-half-baked-go-library-for-epaper-2-13-inch-e4ab7ce689a</a>.</p>
+  </body>
+</html>

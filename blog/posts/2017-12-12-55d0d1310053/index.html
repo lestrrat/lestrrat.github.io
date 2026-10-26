@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>How Kubernetes Load Balancer Services Are Implemented in GKE (And How To Delete Them)</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">How Kubernetes Load Balancer Services Are Implemented in GKE (And How To Delete Them)</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-As of Dec 2017, for whatever reasons which could be on my side, I find dangling TCP Load Balancers after deleting a GKE cluster. That is…
-</section>
-<section data-field="body" class="e-content">
-<section name="5558" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="309b" id="309b" class="graf graf--h3 graf--leading graf--title">How Kubernetes Load Balancer Services Are Implemented in GKE (And How To Delete Them)</h3><p name="25e6" id="25e6" class="graf graf--p graf-after--h3 graf--trailing">As of Dec 2017, for whatever reasons which could be on my side, I find dangling TCP Load Balancers after deleting a GKE cluster. That is, the Kubernetes cluster is long gone, but these LBs are just there, without a valid target to forward traffic to. I wanted to get rid of them, so I had to learn how to properly find/query them. These are my notes on this, in hopes that it helps somebody in the future.</p></div></div></section><section name="bda3" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="903b" id="903b" class="graf graf--p graf--leading">Kubernetes Load Balancer services with external IP addresses are implemented simply as HTTP/TCP load balancers into the GKE cluster node instances.</p><p name="74e9" id="74e9" class="graf graf--p graf-after--p">In order to cleanup, we need to find out the LBs that we should check for. I did not know this until I dove into this, but apparently there isn’t a <code class="markup--code markup--p-code">gcloud compute loadbalancers</code> command. Instead what you do is to look for <code class="markup--code markup--p-code">forwarding-rules</code>:</p><pre name="d284" id="d284" class="graf graf--pre graf-after--p">$ gcloud compute forwarding-rules list --format json</pre><p name="9dd3" id="9dd3" class="graf graf--p graf-after--pre">Note that I used <code class="markup--code markup--p-code">--format json</code> because I needed to parse an inspect the entries in a script. You don’t have to do this if you are just doing it by hand.</p><p name="35ed" id="35ed" class="graf graf--p graf-after--p">This will give you a list of forwarding rules, along with some metadata about them. One of the things you should look for is the <code class="markup--code markup--p-code">description</code> field, which will contain the string <code class="markup--code markup--p-code">&quot;kubernetes.io/service-name/$your-service-name&quot;</code> . This field will only be populated if the LB was created for a GKE Service. Since we’re currently only interested in this particular resource, we will grep for it, and filter out the forwarding rules that do not have this string.</p><p name="03a3" id="03a3" class="graf graf--p graf-after--p">Next, you need to find the <code class="markup--code markup--p-code">target-pool</code> to check for. The value is listed under the <code class="markup--code markup--p-code">target</code> field, but you should also find the region that this target pool is created under. It will be encoded in the field as a URL:</p><pre name="2684" id="2684" class="graf graf--pre graf-after--p">https://www.googleapis.com/compute/v1/projects/$your-project-name/regions/<strong class="markup--strong markup--pre-strong">$your-region</strong>/targetPools/<strong class="markup--strong markup--pre-strong">$target-pool</strong></pre><p name="596d" id="596d" class="graf graf--p graf-after--pre">Use your favorite tool to extract this, sed, grep, perl, whatever.</p><p name="9dca" id="9dca" class="graf graf--p graf-after--p">Next, find out details about this target pool by issuing this command:</p><pre name="2f0a" id="2f0a" class="graf graf--pre graf-after--p">$ gcloud compute target-pools describe $target-pool --region $region --format json</pre><p name="9cc6" id="9cc6" class="graf graf--p graf-after--pre">You need to provide the <code class="markup--code markup--p-code">--region</code> parameter, or it will ask you for it, and that’s annoying. This is why I instructed you to extract it from the previous URL.</p><p name="1843" id="1843" class="graf graf--p graf-after--p">In the target pool’s <code class="markup--code markup--p-code">instances</code> field, GCE VM names that are associated with this target pool will be listed. Note again, these will be URLs. Use your favorite tool to extract out the <code class="markup--code markup--p-code">zone</code> and <code class="markup--code markup--p-code">name</code> of these instances.</p><pre name="409c" id="409c" class="graf graf--pre graf-after--p">https://www.googleapis.com/compute/v1/projects/$project-name/zones/<strong class="markup--strong markup--pre-strong">$zone</strong>/instances/<strong class="markup--strong markup--pre-strong">$name</strong></pre><p name="8f47" id="8f47" class="graf graf--p graf-after--pre">Now check for the instance’s existence by issuing the following command:</p><pre name="d6c8" id="d6c8" class="graf graf--pre graf-after--p">$ gcloud compute instances describe $name --zone $zone --format json</pre><p name="9daa" id="9daa" class="graf graf--p graf-after--pre">If this command fails for all names in the <code class="markup--code markup--p-code">instances</code> field, you most likely have a dangling TCP LB. You can delete this by issuing the following <strong class="markup--strong markup--p-strong">TWO</strong> commands:</p><pre name="6035" id="6035" class="graf graf--pre graf-after--p">$ gcloud compute forwarding-rules delete $forwarding-rule-name --region $region<br>$ gcloud compute target-pools delete $target-pool --region $region</pre><p name="d15a" id="d15a" class="graf graf--p graf-after--pre">The order of these operations matter, as GCP generally does not allow you to delete resources that are being used by another live resource.</p><p name="9da4" id="9da4" class="graf graf--p graf-after--p">And now your TCP LB should be gone.</p><p name="9671" id="9671" class="graf graf--p graf-after--p">Finally, this is the script I wrote to automate this <a href="https://gist.github.com/lestrrat/2407c11947fbe2cd3c8770c959aa06d3" data-href="https://gist.github.com/lestrrat/2407c11947fbe2cd3c8770c959aa06d3" class="markup--anchor markup--p-anchor" rel="nofollow noopener" target="_blank">https://gist.github.com/lestrrat/2407c11947fbe2cd3c8770c959aa06d3</a></p><figure name="08ec" id="08ec" class="graf graf--figure graf--iframe graf-after--p graf--trailing"></figure></div></div></section><section name="0351" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="236e" id="236e" class="graf graf--p graf--leading">I should also mention that the same thing (dangling LBs) happens to my HTTP(s) LBs created by Kubernetes Ingress resources. I just didn’t write the feature to delete these in my script, because I deleted them manually by hand right before deciding to write the script :)</p><p name="2d27" id="2d27" class="graf graf--p graf-after--p">The best thing that could happen is for this issue to go away, but for now, at least I don’t have to investigate how to do this again, so I’m happy.</p><div name="b2c6" id="b2c6" class="graf graf--mixtapeEmbed graf-after--p graf--trailing"><a href="http://amzn.to/2C438G4" data-href="http://amzn.to/2C438G4" class="markup--anchor markup--mixtapeEmbed-anchor" title="http://amzn.to/2C438G4"><strong class="markup--strong markup--mixtapeEmbed-strong">Kubernetes: Up and Running: Dive into the Future of Infrastructure</strong><br><em class="markup--em markup--mixtapeEmbed-em">Legend has it that Google deploys over two billion application containers a week. How&#39;s that possible? Google revealed…</em>amzn.to</a><a href="http://amzn.to/2C438G4" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="a7c42add5376071f7816494d0cb8dc0f" data-thumbnail-img-id="0*mj8GhLAMZjVJeBts." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*mj8GhLAMZjVJeBts.);"></a></div></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2017-12-12-55d0d1310053/index.html"><time class="dt-published" datetime="2017-12-12T02:21:10.620Z">December 12, 2017</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/how-kubernetes-load-balancer-services-are-implemented-in-gke-and-how-to-delete-them-55d0d1310053">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/how-kubernetes-load-balancer-services-are-implemented-in-gke-and-how-to-delete-them-55d0d1310053">https://medium.com/@lestrrat/how-kubernetes-load-balancer-services-are-implemented-in-gke-and-how-to-delete-them-55d0d1310053</a>.</p>
+  </body>
+</html>

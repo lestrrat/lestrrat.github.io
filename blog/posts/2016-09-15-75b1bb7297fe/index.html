@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>WTF Was Wrong With My Go Code, Part 2</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">WTF Was Wrong With My Go Code, Part 2</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-So apparently rakyll received a copy of the book that I co-authored with my fellow Japanese gophers. Feels weird to see our book written…
-</section>
-<section data-field="body" class="e-content">
-<section name="02bb" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="64eb" id="64eb" class="graf graf--h3 graf--leading graf--title">WTF Was Wrong With My Go Code, Part 2</h3><p name="57a3" id="57a3" class="graf graf--p graf-after--h3">So apparently rakyll received a copy of the book that I co-authored with my fellow Japanese gophers. Feels weird to see our book written entirely in Japanese floating around in other parts of the World, but I’m very glad that people are expressing interest. Thank you for those who have purchased it :)</p><figure name="f750" id="f750" class="graf graf--figure graf--iframe graf-after--p"><blockquote class="twitter-tweet"><a href="https://twitter.com/rakyll/status/776227124642353152"></a></blockquote></figure><p name="2692" id="2692" class="graf graf--p graf-after--figure">Onto the main topic.</p><p name="5874" id="5874" class="graf graf--p graf-after--p">Soon after I wrote my previous article, “<a href="../2016-09-09-a025fa7563c/index.html" data-href="../2016-09-09-a025fa7563c/index.html" class="markup--anchor markup--p-anchor" target="_blank">WTF Was Wrong With My Go Code</a>”, I noticed somebody referencing another one of my old Go libraries. …And, right. It was old, and it was bad. So I updated this one time again.</p><h3 name="f4a8" id="f4a8" class="graf graf--h3 graf-after--p">The Subject In Question</h3><p name="3ef8" id="3ef8" class="graf graf--p graf-after--h3">This time around the subject in question is <a href="https://github.com/lestrrat/go-file-rotatelogs" data-href="https://github.com/lestrrat/go-file-rotatelogs" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">a library that is used as a log destination</a>, which also happens to be one of my earliest Go works. It was easy to tell it was old, as the <strong class="markup--strong markup--p-strong">.travis.yml</strong> file specified this library to be tested against Go 1.1 and 1.2 on <a href="https://travis-ci.org/lestrrat/go-file-rotatelogs" data-href="https://travis-ci.org/lestrrat/go-file-rotatelogs" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Travis CI</a>.</p><p name="d78a" id="d78a" class="graf graf--p graf-after--p">If you are new to running services, you tend to naively assume that your host server has unlimited disk space that allows you to log how much ever data you want to your log files. Those of us who have been in this field know better not to assume such things, and instead we *rotate* the logs.</p><p name="153a" id="153a" class="graf graf--p graf-after--p">You could use an external service for this, but there are cases where it’s just easier if the application that is emitting the log handle the log rotation — but it’s a very tedious job. This is where my <a href="https://github.com/lestrrat/go-file-rotatelogs" data-href="https://github.com/lestrrat/go-file-rotatelogs" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">go-file-rotatelogs</a> package comes in.</p><p name="c5a7" id="c5a7" class="graf graf--p graf-after--p">But then again, the code was… not very Go-ish, or particularly good. Let’s see why.</p><h3 name="62d1" id="62d1" class="graf graf--h3 graf-after--p">Naming Things</h3><p name="5ddc" id="5ddc" class="graf graf--p graf-after--h3">Yes, <a href="../2016-09-09-a025fa7563c/index.html" data-href="../2016-09-09-a025fa7563c/index.html" class="markup--anchor markup--p-anchor" target="_blank">just like my previous article</a>, I yet again named things weirdly.</p><p name="4a9e" id="4a9e" class="graf graf--p graf-after--p">The package URL path does not match that of the actual package name.The constructor function includes the package name with it, making it feel very redundant. This was the same deal as my previous post, so I guess back then I thought this was the right way.</p><h3 name="7230" id="7230" class="graf graf--h3 graf-after--p">A Case For Mutexes</h3><p name="a137" id="a137" class="graf graf--p graf-after--h3">For whatever reason, I was using a semaphore via channels to limit accessibility to critical sections of my code. However, I was only allowing exactly one goroutine to have access to this section.</p><figure name="984d" id="984d" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Zv3-MYxPWKh9EhQO3wK7yQ.png" data-width="437" data-height="86" src="image-e70a1ffed2b7bb29.png"></figure><p name="4bb8" id="4bb8" class="graf graf--p graf-after--figure">A <em class="markup--em markup--p-em">sync.Mutex</em> in Go can be thought of as a semaphore where the number of goroutines allowed is exactly one. And it’s ever so slightly more efficient than using channels to protect blocks of code. So I really don’t know why I used channels back then. I guess I was trying to be hip…</p><p name="b067" id="b067" class="graf graf--p graf-after--p">In this case, I just switched to using sync.RWMutex. Simple, and the way I did it, <a href="https://github.com/lestrrat/go-file-rotatelogs/blob/fa717906544aa7d12b5699bc8d80089c0ae38ce2/interface.go#L17" data-href="https://github.com/lestrrat/go-file-rotatelogs/blob/fa717906544aa7d12b5699bc8d80089c0ae38ce2/interface.go#L17" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">it saves me from writing an explicit initialization</a>.</p><figure name="7f3d" id="7f3d" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*cKYpBixyXwqAJpdYWO3lcQ.png" data-width="434" data-height="89" src="image-ac00fc881dc29e79.png"></figure><h3 name="c5d7" id="c5d7" class="graf graf--h3 graf-after--figure">Hiding What’s Not Necessary</h3><p name="70e0" id="70e0" class="graf graf--p graf-after--h3">While tweaking the code, I also noticed many methods that were public APIs that just did not need to be public. For example, a method to generate the next file name to be used is not exactly something that an end user would need to access. All of these extra methods are now private.</p><p name="bb82" id="bb82" class="graf graf--p graf-after--p">One slight problem was that I had test code that relied on it, but I recently also tend to write my tests in the “foo_test” package to make sure I don’t unintentionally rely on some non-public parts of the API. The parts that were now private could not be tested in this scope. It’s easy to fix this, though: Just create another test file that has access to the internal parts, and run your private tests there. Simple.</p><h3 name="3266" id="3266" class="graf graf--h3 graf-after--p">Configurable Instance Variables</h3><p name="b497" id="b497" class="graf graf--p graf-after--h3">I come from the land of interpreted languages where words like “<strong class="markup--strong markup--p-strong">public</strong>”,”<strong class="markup--strong markup--p-strong">private</strong>”, and “<strong class="markup--strong markup--p-strong">protected</strong>” do not mean a thing. In that world, you can not really limit the visibility of any piece of data, except for sheer obfuscation.</p><p name="b72c" id="b72c" class="graf graf--p graf-after--p">So <em class="markup--em markup--p-em">naturally</em> I thought: well, if some parts of the <strong class="markup--strong markup--p-strong">RotateLogs</strong> object are optional/configurable, why not just expose them as <em class="markup--em markup--p-em">public struct fields</em>. For example, things like maximum age of a file before being deleted, or name of symlink to use were available as public fields.</p><figure name="2c78" id="2c78" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*5zeHh--CQslZr_pcYg0riw.png" data-width="396" data-height="207" src="image-b6d1d08d57b4647b.png"></figure><p name="dc45" id="dc45" class="graf graf--p graf-after--figure">At first glance, this may seem harmless if a bit awkward, but with Go you should always be thinking “Well, <em class="markup--em markup--p-em">what if</em> multiple goroutines tried to read/write to this field…? For example, in our case, what could happen if a goroutine changed the LinkName field (the name to use for symbolic links) was modified while we were calling <em class="markup--em markup--p-em">os.Symlink</em>…?</p><p name="cc89" id="cc89" class="graf graf--p graf-after--p">Recently my rules regarding this sort of thing is: <a href="https://github.com/lestrrat/go-file-rotatelogs/blob/fa717906544aa7d12b5699bc8d80089c0ae38ce2/interface.go#L11-L21" data-href="https://github.com/lestrrat/go-file-rotatelogs/blob/fa717906544aa7d12b5699bc8d80089c0ae38ce2/interface.go#L11-L21" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">If it doesn’t look like it needs to be updated by the end user, just keep fields private</strong></a>. This is obviously not a rule that has to be followed 100% of the time, but this is what I’m using when I’m in doubt. So in the new version, I have no public fields: everything is private.</p><p name="b785" id="b785" class="graf graf--p graf-after--p">Now that the important fields are private, it was now easy to use <em class="markup--em markup--p-em">sync.Mutex</em> objects where necessary to protect them from possible corruption.</p><h3 name="c498" id="c498" class="graf graf--h3 graf-after--p">Optional Parameters</h3><p name="4a37" id="4a37" class="graf graf--p graf-after--h3">However, this leaves one problem: So how exactly should users provide optional parameters? You cannot just ask them to assign them as they are all private.</p><p name="2986" id="2986" class="graf graf--p graf-after--p">One obvious way is to provide a constructor that can take all of those optional parameters. However, this leaves the end user having to specify really ugly constructor calls like this:</p><figure name="1e77" id="1e77" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*SEjztnMqpV4aTc8fGWkt8Q.png" data-width="411" data-height="39" src="image-0f743a964ec8f0d9.png"></figure><p name="689b" id="689b" class="graf graf--p graf-after--figure">There are other ways to work around this problem, but one particular idiom that I like is the way <a href="https://cloud.google.com/go" data-href="https://cloud.google.com/go" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Go code from Google Cloud Platform</a> client libraries handle optional parameters. For example, below are the two ways to create a Google Storage client, one using the default OAuth token source, and the latter one to explicitly specify one yourself:</p><figure name="097c" id="097c" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*NnE8_iFSHDKnLcuHEm05vg.png" data-width="453" data-height="95" src="image-1f7485dba9dc15da.png"></figure><p name="22d8" id="22d8" class="graf graf--p graf-after--figure">The trick is to receive the optional parameters as a variadic list of a generic interface. This allows you to specify as many of them as you want, or none at all.</p><p name="c571" id="c571" class="graf graf--p graf-after--p">I find this pattern very pleasant to the eye. There are definitely cases where this does not fit, but when it does, it’s beautiful.</p><p name="dd03" id="dd03" class="graf graf--p graf-after--p">You can now just create a RotateLog object with all default values like this, passing the only mandatory parameter:</p><figure name="67df" id="67df" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*BrkCPQUpIVA2FU6pfUwQzg.png" data-width="560" data-height="163" src="image-bf23746f83988b57.png"></figure><p name="dc13" id="dc13" class="graf graf--p graf-after--figure">Or you can specify the full set of optional parameters, or a subset thereof:</p><figure name="eadb" id="eadb" class="graf graf--figure graf-after--p graf--trailing"><img class="graf-image" data-image-id="1*BKXWz6BH5nZPmpESKzqNmw.png" data-width="643" data-height="257" src="image-bc92e2c7607caac4.png"></figure></div></div></section><section name="86aa" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="1b59" id="1b59" class="graf graf--p graf--leading graf--trailing">That’s it for now! I hope sharing my mistakes saves others from having to spend more time debugging. Enjoy, and happy hacking.</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2016-09-15-75b1bb7297fe/index.html"><time class="dt-published" datetime="2016-09-15T21:25:37.163Z">September 15, 2016</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/wtf-was-wrong-with-my-go-code-part-2-75b1bb7297fe">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/wtf-was-wrong-with-my-go-code-part-2-75b1bb7297fe">https://medium.com/@lestrrat/wtf-was-wrong-with-my-go-code-part-2-75b1bb7297fe</a>.</p>
+  </body>
+</html>

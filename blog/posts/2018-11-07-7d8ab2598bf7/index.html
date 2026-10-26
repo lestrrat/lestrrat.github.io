@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Oxygen Not Included 初心者向け、電解機と水素発電の酸素供給施設の考察（１）</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">Oxygen Not Included 初心者向け、電解機と水素発電の酸素供給施設の考察（１）</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-Oxygen Not Includedはこの電解機と水素発電による酸素供給施設が効率良く稼働するように工夫するところから、ようやく本当のゲームが始まると言っても過言ではないと思っている。
-</section>
-<section data-field="body" class="e-content">
-<section name="7940" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="b9b7" id="b9b7" class="graf graf--h3 graf--leading graf--title">Oxygen Not Included 初心者向け、電解機と水素発電の酸素供給施設の考察（１）</h3></div><div class="section-inner sectionLayout--fullWidth"><figure name="1822" id="1822" class="graf graf--figure graf--layoutFillWidth graf-after--h3"><img class="graf-image" data-image-id="1*dQi_zkq0omBQ16ZcNTquLg.png" data-width="2740" data-height="838" data-is-featured="true" src="image-680ce2fef365643d.png"></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="78f8" id="78f8" class="graf graf--p graf-after--figure"><a href="https://www.klei.com/games/oxygen-not-included" data-href="https://www.klei.com/games/oxygen-not-included" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Oxygen Not Included</a>はこの電解機と水素発電による酸素供給施設が効率良く稼働するように工夫するところから、ようやく本当のゲームが始まると言っても過言ではないと思っている。</p><p name="76f8" id="76f8" class="graf graf--p graf-after--p graf--trailing"><a href="../2018-11-05-759d0df446bc/index.html" data-href="../2018-11-05-759d0df446bc/index.html" class="markup--anchor markup--p-anchor" target="_blank">前回</a>、<a href="../2018-11-06-cec9651c6562/index.html" data-href="../2018-11-06-cec9651c6562/index.html" class="markup--anchor markup--p-anchor" target="_blank">前々回</a>の序盤の解説の続きとして、ここから数回にわけて、<strong class="markup--strong markup--p-strong">電解機と水素発電を中心としてシステム</strong>の組み立て方について解説しながら、Oxygen Not Includedでの中盤以降重要になるシステムの組み方について考えていく。</p></div></div></section><section name="f5f0" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="448e" id="448e" class="graf graf--p graf--leading">酸素供給はゲーム序盤では超重要な要素なので、特に初心者のときにはつい適当に電解機を設置しがちだ。例えばこんなふうに…</p><figure name="6e3f" id="6e3f" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*HxHQY-TTAlAXXpsagbE_Gw.png" data-width="1642" data-height="990" src="image-84a4e117170f0211.png"></figure><p name="965a" id="965a" class="graf graf--p graf-after--figure">しかしこれでは当たり前だが酸素はともかく電解機の副産物の水素が基地の上の方に溜まるだけだ。大きな害はないが、あとでこの水素を集めるのは意外と苦労するのでおススメできない。</p><p name="c8a0" id="c8a0" class="graf graf--p graf-after--p">じゃあどこかに水素を貯めればいいのかというとそうでもない。頑張って吸気ポンプとフィルターを作って水素タンク（ないし水素部屋）に水素を貯めたところで、タンクが満杯になったところで酸素供給のほうも止まってしまう（か、水素が溢れる）。</p><p name="2498" id="2498" class="graf graf--p graf-after--p">それにここまでのやり方では電解機と汲み上げポンプを動かすためのエネルギーを外部に頼らざるを得ない。これがゲーム序盤だと石炭発電しかないので、いくら石炭を掘っても足りない状況になる。</p><p name="c313" id="c313" class="graf graf--p graf-after--p">そうなってくると、やるべきことは一つしかない。酸素供給の為のエネルギーを、電解機から得られる水素を使って、そこから得る、ということだ。つまり、クローズドなシステムを作る。</p><h3 name="5fe7" id="5fe7" class="graf graf--h3 graf-after--p">シンプルなシステム</h3><p name="c9ef" id="c9ef" class="graf graf--p graf-after--h3">そこでまず最もシンプルな形のシステムを考えてみたい。さまざまな問題があるので、それの改良方法について解説して、その後シンプルな酸素供給施設その１、として改良したものをお見せする。</p><p name="dc44" id="dc44" class="graf graf--p graf-after--p">まず最初に以下のような形のシステムを考える。</p><figure name="e5ed" id="e5ed" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Qf9YkM8loAkWVqY5za5jSw.png" data-width="1414" data-height="764" src="image-e74d013590e987f4.png"></figure><p name="43cf" id="43cf" class="graf graf--p graf-after--figure">閉じられた部屋で電解機から得られる水素と酸素を吸気ポンプで吸い込み、利用する。</p><p name="1a07" id="1a07" class="graf graf--p graf-after--p">水素発電機は水素以外の気体を流し込むと故障するので、吸気ポンプから得られる気体にはフィルターをかけて、そこから得られる純粋な水素を発電器に流す。</p><p name="42de" id="42de" class="graf graf--p graf-after--p">発電機から得られたエネルギーはバッテリーに蓄電する。</p><p name="02e0" id="02e0" class="graf graf--p graf-after--p">このシステムの消費電力は吸気ポンプ240W、エアフィルター120W、電解機120Wの合計480Wで、水素発電は800Wなので発電量が完全に消費電力を上回っており、元の目的であるクローズドなシステムとしてはの要件は満たしている。</p><p name="cedb" id="cedb" class="graf graf--p graf-after--p">しかしこのシステムには多々問題がある。ひとつずつ見ていく。</p><h3 name="a62c" id="a62c" class="graf graf--h3 graf-after--p">システムの問題点</h3><h4 name="c70c" id="c70c" class="graf graf--h4 graf-after--h3">過剰な発電</h4><p name="bb3e" id="bb3e" class="graf graf--p graf-after--h4">上記のシステムの場合、蓄電に使う装置がただのバッテリーでは、バッテリーが満タンになっていてもそれを発電機に伝える術がない。ということは、発電機は蓄電量にかかわらず、常に発電し続けてしまう。</p><p name="3a97" id="3a97" class="graf graf--p graf-after--p">これでは燃料の水素がどんどん消費されてしまいもったいない。</p><p name="be15" id="be15" class="graf graf--p graf-after--p">なのでここはスマートバッテリーを使うべきだろう。自動化ワイヤーでスマートバッテリーと発電機を繋げておけば、スマートバッテリーから発電機に充分蓄電できているかどうかのシグナルを送ることができる。</p><figure name="b201" id="b201" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Q_kTISWjuUo6jk6ZJ8Y42Q.png" data-width="1386" data-height="726" src="image-93ef05c665235a7a.png"></figure><p name="dbf0" id="dbf0" class="graf graf--p graf-after--figure">無事スマートバッテリーに換装できたのなら、一つ注意しておきたいのは、デフォルト状態では<strong class="markup--strong markup--p-strong">スマートバッテリーから得られる自動化用のシグナルは、バッテリーの蓄電率が0%になってから初めて発せられるということだ</strong>。</p><p name="1200" id="1200" class="graf graf--p graf-after--p">それで問題ないと思ったあなたは、発電機を動かすには水素が必要で、その水素を作るにはまず電解機と吸気ポンプが動かないといけない、ということを思い出してほしい。つまり蓄電率が0%になってからまた発電を開始してもそもそも水素を発電機まで届けられないので手遅れになってしまうのだ。</p><p name="149c" id="149c" class="graf graf--p graf-after--p">なので、ここはスマートバッテリーの設定で蓄電率が20%とか50%とか、そのあたりのよき値になったらシグナルを送るという設定にしておくと良い</p><figure name="265b" id="265b" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*rEieNgBGh2kdNGanit7EnA.png" data-width="862" data-height="858" src="image-5a8780ca1bbc1593.png"></figure><h4 name="d440" id="d440" class="graf graf--h4 graf-after--figure">吸気ポンプの稼働条件</h4><p name="2dca" id="2dca" class="graf graf--p graf-after--h4">また、効率の面でもうひとつ考えておきたいのは吸気ポンプのほうだ。</p><p name="d5ca" id="d5ca" class="graf graf--p graf-after--p">吸気ポンプは電気の供給が続く限り、周りの気体を吸って送り続ける。通常はこれで問題はないのだが、もしなんらかの理由でこの部屋の中で気圧が下がった場合、ほとんど送り出す気体がないにも関わらず吸気ポンプは全力で吸気し、エネルギーを消費し続けることになる。</p><p name="499d" id="499d" class="graf graf--p graf-after--p">なので、ここでも気圧計などをかまして自動化するべきだろう。気圧計である一定の気圧になったら始めて吸気ポンプを動かす、という形だ。</p><figure name="b8d0" id="b8d0" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*QJMh-MzqgIQX5nuCim7Pmw.png" data-width="1506" data-height="744" src="image-a2e9ac8f062ba37d.png"></figure><h4 name="a421" id="a421" class="graf graf--h4 graf-after--figure">初回起動時の電気</h4><p name="186e" id="186e" class="graf graf--p graf-after--h4">次にこのシステム全体を最初に動かす時のことを考える。一番最初にはこのシステム内に蓄電されている電気は存在しない。</p><p name="9144" id="9144" class="graf graf--p graf-after--p">ということは、まず最初に水素発電機を動かすのに充分な水素を作るための電気を作る必要がある。</p><p name="590e" id="590e" class="graf graf--p graf-after--p">色々やり方はあるのだが、このようなシンプルなシステムを作るとしたらゲーム序盤だろうから、本記事では人力発電機で賄うということでよいだろう。</p><figure name="7658" id="7658" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Ejo5I91MYYKyUWw7ZNS0HQ.png" data-width="1052" data-height="568" src="image-5ce12f99e408739b.png"></figure><p name="24ed" id="24ed" class="graf graf--p graf-after--figure">ここでポイントなのは、Duplicantが直接操作する必要がある人力発電機は、密閉された部屋の外に出しておく、ということだ。こうしておけば、わざわざ部屋の中の水素を外部に漏らす危険を伴わずに電力を供給できる。</p><h4 name="b416" id="b416" class="graf graf--h4 graf-after--p">部屋の非常出入り口</h4><p name="cc0e" id="cc0e" class="graf graf--p graf-after--h4">前項に密閉された部屋と書いたが、厳密に言えばどこかのタイミングで部屋内部にある施設もメンテナンスをする必要がでてくる可能性が高い。</p><p name="baa8" id="baa8" class="graf graf--p graf-after--p">その時に壁を壊してもいいのだが、どうせなら最初から出入り口を作っておくのが良いと思う。なので最初に設置するタイミングで手動エアーロックを設置するとよいだろう。</p><p name="9c1f" id="9c1f" class="graf graf--p graf-after--p">ただ、普通にドアを作って終わりにするとDuplicant達が好き勝手に部屋に出入りしてしまう。</p><p name="34aa" id="34aa" class="graf graf--p graf-after--p">これを避けるためにはドアを通れるDuplicantを選択できる設定を使い、「誰も通れない」形にしておく。これで実質上、そこにドアがあるのに通行止め、という形にできる。</p><figure name="ed5d" id="ed5d" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*fZ7lSMbcmRRCgSWkV6Kv5Q.png" data-width="1154" data-height="746" src="image-76e7728b0aa78421.png"></figure><h4 name="7b91" id="7b91" class="graf graf--h4 graf-after--figure">余剰水素の処理</h4><p name="899a" id="899a" class="graf graf--p graf-after--h4">実はスマートバッテリーで水素発電を制御するとひとつだけ弊害が出てくる。余分な水素を使わなくなる結果、水素が溜まっていくのだ。</p><p name="2dc7" id="2dc7" class="graf graf--p graf-after--p">溜まるのも、部屋内部で溜まるならまだギリギリ良いかも知れないが、問題は排気管の中が詰まってしまうことだ。フィルターが水素を発電機側のパイプに送ろうとしても、遊びがないので詰まってしまうのだ。</p><p name="920e" id="920e" class="graf graf--p graf-after--p">こうなると、フィルターが全く動かなくなるので、折角作った酸素が基地内に提供できなくなってしまう。</p><p name="2fb0" id="2fb0" class="graf graf--p graf-after--p">これは余剰分の水素をどこかに貯蔵ないし、別系統の発電設備に回すとよい。だが、この記事はクローズドなシステムについての記事なので、ここではこれ以上の詳細は省くことにする。</p><p name="080d" id="080d" class="graf graf--p graf-after--p">ただ、ここで配管についてひとつだけ重要なことを覚えておいてほしい。</p><figure name="97a1" id="97a1" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*uEHKzICB3LWhAibJpyMLlQ.png" data-width="1420" data-height="1002" src="image-0559600d4a86ee3e.png"></figure><p name="26d4" id="26d4" class="graf graf--p graf-after--figure">配管を二手に分けた場合、通常の管では内容物が均等に2分の1ずつ分かれて送られていく。でもこのシステムではまず最初にシステム内の水素発電機に水素が送られて欲しい。排気したいのはあくまで水素発電側に充分水素がある時だけだ。</p><p name="61a1" id="61a1" class="graf graf--p graf-after--p">このように片方の管を優先したい場合は、優先したい側を気体用ブリッジでつなぎ、反対側を通常のパイプでつなぐ。こうすると、ブリッジ側が詰まった時のみ、反対側に排気される。</p><p name="af52" id="af52" class="graf graf--p graf-after--p">これは液体用のパイプでも同じなので、ぜひ覚えておきたい。</p><h3 name="e043" id="e043" class="graf graf--h3 graf-after--p">改良版発電システム</h3><p name="26a5" id="26a5" class="graf graf--p graf-after--h3">以上を考慮した設計をすると以下のようになる。</p><figure name="b283" id="b283" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*hR8SPs9Dxdij07VvtsFPow.png" data-width="1720" data-height="652" src="image-1de17f2df6d5859e.png"></figure><p name="870c" id="870c" class="graf graf--p graf-after--figure graf--trailing">これはあくまで解説用にざっくり作ったシステムなのでレイアウトが悪いのは勘弁してほしい。この次の記事ではこれをさらに改良していく過程を説明する。</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2018-11-07-7d8ab2598bf7/index.html"><time class="dt-published" datetime="2018-11-07T10:54:13.781Z">November 7, 2018</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/oxygen-not-included-%E5%88%9D%E5%BF%83%E8%80%85%E5%90%91%E3%81%91-%E9%9B%BB%E8%A7%A3%E6%A9%9F%E3%81%A8%E6%B0%B4%E7%B4%A0%E7%99%BA%E9%9B%BB%E3%81%AE%E9%85%B8%E7%B4%A0%E4%BE%9B%E7%B5%A6%E6%96%BD%E8%A8%AD%E3%81%AE%E8%80%83%E5%AF%9F-%EF%BC%91-7d8ab2598bf7">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/oxygen-not-included-%E5%88%9D%E5%BF%83%E8%80%85%E5%90%91%E3%81%91-%E9%9B%BB%E8%A7%A3%E6%A9%9F%E3%81%A8%E6%B0%B4%E7%B4%A0%E7%99%BA%E9%9B%BB%E3%81%AE%E9%85%B8%E7%B4%A0%E4%BE%9B%E7%B5%A6%E6%96%BD%E8%A8%AD%E3%81%AE%E8%80%83%E5%AF%9F-%EF%BC%91-7d8ab2598bf7">https://medium.com/@lestrrat/oxygen-not-included-%E5%88%9D%E5%BF%83%E8%80%85%E5%90%91%E3%81%91-%E9%9B%BB%E8%A7%A3%E6%A9%9F%E3%81%A8%E6%B0%B4%E7%B4%A0%E7%99%BA%E9%9B%BB%E3%81%AE%E9%85%B8%E7%B4%A0%E4%BE%9B%E7%B5%A6%E6%96%BD%E8%A8%AD%E3%81%AE%E8%80%83%E5%AF%9F-%EF%BC%91-7d8ab2598bf7</a>.</p>
+  </body>
+</html>

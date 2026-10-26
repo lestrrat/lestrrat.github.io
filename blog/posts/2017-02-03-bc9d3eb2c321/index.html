@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>kubernetes使いは全員 stern を導入すべき</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">kubernetes使いは全員 stern を導入すべき</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-kubernetesを使うとコンテナをポンポンあげられてもう最高！なんだけど、開発中に地味に面倒なのがログ。
-</section>
-<section data-field="body" class="e-content">
-<section name="7024" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="0709" id="0709" class="graf graf--h3 graf--leading graf--title">kubernetes使いは全員 stern を導入すべき</h3><p name="372b" id="372b" class="graf graf--p graf-after--h3"><a href="https://kubernetes.io" data-href="https://kubernetes.io" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">kubernetes</a>を使うとコンテナをポンポンあげられてもう最高！なんだけど、開発中に地味に面倒なのがログ。</p><div name="3273" id="3273" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://www.amazon.co.jp/gp/product/1491935677/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=d604-22&amp;creative=1211&amp;linkCode=as2&amp;creativeASIN=1491935677&amp;linkId=3fc338d8307638e3f2c19e6b90b3194f" data-href="https://www.amazon.co.jp/gp/product/1491935677/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=d604-22&amp;creative=1211&amp;linkCode=as2&amp;creativeASIN=1491935677&amp;linkId=3fc338d8307638e3f2c19e6b90b3194f" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://www.amazon.co.jp/gp/product/1491935677/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=d604-22&amp;creative=1211&amp;linkCode=as2&amp;creativeASIN=1491935677&amp;linkId=3fc338d8307638e3f2c19e6b90b3194f"><strong class="markup--strong markup--mixtapeEmbed-strong">Kubernetes: Up and Running; Dive into the Future of Infrastructure</strong><br><em class="markup--em markup--mixtapeEmbed-em">Amazon配送商品ならKubernetes: Up and Running; Dive into the Future of Infrastructureが通常配送無料。更にAmazonならポイント還元本が多数。Kelsey…</em>www.amazon.co.jp</a><a href="https://www.amazon.co.jp/gp/product/1491935677/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=d604-22&amp;creative=1211&amp;linkCode=as2&amp;creativeASIN=1491935677&amp;linkId=3fc338d8307638e3f2c19e6b90b3194f" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="2811dda64e3122625add3176103aa378" data-thumbnail-img-id="0*6wr3Ful5e-oNnEnU." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*6wr3Ful5e-oNnEnU.);"></a></div><p name="9366" id="9366" class="graf graf--p graf-after--mixtapeEmbed"><a href="https://cloud.google.com/container-engine/" data-href="https://cloud.google.com/container-engine/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Google Container Engine(GKE)</a>を使っている限りは基本Stackdriverがあるのでそちらにログをガンガン投げつけられるんだけど、これがさ… リアルタイムで見るにはもうとにかく読みにくいんですよ。</p><figure name="7e97" id="7e97" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*phCnIXoSYV1qp5J68SvOqA.png" data-width="1650" data-height="1034" src="image-3200a98551bf2081.png"></figure><p name="a42c" id="a42c" class="graf graf--p graf-after--figure">まぁこれは基本的に膨大なログを見ている時に、ピンポイントで絞り込み検索をするという行動を前提としてるからだと思うんだけど、デバッグとかしてるときは「<strong class="markup--strong markup--p-strong">スゴク、コレジャナイ感…</strong>」がするわけです。</p><p name="a406" id="a406" class="graf graf--p graf-after--p">なので、そんな時はもう素直にkubectl get podsして、kubectl logs -f …. している自分がいました。</p><figure name="8ad9" id="8ad9" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*I-c2kSAwWk0JvwJhYvm3nA.png" data-width="1026" data-height="358" src="image-9f3d417ab6d95b91.png"></figure><p name="55e6" id="55e6" class="graf graf--p graf-after--figure">まぁこれでも充分なんです。充分なんですけど、辛い事が二つあって。</p><p name="1e0d" id="1e0d" class="graf graf--p graf-after--p">まず複数のコンテナにロードバランスされるペイロードに関しては自分が見てるコンテナにアクセスが来るとは限らないから全部のコンテナのログを見てるか、自分の見てるコンテナにアクセスが来るまで読み込み続けなければならない。</p><p name="50d6" id="50d6" class="graf graf--p graf-after--p graf--trailing">もうひとつは、開発をしている間の話なので、kubectl applyでdeploymentをガンガン入れ替えているのでコンテナもどんどん世代交代するわけです。そうすると… そう、当然コンテナはデコミッションされたらアクセスが来ないし、その後削除されたらそもそもkubectl logs -fで追ってた接続も切れるので、もう一度つなげ直さないといけない… 辛い。</p></div></div></section><section name="24d1" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="8c88" id="8c88" class="graf graf--p graf--leading">ある程度アプリができあがってくるとエラーのロギングとかもわりとちゃんとできてて、その特定に困らないのですが、今回新しく kubernetes上で動作するアプリを書き始めたら、まだたったの数百行しかないコードなのに追うのがもう面倒で面倒で。</p><p name="22bc" id="22bc" class="graf graf--p graf-after--p">しかし時は2017年。Twitterでつぶやくと正解が提示される世界でした。</p><figure name="0caa" id="0caa" class="graf graf--figure graf--iframe graf-after--p"><blockquote class="twitter-tweet"><a href="https://twitter.com/lestrrat/status/827317168899436544"></a></blockquote></figure><figure name="0e0b" id="0e0b" class="graf graf--figure graf--iframe graf-after--figure"><blockquote class="twitter-tweet"><a href="https://twitter.com/superbrothers/status/827319725348622336"></a></blockquote></figure><p name="0885" id="0885" class="graf graf--p graf-after--figure">なに？<a href="https://github.com/wercker/stern" data-href="https://github.com/wercker/stern" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">stern</strong></a>とな？</p><figure name="2d20" id="2d20" class="graf graf--figure graf--iframe graf-after--p"><blockquote class="twitter-tweet"><a href="https://twitter.com/lestrrat/status/827319964180705280"></a></blockquote></figure><figure name="fbc1" id="fbc1" class="graf graf--figure graf--iframe graf-after--figure"><blockquote class="twitter-tweet"><a href="https://twitter.com/lestrrat/status/827320696497795073"></a></blockquote></figure><p name="78b8" id="78b8" class="graf graf--p graf-after--figure">やばい、最高すぎる。podのインスタンス名を調べて入力してた自分が馬鹿みたいだ。stern だと、podのインスタンス名 じゃなくてpodのスペックに書いてある名前を雑にいれるだけで、それにマッチする全部のpodのログがだだーっと流れてくる。それぞれのpodインスタンスの名前が色付きで行頭についているので見間違いもない。最高だ。</p><figure name="693a" id="693a" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*7WX5L5XfTrpmut0EZHUKZQ.png" data-width="2192" data-height="504" src="image-91adb5fd576bdf06.png"></figure><p name="5541" id="5541" class="graf graf--p graf-after--figure">そしてなおかつ、kubectl applyした後やkubectl delete podsした後でも、ちゃんとそのpodのスペックをk8s APIからwatchして、新しいインスタンスがあがったらそっちのログを出してくれる。最高だ！</p><figure name="70eb" id="70eb" class="graf graf--figure graf--iframe graf-after--p"><blockquote class="twitter-tweet"><a href="https://twitter.com/lestrrat/status/827321863147749377"></a></blockquote></figure><figure name="101b" id="101b" class="graf graf--figure graf--iframe graf-after--figure"><blockquote class="twitter-tweet"><a href="https://twitter.com/lestrrat/status/827321880826634240"></a></blockquote></figure><p name="6aa4" id="6aa4" class="graf graf--p graf-after--figure">とにかく最高！を言いまくった。</p><figure name="ff89" id="ff89" class="graf graf--figure graf--iframe graf-after--p"><blockquote class="twitter-tweet"><a href="https://twitter.com/superbrothers/status/827322094803316736"></a></blockquote></figure><figure name="db45" id="db45" class="graf graf--figure graf--iframe graf-after--figure"><blockquote class="twitter-tweet"><a href="https://twitter.com/lestrrat/status/827322640868052992"></a></blockquote></figure><p name="438a" id="438a" class="graf graf--p graf-after--figure graf--trailing">というわけでstern最高。kubernetes使いはもうインストールしておくしかない。homebrewメンテナをしてる superbrothers さんに感謝の念を送りつつ、みんなsternを使いましょう。</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2017-02-03-bc9d3eb2c321/index.html"><time class="dt-published" datetime="2017-02-03T07:00:41.771Z">February 3, 2017</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/kubernetes%E4%BD%BF%E3%81%84%E3%81%AF%E5%85%A8%E5%93%A1-stern-%E3%82%92%E5%B0%8E%E5%85%A5%E3%81%99%E3%81%B9%E3%81%8D-bc9d3eb2c321">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/kubernetes%E4%BD%BF%E3%81%84%E3%81%AF%E5%85%A8%E5%93%A1-stern-%E3%82%92%E5%B0%8E%E5%85%A5%E3%81%99%E3%81%B9%E3%81%8D-bc9d3eb2c321">https://medium.com/@lestrrat/kubernetes%E4%BD%BF%E3%81%84%E3%81%AF%E5%85%A8%E5%93%A1-stern-%E3%82%92%E5%B0%8E%E5%85%A5%E3%81%99%E3%81%B9%E3%81%8D-bc9d3eb2c321</a>.</p>
+  </body>
+</html>

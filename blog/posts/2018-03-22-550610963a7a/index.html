@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Open Your Repository In Google Cloud Shell</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">Open Your Repository In Google Cloud Shell</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-When I found that this was possible, I mumbled to myself; “Oh. My. God.”
-</section>
-<section data-field="body" class="e-content">
-<section name="3a25" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="4a3c" id="4a3c" class="graf graf--h3 graf--leading graf--title">Open Your Repository In Google Cloud Shell</h3><p name="2098" id="2098" class="graf graf--p graf-after--h3">When I found that this was possible, I mumbled to myself; “Oh. My. God.”</p><p name="489a" id="489a" class="graf graf--p graf-after--p">So Cloud Shell is a Google’s version of “Open a command line prompt on your browser” tool</p><div name="4d9b" id="4d9b" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://cloud.google.com/shell/" data-href="https://cloud.google.com/shell/" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://cloud.google.com/shell/"><strong class="markup--strong markup--mixtapeEmbed-strong">Cloud Shell - Browser Based Command Line | Google Cloud</strong><br><em class="markup--em markup--mixtapeEmbed-em">Google Cloud Shell is a free admin machine with browser-based command-line access for managing your infrastructure and…</em>cloud.google.com</a><a href="https://cloud.google.com/shell/" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="12514916ed1e969209b6140a7c9c371a" data-thumbnail-img-id="0*qm_A0I_HBSoaFVZN." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*qm_A0I_HBSoaFVZN.);"></a></div><p name="d748" id="d748" class="graf graf--p graf-after--mixtapeEmbed">If you have deployed applications on GCP, you probably saw links in the Console saying “Run this in Cloud Shell”. I saw this many times, too, and found them rather amusing, but not so useful other than to learn how to use the <code class="markup--code markup--p-code">gcloud</code> tool without having to configure it in my own machine.</p><p name="e3ea" id="e3ea" class="graf graf--p graf-after--p">Then as I was perusing, I found a link to Cloud Shell with a Git repo… oh. Lo and behold, you can clone an arbitrary (public) git repository and also open a file in an editor… all on the browser!</p><p name="6b65" id="6b65" class="graf graf--p graf-after--p">For example, you can open the following window by clicking on this link: <a href="https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/peco/peco&amp;page=editor&amp;open_in_editor=README.md" data-href="https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/peco/peco&amp;page=editor&amp;open_in_editor=README.md" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/peco/peco&amp;page=editor&amp;open_in_editor=README.md</a></p><figure name="bcdc" id="bcdc" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*oqwK_tWoLwnDj__Lor2IjQ.png" data-width="1604" data-height="1214" src="image-5abe8566eb33c008.png"></figure><p name="1572" id="1572" class="graf graf--p graf-after--figure">This is my <a href="https://github.com/peco/peco" data-href="https://github.com/peco/peco" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">peco</a> repository. Holy moly. You have an editor open, and you even have access to shell so you can write in the editor and do other stuff from the shell.</p><div name="eedd" id="eedd" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/peco/peco" data-href="https://github.com/peco/peco" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/peco/peco"><strong class="markup--strong markup--mixtapeEmbed-strong">peco/peco</strong><br><em class="markup--em markup--mixtapeEmbed-em">peco - Simplistic interactive filtering tool</em>github.com</a><a href="https://github.com/peco/peco" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="d965fa58d9e7473340371eac3f0cfc18" data-thumbnail-img-id="0*6api8J4bXLA7z7n2." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*6api8J4bXLA7z7n2.);"></a></div><p name="e43a" id="e43a" class="graf graf--p graf-after--mixtapeEmbed">Now, for a lot of users I’m sure this is something they can easily bypass by cloning the repository on their machines, but if you just want to, for example, have somebody go through a tutorial, this is rather handy in that you can get anybody drop into a VM with standard features.</p><p name="b97c" id="b97c" class="graf graf--p graf-after--p">For other possible options on this feature, look under this page:</p><div name="648d" id="648d" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://cloud.google.com/shell/docs/open-in-cloud-shell" data-href="https://cloud.google.com/shell/docs/open-in-cloud-shell" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://cloud.google.com/shell/docs/open-in-cloud-shell"><strong class="markup--strong markup--mixtapeEmbed-strong">Open in Cloud Shell | Cloud Shell | Google Cloud</strong><br><em class="markup--em markup--mixtapeEmbed-em">To provide a link to open a sample Git repository in Cloud Shell, you would need to use Markdown such as the following…</em>cloud.google.com</a><a href="https://cloud.google.com/shell/docs/open-in-cloud-shell" class="js-mixtapeImage mixtapeImage mixtapeImage--empty u-ignoreBlock" data-media-id="b6d45eb3dfdacc5f13a6071b2b913f2a"></a></div><p name="7ab7" id="7ab7" class="graf graf--p graf-after--mixtapeEmbed graf--trailing">I think this is just amazing. And I wanted to share my excitement. That’s all :)</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2018-03-22-550610963a7a/index.html"><time class="dt-published" datetime="2018-03-22T05:15:34.113Z">March 22, 2018</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/open-your-repository-in-google-cloud-shell-550610963a7a">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/open-your-repository-in-google-cloud-shell-550610963a7a">https://medium.com/@lestrrat/open-your-repository-in-google-cloud-shell-550610963a7a</a>.</p>
+  </body>
+</html>

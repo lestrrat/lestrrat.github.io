@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Relaying Power to Existing Infrastructure Without Rewiring Everything</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">Relaying Power to Existing Infrastructure Without Rewiring Everything</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-Sometimes you want to relay electricity from a far-off power plant to somewhere else. The “correct” way would be to use a transformer, and…
-</section>
-<section data-field="body" class="e-content">
-<section name="7142" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="ef26" id="ef26" class="graf graf--h3 graf--leading graf--title">Relaying Power to Existing Infrastructure Without Rewiring Everything</h3><p name="b427" id="b427" class="graf graf--p graf-after--h3">Sometimes you want to relay electricity from a far-off power plant to somewhere else. The “correct” way would be to use a transformer, and to wire everything “correctly”</p><p name="86ae" id="86ae" class="graf graf--p graf-after--p">Well, let’s say you created a proper transformer, and you then proceeded to check out what’s needed to relay that power to your destination. I often find myself looking at an old infrastructure, possibly based on Coal Generator. These are usually a maze of wires — and if I wanted to properly rewire the whole thing, I would need to pretty much re-invent the entire site.</p><p name="cde4" id="cde4" class="graf graf--p graf-after--p">But sometimes you don’t have that luxury. Maybe you can bring that one wire from your power plant, but you just can’t rewire everything.</p><p name="ee16" id="ee16" class="graf graf--p graf-after--p">In such cases, building <strong class="markup--strong markup--p-strong">a battery farm with automatic circuit switching mechanism</strong> may save you.</p><p name="e303" id="e303" class="graf graf--p graf-after--p">Here’s the idea: <strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">You receive electricity from the main power plant only when you need it</em></strong>. The rest of the time, you use a Power Shutoff to basically isolate the battery farm from the power plant. And while you are receiving electricity from the power plant, <strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">you switch off access to the existing electricity grid by using another Power Shutoff</em></strong>.</p><figure name="e3ea" id="e3ea" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*OOumpQEOzxYfcSjeoCYeGQ.png" data-width="1082" data-height="410" data-is-featured="true" src="image-c77c6876aa466b48.png"></figure><figure name="7d88" id="7d88" class="graf graf--figure graf-after--figure"><img class="graf-image" data-image-id="1*Bj2UFBfabSs_TOo2blIwRA.png" data-width="1016" data-height="382" src="image-f5b47346667e0b10.png"></figure><figure name="d2bc" id="d2bc" class="graf graf--figure graf-after--figure"><img class="graf-image" data-image-id="1*PtmMGsh6irKHqtZJ1vpfFg.png" data-width="1040" data-height="394" src="image-f91aaae8dabe8810.png"></figure><p name="0aac" id="0aac" class="graf graf--p graf-after--figure">In these pictures, my power plant’s electricity is coming from the right side, and my existing infrastructure is in the left side.</p><p name="a9ca" id="a9ca" class="graf graf--p graf-after--p">When the Smart Battery thinks it needs recharging, the Power Shutoff on the right side is enabled, and the one of the left is disabled. At this point the battery farm will charge electricity from the power plant, while being isolated from the existing structure. When the batteries are full, the opposite happens, and now the batteries act as if they are part of the existing structure.</p><p name="607f" id="607f" class="graf graf--p graf-after--p graf--trailing">The cool thing about this mechanism is that batteries are not counted towards the power consumption going through these wires, so you don’t really have to care how much load is dangling on your wires. It’s like using a mobile battery: you plug it when it’s full, when it’s empty you recharge it, and put it back again. You need no modification to your existing infrastructure.</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2018-08-30-54857a7dec6a/index.html"><time class="dt-published" datetime="2018-08-30T11:49:40.536Z">August 30, 2018</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/relaying-power-to-existing-infrastructure-without-rewiring-everything-54857a7dec6a">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/relaying-power-to-existing-infrastructure-without-rewiring-everything-54857a7dec6a">https://medium.com/@lestrrat/relaying-power-to-existing-infrastructure-without-rewiring-everything-54857a7dec6a</a>.</p>
+  </body>
+</html>

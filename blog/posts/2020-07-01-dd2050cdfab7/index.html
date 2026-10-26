@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>sync.Cond／コンディション変数についての解説</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">sync.Cond／コンディション変数についての解説</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-sync.Cond（コンディション変数）について、Goをよく使ってる人たちですら「うまく説明できん」という話がmercarigoで出てたので、あとで誰かの役に立てばよいな、という気持ちで新たな解説記事を書いてみたいと思います。
-</section>
-<section data-field="body" class="e-content">
-<section name="3115" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="dbb0" id="dbb0" class="graf graf--h3 graf--leading graf--title">sync.Cond／コンディション変数についての解説</h3><figure name="b7ee" id="b7ee" class="graf graf--figure graf-after--h3"><img class="graf-image" data-image-id="0*lXsfAXFkAckdhmC8.jpg" data-width="600" data-height="239" data-is-featured="true" src="image-9f80df017db9e6a2.jpg"></figure><p name="a123" id="a123" class="graf graf--p graf-after--figure">sync.Cond（コンディション変数）について、Goをよく使ってる人たちですら「うまく説明できん」という話がmercarigoで出てたので、あとで誰かの役に立てばよいな、という気持ちで新たな解説記事を書いてみたいと思います。</p><p name="5691" id="5691" class="graf graf--p graf-after--p">自分はPerl5をバリバリ書いていた時代ではAE::Cond、Goを使うようになってからはsync.Condと、とにかく非同期処理でピタゴラ装置を作らないといけない時はこの仕組みがあったことでロジックを無駄に小難しくしないで実装することができたので、この仕組みは是非広く知られて欲しいのです。</p><p name="fb52" id="fb52" class="graf graf--p graf-after--p">というわけでまたあらたにGoのsync.Condを解説してみます。</p><p name="81bb" id="81bb" class="graf graf--p graf-after--p">なお、<a href="https://amzn.to/3ihxsPM" data-href="https://amzn.to/3ihxsPM" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Web+DB Press vol 113</a>の私の連載、「Goにいりては…」でもこの話を書いていますが、あちらの記事では <code class="markup--code markup--p-code">Broadcast</code> を使った方法ではなく、 <code class="markup--code markup--p-code">Signal</code> を使った方法について書いてありますので、もしよければこちらもどうぞ</p><h3 name="f09c" id="f09c" class="graf graf--h3 graf-after--p">sync.Condを使ったコードの記述とその意味</h3><p name="220d" id="220d" class="graf graf--p graf-after--h3">まずコンディション変数には基本的にひとつしか記述方法がありません（例外は常にあります。またここではBroadcastを使う場合の想定のみです）。それは以下の通り。このコードは何かのお知らせを <code class="markup--code markup--p-code">cond.Wait()</code> でお知らせが来るまで待ち、そのたびに条件を確認しにいくコードです。</p><pre name="f122" id="f122" class="graf graf--pre graf-after--p">cond.L.Lock()<br>for !条件 {<br>   cond.Wait()<br>}<br>cond.L.Unlock()</pre><p name="a664" id="a664" class="graf graf--p graf-after--pre">このコードのポイントは <code class="markup--code markup--p-code">条件</code> 部分はロックによって守られたクリティカルセクションでないと確認できない、ということです（例：複数のスレッドが同じ変数を参照している）。例えば、この条件を制御する変数に書き込むスレッドと、読み込むスレッドがある場合、ロックによって書き込みと読み込み処理を排他制御する必要がありますね。</p><p name="8076" id="8076" class="graf graf--p graf-after--p">このコードを見せるとだいたい「？？？」という反応をもらいますが、これは forの中の <code class="markup--code markup--p-code">Wait()</code> がわかりにくくしています。例えば以下のようなコードだったらわかりやすいでしょう。</p><pre name="6116" id="6116" class="graf graf--pre graf-after--p">lock.Lock()<br>if 条件 { // !条件ではなくなってるのに注意<br>  lock.Unlock()<br>  return<br>}<br>lock.Unlock()</pre><p name="1ab4" id="1ab4" class="graf graf--p graf-after--pre">これは1回しか条件を確認できないですし、条件が負であってもそのままコードが進行してしまいます。条件の確認をし続ける形に戻してみましょう(※1)</p><pre name="17cb" id="17cb" class="graf graf--pre graf-after--p">lock.Lock() // クリティカルセクションをロックで守る<br>for !条件 {  // 条件が真になるまで確認し続ける<br>  lock.Unlock() // 自分は条件を確認したので、他のスレッドが条件を確認できるように<br>                // ロックは解放する</pre><pre name="b201" id="b201" class="graf graf--pre graf-after--pre">  // なんらかの方法でここで次の確認のタイミングを待つ</pre><pre name="82c5" id="82c5" class="graf graf--pre graf-after--pre">  lock.Lock()   // また次の確認のタイミングが来たのでロックを取得する<br>}<br>lock.Unlock() // 確認が終わったのでロックを解放する</pre><p name="601d" id="601d" class="graf graf--p graf-after--pre">元のコードより少し行数は増えましたが、あと足りないのは次の確認のタイミングを待つ、という処理だけですね。</p><p name="e2d4" id="e2d4" class="graf graf--p graf-after--p">定期的にある変数の値が真だったら… というようなコードもかけますが、これは追加でロックが必要だったり、いわゆるビジーループが必要になってしまうのでちょっと無駄なやり方になってしまいます。</p><pre name="592a" id="592a" class="graf graf--pre graf-after--p">lock.Lock()<br>for !条件 {<br>  lock.Unlock()<br><strong class="markup--strong markup--pre-strong">  for nextCheckLoop := true; nextCheckLoop; {<br>    nextCheckLock.Lock()<br>    if nextCheck {<br>      nextCheckLoop = false<br>    }<br>    nextCheckLock.Unlock()<br>    time.Sleep(50*time.Milliseconds)<br>  }</strong><br>  lock.Lock()<br>}<br>lock.Unlock()</pre><p name="afa2" id="afa2" class="graf graf--p graf-after--pre">余計なロックが必要なのもそうですが、特にビジーループはとにかく避けたい構造です。</p><p name="f09f" id="f09f" class="graf graf--p graf-after--p">ラッキーなことにこの「お知らせを待つ」という機能はGoならばチャンネルで簡単に実装可能ですので、今度はそれを入れてみましょう。</p><pre name="530a" id="530a" class="graf graf--pre graf-after--p">lock.Lock()<br>for !条件 {<br>  lock.Unlock()<br>  &lt;-ch<br>  lock.Lock()<br>}<br>lock.Unlock()  </pre><p name="9c24" id="9c24" class="graf graf--p graf-after--pre graf--trailing">ずっとシンプルになりました。これで任意のタイミングを待つ、まってから条件を確認しにいく、それを何回もやり続ける、ということができますね。</p></div></div></section><section name="b8a5" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="1342" id="1342" class="graf graf--p graf--leading">ところがここでチャンネルの特性上ひとつ問題がでてきます。チャンネルを通して一度に通信できるのはひとつのメッセージだけです。同じチャンネルを複数のスレッドから同時に読み込む事はできますが、そのうち「お知らせ」をもらえるのはひとつだけです。</p><p name="268b" id="268b" class="graf graf--p graf-after--p">ですが、もし上記のコードを<strong class="markup--strong markup--p-strong">複数goroutineに同時に伝えて、全員がよーいどん、で何か処理をしてほしい時</strong>はどうなるでしょう。</p><p name="7e3f" id="7e3f" class="graf graf--p graf-after--p">あ、今読者のあなたのどや顔が見えました。</p><figure name="fc2f" id="fc2f" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*TWTzdTOMRJAf2f9IffiVdA.jpeg" data-width="750" data-height="990" alt="「close()だな」「知ってるぞ」とどや顔" src="image-2d1125fca5f03f3d.jpeg"><figcaption class="imageCaption">「五等分の花嫁」より。残念ながら読んだことはありません…</figcaption></figure><p name="3f38" id="3f38" class="graf graf--p graf-after--figure">たしかに書き込みスレッドから上記の <code class="markup--code markup--p-code">ch</code> に対して <code class="markup--code markup--p-code">close()</code> を呼べば <code class="markup--code markup--p-code">&lt;-ch</code> で待機している全てのスレッドが確認を始めます。</p><p name="1293" id="1293" class="graf graf--p graf-after--p">…が、ここでやりたい処理は<strong class="markup--strong markup--p-strong">条件がそろうまで何回も繰り返されなければいけないのです</strong>。一回 <code class="markup--code markup--p-code">close()</code> してしまったチャンネルは再利用できません。2回目以降のループでは期待した動作にはならないのです。</p><p name="0baf" id="0baf" class="graf graf--p graf-after--p graf--trailing">ということで、実はこの機能を実装するのには単純にチャンネルを使うわけにはいきません。</p></div></div></section><section name="2066" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="51af" id="51af" class="graf graf--p graf--leading">さて、ここから別の方法でもできるー、できない、という議論を続けることはできますが、ここで主題に戻ります。</p><p name="f78c" id="f78c" class="graf graf--p graf-after--p"><code class="markup--code markup--p-code">sync.Cond</code> とその <code class="markup--code markup--p-code">Broadcast()</code> メソッドはまさにこのために作られているのです。</p><p name="bc3a" id="bc3a" class="graf graf--p graf-after--p">ここで一番最初の例を思い出してください。</p><pre name="4958" id="4958" class="graf graf--pre graf-after--p">cond.L.Lock()<br>for !条件 {<br>   cond.Wait()<br>}<br>cond.L.Unlock()</pre><p name="a6ff" id="a6ff" class="graf graf--p graf-after--pre">実は最初にわかりにくいと思ったこの <code class="markup--code markup--p-code">cond.Wait()</code> は内部的には以下のコードと同等です</p><pre name="238a" id="238a" class="graf graf--pre graf-after--p">cond.L.Unlock()<br>// お知らせを待つ<br>cond.L.Lock()</pre><p name="c179" id="c179" class="graf graf--p graf-after--pre">これを元の例にあてはめて、※1のコードと比較すると、全く同じ事をしているのがわかるはずです。</p><p name="0c6d" id="0c6d" class="graf graf--p graf-after--p">さらに、このお知らせを待つ、という部分はGoランタイムが実装してくれている部分で、何回でも再利用できますし、我々は具体的にどのような実装になっているのかを知る必要はありません。</p><p name="ff52" id="ff52" class="graf graf--p graf-after--p">というわけで結局この仕組みは <code class="markup--code markup--p-code">sync.Cond</code> を使った方式が一番エレガントに書けるというところに戻ります。</p><pre name="d74d" id="d74d" class="graf graf--pre graf-after--p">cond.L.Lock()<br>for !条件 {<br>   cond.Wait()<br>}<br>cond.L.Unlock()</pre><p name="404b" id="404b" class="graf graf--p graf-after--pre">このように 内部構造がわかるとなぜ <code class="markup--code markup--p-code">sync.Cond</code>の どの例も ロックをとって、ループに入って、ループを抜けた後にロックを解放して… という処理をしているのかその理由が理解できるかと思います。</p><h3 name="9e0d" id="9e0d" class="graf graf--h3 graf-after--p">sync.CondとBroadcastの組み合わせの使いどころ</h3><p name="c683" id="c683" class="graf graf--p graf-after--h3">sync.Cond 自体はただの部品ですので、使いどころ、と言われてもなかなか難しいのですが、以下のような条件を満たすコードが必要な場合には自然と選択されるツールになると思います</p><ol class="postList"><li name="e7b5" id="e7b5" class="graf graf--li graf-after--p">大前提： 非同期・並行処理が発生する。</li><li name="109a" id="109a" class="graf graf--li graf-after--li">ある変数の状態の遷移（「イベント」）が起こった事実を繰り返し確認する必要がある。</li><li name="b308" id="b308" class="graf graf--li graf-after--li">その状態変化が起こるまでは確認スレッドは待機している必要がある。</li><li name="2a67" id="2a67" class="graf graf--li graf-after--li">ただし、確認するタイミングは確認スレッドから見て外部要因によって決まる（例：カウントがある一定の数値を超えた、バッファが埋まった、等）。</li><li name="537f" id="537f" class="graf graf--li graf-after--li">上記の処理を繰り返し行う必要がある</li></ol><p name="98bb" id="98bb" class="graf graf--p graf-after--li">また、Goの場合、以下のような条件も加味するとチャンネルを使うべきかsync.Condを使うべきか判断する条件になると思います</p><ol class="postList"><li name="d27a" id="d27a" class="graf graf--li graf-after--p">「お知らせイベント」を発火する時にブロックしたくない（例：イベント自体は一気に100回くらい起こる可能性もあるが、そのイベントから待機していたスレッドは1回だけ動けばよい。チャンネルで実装するとイベント書き込み側が詰まってしまう）</li><li name="90e4" id="90e4" class="graf graf--li graf-after--li">チャンネルで実現できない、「繰り返し同じイベントを待つ」ような条件を満たす必要がある</li></ol><p name="0e80" id="0e80" class="graf graf--p graf-after--li">もっと具体的には例えば、byteをため込んでおく []byteバッファがあって、そこにユーザーが任意のタイミングでデータを追記していきます。</p><p name="bbc3" id="bbc3" class="graf graf--p graf-after--p">そのバッファの内容をどこかのタイミングでメモリ上からログや別のサーバーに移動させたいが、厳密にユーザーが追記したタイミングでなくてもよい。なんなら、任意の閾値を超えた場合のみログに書き込みたい。</p><p name="aecd" id="aecd" class="graf graf--p graf-after--p">このような場合、考えられる実装は以下のようなイメージになります：</p><ol class="postList"><li name="0d6e" id="0d6e" class="graf graf--li graf-after--p">ユーザーからの書き込みがあったタイミングでイベント発生（ <code class="markup--code markup--li-code">Broadcast</code> ）が起こり、データを書き込むスレッドを起こす</li><li name="38c9" id="38c9" class="graf graf--li graf-after--li">データを書き込むスレッドは、バッファのサイズが閾値を超えていた時だけ書き込みを行う</li><li name="8db7" id="8db7" class="graf graf--li graf-after--li">データ書き込みスレッドは確認と（必要であれば）書き込みが終わったあとは待機状態に戻る。</li></ol><p name="afa4" id="afa4" class="graf graf--p graf-after--li">ちなみにこれは拙作の<a href="https://github.com/lestrrat-go/fluent-client" data-href="https://github.com/lestrrat-go/fluent-client" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">github.com/lestrrat-go/fluent-client</a>の実装そのままです。</p><h3 name="8e1f" id="8e1f" class="graf graf--h3 graf-after--p">その… つまり… どういうことよ？</h3><p name="535c" id="535c" class="graf graf--p graf-after--h3">ここまで読んでもよくわからない。それは普通の感覚だと思います。なぜなら、私の理解ではこのツールは「必要になるまでどう扱えばいいのか全くわからない」類いのツールだと思っているからです。</p><p name="3a41" id="3a41" class="graf graf--p graf-after--p">ここまで読んでピンと来なかった方は（私の説明能力の欠落もあるかもしれませんが）そもそもこのような並行処理の同期を取る必要性がこれまで発生する状況になってこなかったから、だと私は想像しています。</p><p name="05a7" id="05a7" class="graf graf--p graf-after--p">いいんです、こんな小難しいこと、やらないで済むならそれに超したことはありません。並行処理そのものもそうですが、複雑な事はやらないで済むならそれに超したことはないのです。</p><h3 name="f961" id="f961" class="graf graf--h3 graf-after--p">ツールベルトに持ってて欲しい</h3><p name="e93b" id="e93b" class="graf graf--p graf-after--h3">ただ、この手の「必要になるまでいらない」系のツールは、実際必要になった時には本当に強力なアイテムとなります</p><p name="8bed" id="8bed" class="graf graf--p graf-after--p">そしていざ必要になった時にその存在を全く知らなかった、ではそもそも皆さんの選択肢にいれられません。</p><p name="8a7a" id="8a7a" class="graf graf--p graf-after--p">ですので、私はこのような解説記事を書いて、皆さんの頭の片隅にこのツールの存在を知って欲しいと思っています。「そのとき」が来たらさっと調べられるようにあなたのツールベルトにとりあえずしまっておいてもらえるように。</p><p name="cac5" id="cac5" class="graf graf--p graf-after--p">実は自分がコンディション変数と出会ったのは大学3年の時、OSの実装に関する授業を受けていた時にセマフォア、ミューテックス、クリティカルセクション等の理論について習ってた時でした。そしてそのときは正直なぜこれが必要なのか一切わかりませんでした。ロックをこんな小難しい使い方してたらバグの温床になるんじゃないの？くらいに思っていました。</p><p name="5d29" id="5d29" class="graf graf--p graf-after--p graf--trailing">でもやはり頭のいい人が考え抜いた形は意味があるのです… まさか大人になって非同期サーバーやらなにやらを書き始めた時に「ハッ… これって… あのコンディション変数ってのを使える？」と気づいた瞬間に電撃が走りました。本当にこんな便利なものを標準的な実装として提供しようと思ってくれた人々には感謝感謝しかありません。</p></div></div></section><section name="2316" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="f405" id="f405" class="graf graf--p graf--leading graf--trailing">そういう感じで sync.Condの解説でした。あんまりピンとこなくても、なんとなくそういうものがあって、本当に便利な時がある、ということだけ覚えておいてもらって、皆さんの頭の片隅にとどめておいてくれればうれしいです。</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2020-07-01-dd2050cdfab7/index.html"><time class="dt-published" datetime="2020-07-01T00:46:25.802Z">July 1, 2020</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/sync-cond-%E3%82%B3%E3%83%B3%E3%83%87%E3%82%A3%E3%82%B7%E3%83%A7%E3%83%B3%E5%A4%89%E6%95%B0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E8%A7%A3%E8%AA%AC-dd2050cdfab7">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/sync-cond-%E3%82%B3%E3%83%B3%E3%83%87%E3%82%A3%E3%82%B7%E3%83%A7%E3%83%B3%E5%A4%89%E6%95%B0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E8%A7%A3%E8%AA%AC-dd2050cdfab7">https://medium.com/@lestrrat/sync-cond-%E3%82%B3%E3%83%B3%E3%83%87%E3%82%A3%E3%82%B7%E3%83%A7%E3%83%B3%E5%A4%89%E6%95%B0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E8%A7%A3%E8%AA%AC-dd2050cdfab7</a>.</p>
+  </body>
+</html>

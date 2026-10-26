@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Oxygen Not Included — Thermo Regulatorによる冷却</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">Oxygen Not Included — Thermo Regulatorによる冷却</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-これまでOxygen Not Included内で使いにくく感じてずっと使ってなかったThermo Regulatorの使い方がやっとわかったので解説する
-</section>
-<section data-field="body" class="e-content">
-<section name="280b" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="8157" id="8157" class="graf graf--h3 graf--leading graf--title">Oxygen Not Included — Thermo Regulatorによる冷却</h3><p name="3144" id="3144" class="graf graf--p graf-after--h3">これまでOxygen Not Included内で使いにくく感じてずっと使ってなかった設備がある。Thermo Regulator（日本語版では「空調設備」、以後TRと表記）とThermo Aquatuner（同じく「液体クーラー」、以後TAと表記）だ。今回色々試してみて、ようやくゲーム序盤から手に入る資源で安定稼働するよう設計できたので、この設備の使い方について解説する。</p><figure name="2e27" id="2e27" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*DyGGtP1dTEESOJiBrD7Qsg.jpeg" data-width="1920" data-height="1080" data-is-featured="true" src="image-45c090ac13bbbaaa.jpeg"></figure><p name="1c0d" id="1c0d" class="graf graf--p graf-after--figure graf--trailing">ちなみに他人のプレイ動画とかを見てて大分以前からなんとなく使えるのはわかっていたのだが、今回初めて本腰を入れて自分で（サンドボックスでなく）普通のプレイ中に再現できたので、自分の理解をこうしてまとめてみた感じである。</p></div></div></section><section name="d9ac" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="3411" id="3411" class="graf graf--p graf--leading">本稿では基本TRについてのみ、解説する。原理はTAも一緒なので、使い方はほぼ一緒となる。違うのは気体と液体という性質の違う資源の質量によるエネルギー消費量、そしてそれによるいくつかの設備の差だ。</p><h3 name="52e4" id="52e4" class="graf graf--h3 graf-after--p">TRとは何の装置なのか</h3><p name="6e83" id="6e83" class="graf graf--p graf-after--h3">まず、TRが何をする機械なのかを理解する必要がある。誤解しやすいが、<strong class="markup--strong markup--p-strong">これらは気体を冷却する機械ではない</strong>。</p><p name="f941" id="f941" class="graf graf--p graf-after--p">これは電力を使って、<strong class="markup--strong markup--p-strong">気体から奪ったエネルギー（熱）を自らに蓄える装置だ</strong>。</p><p name="8f37" id="8f37" class="graf graf--p graf-after--p">具体的には14℃分のエネルギーをうばい、その分の熱を自分に蓄える（ただし、その際にTRも14℃あがる、というわけではない。多分、気体と機械それぞれの熱容量と質量の差のせいだと思われる）</p><figure name="2857" id="2857" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*LBHcACWtfR9XlU8CcX_Qsw.jpeg" data-width="1024" data-height="768" src="image-107268073b011711.jpeg"></figure><p name="d329" id="d329" class="graf graf--p graf-after--figure">つまりこの装置は「気体のエネルギーを気体から装置に移す」ためのものだということだ。</p><h3 name="d4bb" id="d4bb" class="graf graf--h3 graf-after--p">エネルギーをバッファする</h3><p name="c13b" id="c13b" class="graf graf--p graf-after--h3">この際、TRが熱を蓄えすぎてそのまま壊れる、というのを皆経験してるのではないだろうか。自分は何回もこれをやってしまい、それ以降使わなくなってしまった。</p><p name="0224" id="0224" class="graf graf--p graf-after--p">TRの自壊を防ぐために重要なのはこのエネルギーをTRから受けるためのバッファを用意することだ。</p><p name="4222" id="4222" class="graf graf--p graf-after--p">機械が蓄えた熱はエネルギーである。このエネルギーがそのまわりの液体ないし気体にうつることにより、機械そのものの温度は下がり、周囲の物体の温度があがる。</p><p name="f99a" id="f99a" class="graf graf--p graf-after--p">このエネルギーが移動する際、同じ1℃が変化するにも物質の「<strong class="markup--strong markup--p-strong">熱容量</strong>」によって、その1℃の変化が起こるためのエネルギー量に差がある。</p><figure name="5aa2" id="5aa2" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*kJoKGUi6wNrQPYdY9Rww-w.jpeg" data-width="1024" data-height="768" src="image-aaf50ac653a60c5b.jpeg"></figure><p name="2106" id="2106" class="graf graf--p graf-after--figure">例えば、水素は酸素の約2倍の熱容量がある。このため、100のエネルギーを与えた場合、酸素の場合<em class="markup--em markup--p-em">n</em>℃変化するとしたら、同じ質量の水素では<em class="markup--em markup--p-em">n/2</em>℃しか変化しない。</p><p name="0e35" id="0e35" class="graf graf--p graf-after--p">この性質のため、気体の中では水素はエネルギーを溜めるバッファとしてはこのゲーム内では屈指の効率のよい物質だ。</p><p name="be39" id="be39" class="graf graf--p graf-after--p">話をTRに戻すと、TRのエネルギーを吸収するために水素ガス内に設置することになる。</p><figure name="40b5" id="40b5" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*khIE0-uAa-sDL8_qEH5f7g.jpeg" data-width="1920" data-height="1080" src="image-86c40594843dad72.jpeg"></figure><p name="2ed6" id="2ed6" class="graf graf--p graf-after--figure">これで、TRに送られた気体から奪った熱を今度はTRからじょじょにまわりの水素に移すことができる。</p><h3 name="c6ec" id="c6ec" class="graf graf--h3 graf-after--p">水素のエネルギーを奪う</h3><p name="d986" id="d986" class="graf graf--p graf-after--h3">だが、これだけでは水素そのものの温度がどんどんあがっていき、いつかはTRが壊れるところになってしまう。なので今度はこの水素のエネルギーを奪う方法を考えないといけない。</p><p name="a207" id="a207" class="graf graf--p graf-after--p">エネルギーを奪うための仕組みとしてはAnti Entropy Thermo-Nullifier（日本語版では「反エントロピー型熱無効化装置」、以後AETNと表記）がすぐに思いつくが、実はこの機械、最初こそ「お、すげぇのある！」と思いがちだが、ゲームをやりこんでいくとだんだん扱いが難しい事に気がつく。</p><p name="65be" id="65be" class="graf graf--p graf-after--p">まずなんと言っても場所が限られる。遺物なので自分では建造できないから当たり前なのだが、そのせいで「ここで冷却をしたい！」という場所で使えない… か、長い導線を引いて装置同士を繋げる必要がある。</p><p name="9847" id="9847" class="graf graf--p graf-after--p">また、AETNは設置場所が必ず寒冷バイオームだというのも実はいけてない。寒冷バイオームに育つスリートウィートは栽培が面倒くさいので、野生のまま使いたいのだが、AETNを使おうとすると結構大がかりな工事が必要となり、そのまま残しておきたいのにだいたいその寒冷バイオームを破壊し尽くすことになる。</p><p name="d622" id="d622" class="graf graf--p graf-after--p">なので、比較的ポータブルにエネルギーを奪う装置を考える必要がある。</p><p name="1d0b" id="1d0b" class="graf graf--p graf-after--p">はたしてそんなものはあるのだろうか。もちろん、あるのである。</p><h3 name="2863" id="2863" class="graf graf--h3 graf-after--p">浄水器という謎装置</h3><p name="f6f3" id="f6f3" class="graf graf--p graf-after--h3">このゲームは基本的にエセなりに物理法則に沿うよう作られていて、それが楽しい理由のひとつなのだが、それでもいくつか「謎装置」と呼ばれるものがある。こいつらは全ての法則を無視してエネルギーを消滅させたりする。だから謎装置。</p><p name="0a47" id="0a47" class="graf graf--p graf-after--p">AETNもそのうちのひとつなのだが、今回はポータブルでゲーム序盤で入手可能という縛りで考えると、「<strong class="markup--strong markup--p-strong">浄水器</strong>」がそれにあたる。</p><p name="fa5c" id="fa5c" class="graf graf--p graf-after--p">浄水器は電気と濾過媒体を使い汚染水を真水に変えてくれる機械なわけだが、もうひとつ謎の仕様がある。それは「<strong class="markup--strong markup--p-strong">処理された真水は必ず40℃で出てくる</strong>」ということだ。</p><figure name="a8df" id="a8df" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*BTob20UJk_PEc1YlWyJRUw.jpeg" data-width="1024" data-height="768" src="image-1bc3a7adb9ecb19d.jpeg"></figure><p name="34d0" id="34d0" class="graf graf--p graf-after--figure">これ、実はすごいことで、例えば90℃の汚染水があったとしたら、濾過したあとそれは40℃の真水になってでてくるのだ。50℃はどこにいったのか？！TRのような場合は機械に熱が蓄えられるが、浄水器の場合は熱が完全に消えるのだ。まさに謎装置。</p><p name="fc1a" id="fc1a" class="graf graf--p graf-after--p">賢明な皆様はもう気づかれたと思うが、汚染水を確実に入手できれば、水素のエネルギーを水に移し、ある程度までそれが高まったら謎装置でその熱を一気に消してしまうことが可能になるわけだ。</p><p name="d720" id="d720" class="graf graf--p graf-after--p">水程度で冷却できるのか？と思われるかもしれないが、この装置の役目は水素（およびTRを）過熱させないことにあり、特にそれ以上冷却したいわけではない。50℃前後で安定してればそれでいいのだ。</p><h3 name="3acc" id="3acc" class="graf graf--h3 graf-after--p">汚染水をどこで調達するか</h3><p name="d159" id="d159" class="graf graf--p graf-after--h3">だがここでまた問題がでてくる。</p><p name="6bdb" id="6bdb" class="graf graf--p graf-after--p">通常汚染水は欲しくなくともトイレ等からどんどんでてきて処理に困ってしまいがちだ。だが、トイレからの汚染水は無限だが、いかんせん絶対量が豊富ではない。しかも一回枯渇するとそこから簡単にリカバリーが効く類いのものでもない。</p><p name="8991" id="8991" class="graf graf--p graf-after--p">今回我々はいわゆる「業務用」装置を作りたいので、意図的に、確実に汚染水を発生させたいのである。トイレのようなものには頼りたくない。</p><p name="7f87" id="7f87" class="graf graf--p graf-after--p">ここでお勧めなのが、Carbon Skimmer（日本語版では「炭素スキマー」、以後CSと表記）だ。炭素スキマーは真水と電気を使い、周囲の二酸化炭素を吸収して代わりに汚染水を排出する。</p><p name="3444" id="3444" class="graf graf--p graf-after--p">このゲームでは二酸化炭素は水以上にどんどん溜まる物だ。ゲーム序盤でもそうだし、後半にいけば隕石が落下する際やロケット発射の際に大量の二酸化炭素が発生するので実質無限に安定供給される。</p><p name="4bb0" id="4bb0" class="graf graf--p graf-after--p">これを使って、常に二酸化炭素を供給できれば汚染水を確実に制御下におきつつ発生させられる。</p><h3 name="5930" id="5930" class="graf graf--h3 graf-after--p">酸素供給装置の実装</h3><p name="4554" id="4554" class="graf graf--p graf-after--h3">いよいよ実装にうつりたい。今回は電解機による酸素供給装置を作り、そこから得られる酸素をコロニー内に安全に提供可能な温度の酸素にする仕組みを考える。</p><p name="87b8" id="87b8" class="graf graf--p graf-after--p">今回は電気の供給をクローズドにするとかその手のことは考えない。</p><h4 name="8ca6" id="8ca6" class="graf graf--h4 graf-after--p">電解機</h4><p name="0276" id="0276" class="graf graf--p graf-after--h4">まず電解機側だが、こちらは電解機そのものが熱い。これを冷ましたいのはやまやまだが、それより供給する酸素を冷却したいので、酸素がたまるバッファをつくり、そこにTRで冷やした水素を通して冷却する。</p><figure name="c50c" id="c50c" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*fLQ-uclEnI-M5mCscShYPQ.jpeg" data-width="1024" data-height="768" src="image-60fc79e8f910f9ec.jpeg"></figure><h4 name="4f5e" id="4f5e" class="graf graf--h4 graf-after--figure">TRによる冷却</h4><p name="1145" id="1145" class="graf graf--p graf-after--h4">TR側は、水素ループをただしく作るのが肝心になる。適当な温度（今回は-20℃）をターゲットにして、それ以上の温度の水素だったらTRへ、それ以下の場合は酸素の冷却にまわす。</p><figure name="4f4e" id="4f4e" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*2nnQLslVmrwewVV8C8K1Tw.jpeg" data-width="1024" data-height="768" src="image-3ca643b6c1d4fbf1.jpeg"></figure><p name="cf72" id="cf72" class="graf graf--p graf-after--figure">気体タンクはTRへの水素の供給の為に使う。TRと冷却対象の間には置かないように（TRからタンクにつっこむと、折角冷却した水素がタンク内の水素とまざり、平均された温度の物が出てきてしまう）</p><p name="c0e5" id="c0e5" class="graf graf--p graf-after--p">酸素を直接冷却する側はこれで終了。</p><h4 name="b8fe" id="b8fe" class="graf graf--h4 graf-after--p">浄水器による冷却</h4><p name="8c0d" id="8c0d" class="graf graf--p graf-after--h4">次にTRを冷却する浄水器側を実装する。とは言え、基本は同じだ。</p><p name="87d4" id="87d4" class="graf graf--p graf-after--p">こちらも真水のループを作る。真水の温度がある一定水準を超えたら、CSの側に水が回るようにしておく。</p><figure name="6c1d" id="6c1d" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*H5nzv1cqkLtjeSHEqZJdfg.jpeg" data-width="1020" data-height="541" src="image-4e3169a5f9543be5.jpeg"></figure><p name="3d4d" id="3d4d" class="graf graf--p graf-after--figure">CSは前もって充分な量の二酸化炭素の中に入れておく。真水が供給されたときのみ、動作する。</p><p name="4697" id="4697" class="graf graf--p graf-after--p">CSで作成された汚染水はまだ高温のまま。これを浄水器につっこむ。ここで謎のエネルギー消失がおこり、真水となる。結果的には冷却システムとなる。</p><p name="85a2" id="85a2" class="graf graf--p graf-after--p graf--trailing">なお、この程度の冷却では多分真水の温度が90℃まであがることはないだろう。適当に60℃程度でCSが起動するようにしておくと40℃とはいかないが、20℃を一気に消滅させることができ、システムのこの部分は常に40〜60℃の水をループさせることになる。</p></div></div></section><section name="683e" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="3ecf" id="3ecf" class="graf graf--p graf--leading">今回のこの作りを考えてわかるのは、このゲーム内でなにかからエネルギーを奪うには、エネルギーを移動させる仕組みの連鎖を作り、その最後に謎装置で一気にそのエネルギーを消す、という形を取るのがベストということだ。</p><p name="3e6a" id="3e6a" class="graf graf--p graf-after--p">冒頭で軽く触れたが、TAも同じように冷却できるはずだが、まだ自分でちゃんとゲーム内では実装していない。またこちらの方が消費電力が馬鹿でかいので注意（多分液体のほうが単位あたりの質量が多いからだろう。気体は1kgずつしか処理できないが液体なら10kgずつになる）。</p><p name="788e" id="788e" class="graf graf--p graf-after--p">また、さらに冷却が必要な液体酸素や液体水素を作るには、凍結温度が充分に低い液体を使うしかないので、実質TAでしか実現できない。</p><p name="a07a" id="a07a" class="graf graf--p graf-after--p">ただ、そこまで来ると奪うエネルギー量も相当なとのになるので、その際にはきっと蒸気発電を浄水器のかわりに使う必要があるだろう。蒸気発電も熱を奪って発電する謎機械なのである。</p><p name="ba6e" id="ba6e" class="graf graf--p graf-after--p graf--trailing">これでみんなAETNから卒業できるぞ！</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2019-01-05-d326414866f2/index.html"><time class="dt-published" datetime="2019-01-05T12:02:31.196Z">January 5, 2019</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/oxygen-not-included-thermo-regulator%E3%81%AB%E3%82%88%E3%82%8B%E5%86%B7%E5%8D%B4-d326414866f2">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/oxygen-not-included-thermo-regulator%E3%81%AB%E3%82%88%E3%82%8B%E5%86%B7%E5%8D%B4-d326414866f2">https://medium.com/@lestrrat/oxygen-not-included-thermo-regulator%E3%81%AB%E3%82%88%E3%82%8B%E5%86%B7%E5%8D%B4-d326414866f2</a>.</p>
+  </body>
+</html>

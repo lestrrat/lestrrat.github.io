@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Handling Multiple Kubernetes Clusters Using kubesh</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">Handling Multiple Kubernetes Clusters Using kubesh</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-When you are working with multiple Kuberenetes clusters, you have to tell the various tools that you use which cluster to look for. There…
-</section>
-<section data-field="body" class="e-content">
-<section name="00bf" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="da64" id="da64" class="graf graf--h3 graf--leading graf--title">Handling Multiple Kubernetes Clusters Using kubesh</h3><p name="c933" id="c933" class="graf graf--p graf-after--h3">When you are working with multiple Kuberenetes clusters, you have to tell the various tools that you use which cluster to look for. There are some tools and workarounds for this, but I find them cumbersome and/or error prone. So scratched my itch: I introduce you <code class="markup--code markup--p-code">kubesh</code>:</p><div name="eef7" id="eef7" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/lestrrat/kubesh" data-href="https://github.com/lestrrat/kubesh" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat/kubesh"><strong class="markup--strong markup--mixtapeEmbed-strong">lestrrat/kubesh</strong><br><em class="markup--em markup--mixtapeEmbed-em">kubesh - Spawn a shell for a particular kubectl context (cluster).</em>github.com</a><a href="https://github.com/lestrrat/kubesh" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="508dae28bdf04b71a398c585c440f42c" data-thumbnail-img-id="0*bGqA_w5UtTnkjzRU." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*bGqA_w5UtTnkjzRU.);"></a></div><h3 name="de44" id="de44" class="graf graf--h3 graf-after--mixtapeEmbed">Motivation</h3><p name="9a95" id="9a95" class="graf graf--p graf-after--h3">I use <a href="https://cloud.google.com/container-engine/docs" data-href="https://cloud.google.com/container-engine/docs" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">GKE</a> for <a href="https://www.hde.co.jp" data-href="https://www.hde.co.jp" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">work</a>, and for my <a href="https://builderscon.io" data-href="https://builderscon.io" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">builderscon project</a>.</p><div name="cf5d" id="cf5d" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://cloud.google.com/container-engine/docs" data-href="https://cloud.google.com/container-engine/docs" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://cloud.google.com/container-engine/docs"><strong class="markup--strong markup--mixtapeEmbed-strong">Google Container Engine Documentation | Container Engine | Google Cloud Platform</strong><br><em class="markup--em markup--mixtapeEmbed-em">Run Docker containers on Google Cloud Platform, powered by Kubernetes.</em>cloud.google.com</a><a href="https://cloud.google.com/container-engine/docs" class="js-mixtapeImage mixtapeImage mixtapeImage--empty u-ignoreBlock" data-media-id="6187e5037cbaa09e3d5fccdb583da862"></a></div><p name="4ed9" id="4ed9" class="graf graf--p graf-after--mixtapeEmbed">This does mean I have two google accounts: One for work, and one for my private needs. And I have multiple clusters in each.</p><p name="9c03" id="9c03" class="graf graf--p graf-after--p">For the longest time (while cumbersome) re-authenticating myself and letting <code class="markup--code markup--p-code">gcloud</code> store Application Default Credentials in <code class="markup--code markup--p-code">~/.config/gcloud/application_default_credentials.json</code> and have my kubeconfig updated via <code class="markup--code markup--p-code">gcloud container clusters get-credentials</code> from time to time did the job for me.</p><p name="127c" id="127c" class="graf graf--p graf-after--p">But over time, I started to face some problematic situations.</p><p name="8314" id="8314" class="graf graf--p graf-after--p">One problem was that I started to have incidents where I would be working on one cluster during the morning, and then sometime later, I decide to work on some other project, and I realize that I was working on the cluster from the morning, when I actually wanted to work on another. I haven’t done this yet, but I shudder to think what would happen if I somehow decided delete a Kubernetes resource on an unintended cluster.</p><p name="009d" id="009d" class="graf graf--p graf-after--p">There were also cases where I’d be working on two clusters which needed to communicate with each other. For example, maybe you have cluster that runs an organization-wide Prometheus instance, and it wants to monitor other Kubernetes clusters. In this situation, I’d like to be monitoring both clusters at the same time.</p><h3 name="4b0b" id="4b0b" class="graf graf--h3 graf-after--p">Prior Arts</h3><p name="77ed" id="77ed" class="graf graf--p graf-after--h3">There are other tools that do similar things. One tool that I was recommended was <code class="markup--code markup--p-code">kubectx</code>:</p><div name="4452" id="4452" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/ahmetb/kubectx" data-href="https://github.com/ahmetb/kubectx" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/ahmetb/kubectx"><strong class="markup--strong markup--mixtapeEmbed-strong">ahmetb/kubectx</strong><br><em class="markup--em markup--mixtapeEmbed-em">kubectx - Switch between Kubernetes contexts/namespaces</em>github.com</a><a href="https://github.com/ahmetb/kubectx" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="56555566650b2884ae4d6196c108c0a6" data-thumbnail-img-id="0*tcRpQVhMCbLyYQiF." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*tcRpQVhMCbLyYQiF.);"></a></div><p name="74a4" id="74a4" class="graf graf--p graf-after--mixtapeEmbed">While this makes managing contexts much easier, because it uses <code class="markup--code markup--p-code">kubectl use-context</code> underneath, the effects are global. That means, if you use it in one terminal, and move back to another terminal to use kubectl, you may not be working on the intended cluster anymore.</p><p name="59c6" id="59c6" class="graf graf--p graf-after--p">You could also create multiple kubecfg files, and switch by setting different KUBE_CONFIG variables. This seems like it’s the most widespread way, but I find having to maintain kubeconfig entries unacceptable. Actually, I think I can certainly do it, but would I want to tell my colleagues to learn how to create and manage those files? Hmm…</p><h3 name="077a" id="077a" class="graf graf--h3 graf-after--p">Scratching My Itch</h3><p name="2db2" id="2db2" class="graf graf--p graf-after--h3">So now I have <code class="markup--code markup--p-code"><a href="https://github.com/lestrrat/kubesh" data-href="https://github.com/lestrrat/kubesh" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">kubesh</a></code>. This basically spawns a new shell, which points <code class="markup--code markup--p-code">kubectl</code>, <code class="markup--code markup--p-code">stern</code>, and <code class="markup--code markup--p-code">helm</code> at their respective wrappers. These wrappers just provide the kubernetes context that you specified when you started <code class="markup--code markup--p-code">kubesh</code></p><pre name="514f" id="514f" class="graf graf--pre graf-after--p">$ kubesh --context=my-context<br>$ kubectl get pods # gets data from &quot;my-context&quot;<br>$ helm list        # lists charts from &quot;my-context&quot;<br>$ stern pod-name   # tails pod-name from &quot;my-context&quot;</pre><p name="5780" id="5780" class="graf graf--p graf-after--pre">The effects are local to your shell session. On another terminal, you are perfectly safe from its effects, and if you were working on a different cluster, your setup should not be changed.</p><p name="d9a7" id="d9a7" class="graf graf--p graf-after--p">If you want more consistency, you can open up another new shell, and do the following:</p><pre name="5920" id="5920" class="graf graf--pre graf-after--p">$ kubesh --context=my-other-context</pre><p name="38e2" id="38e2" class="graf graf--p graf-after--pre">And this will force subsequent calls to kubectl and friends refer to the cluster specified by <code class="markup--code markup--p-code">my-other-context</code> only.</p><p name="2fc9" id="2fc9" class="graf graf--p graf-after--p">You can even run random <code class="markup--code markup--p-code">kubectl use-context</code> in some other terminal, and it would still work (note: don’t run <code class="markup--code markup--p-code">use-context</code> while <code class="markup--code markup--p-code">kubesh</code> is in effect).</p><h4 name="f9d5" id="f9d5" class="graf graf--h4 graf-after--p">peco integration</h4><p name="853f" id="853f" class="graf graf--p graf-after--h4">If you get tired of writing long context names, just integrate <code class="markup--code markup--p-code">kubesh</code> with <code class="markup--code markup--p-code">peco</code> (disclaimer: I’m the author)</p><div name="a280" id="a280" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/peco/peco" data-href="https://github.com/peco/peco" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/peco/peco"><strong class="markup--strong markup--mixtapeEmbed-strong">peco/peco</strong><br><em class="markup--em markup--mixtapeEmbed-em">peco - Simplistic interactive filtering tool</em>github.com</a><a href="https://github.com/peco/peco" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="d965fa58d9e7473340371eac3f0cfc18" data-thumbnail-img-id="0*5s5Wr-FOHskxBczs." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*5s5Wr-FOHskxBczs.);"></a></div><p name="ffeb" id="ffeb" class="graf graf--p graf-after--mixtapeEmbed">Look into the README for <code class="markup--code markup--p-code">kubesh</code> for how to integrate <code class="markup--code markup--p-code">peco</code> :</p><div name="e805" id="e805" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/lestrrat/kubesh#integration-with-peco" data-href="https://github.com/lestrrat/kubesh#integration-with-peco" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat/kubesh#integration-with-peco"><strong class="markup--strong markup--mixtapeEmbed-strong">lestrrat/kubesh</strong><br><em class="markup--em markup--mixtapeEmbed-em">kubesh - Spawn a shell for a particular kubectl context (cluster).</em>github.com</a><a href="https://github.com/lestrrat/kubesh#integration-with-peco" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="6ee2c23c1f52072d3a354c6797474a7e" data-thumbnail-img-id="0*l1nvl52ib6yYYK0T." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*l1nvl52ib6yYYK0T.);"></a></div><p name="57e3" id="57e3" class="graf graf--p graf-after--mixtapeEmbed graf--trailing">Now you can select a context interactively!</p></div></div></section><section name="9960" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="9889" id="9889" class="graf graf--p graf--leading graf--trailing">Now you should be able to easily navigate between clusters. Happy Hacking!</p></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2017-09-28-a7e2a1606bfa/index.html"><time class="dt-published" datetime="2017-09-28T04:30:49.406Z">September 28, 2017</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/handling-multiple-kubernetes-clusters-using-kubesh-a7e2a1606bfa">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/handling-multiple-kubernetes-clusters-using-kubesh-a7e2a1606bfa">https://medium.com/@lestrrat/handling-multiple-kubernetes-clusters-using-kubesh-a7e2a1606bfa</a>.</p>
+  </body>
+</html>

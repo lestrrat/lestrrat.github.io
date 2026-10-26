@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>Farewell to Dangling HTTP(s) Load Balancers (GKE)</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">Farewell to Dangling HTTP(s) Load Balancers (GKE)</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-I do a lot of GKE work.
-</section>
-<section data-field="body" class="e-content">
-<section name="134a" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="d19e" id="d19e" class="graf graf--h3 graf--leading graf--title">Farewell to Dangling HTTP(s) Load Balancers (GKE)</h3><figure name="c780" id="c780" class="graf graf--figure graf-after--h3"><img class="graf-image" data-image-id="1*t0zpSqpEw1rtFjknHGWMxg.jpeg" data-width="640" data-height="409" src="image-217a49a7589a8a73.jpeg"><figcaption class="imageCaption">credit: <a href="https://commons.wikimedia.org/wiki/File:The_Grim_Reaper_-_geograph.org.uk_-_522625.jpg" data-href="https://commons.wikimedia.org/wiki/File:The_Grim_Reaper_-_geograph.org.uk_-_522625.jpg" class="markup--anchor markup--figure-anchor" rel="nofollow noopener" target="_blank">https://commons.wikimedia.org/wiki/File:The_Grim_Reaper_-_geograph.org.uk_-_522625.jpg</a></figcaption></figure><p name="998f" id="998f" class="graf graf--p graf-after--figure">I do a lot of GKE work.</p><div name="6cbe" id="6cbe" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://cloud.google.com/kubernetes-engine/" data-href="https://cloud.google.com/kubernetes-engine/" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://cloud.google.com/kubernetes-engine/"><strong class="markup--strong markup--mixtapeEmbed-strong">Google Kubernetes Engine | Google Cloud Platform</strong><br><em class="markup--em markup--mixtapeEmbed-em">Google Kubernetes Engine is a powerful cluster manager and orchestration system for running your Docker containers. Set…</em>cloud.google.com</a><a href="https://cloud.google.com/kubernetes-engine/" class="js-mixtapeImage mixtapeImage mixtapeImage--empty u-ignoreBlock" data-media-id="cec7e43f4cb66eb554e42a294ab64e48"></a></div><p name="ac6a" id="ac6a" class="graf graf--p graf-after--mixtapeEmbed">When doing lots of development on, or automating tasks with GKE, I used to casually bring a cluster up, create resources, delete the cluster, try again. Why not? After all GKE makes this process a breeze.</p><p name="0c8d" id="0c8d" class="graf graf--p graf-after--p">This works fine in most cases, but for Kubernetes Ingress resources that create HTTP(s) load balancers… well, there’s one thing you need to be aware of: <strong class="markup--strong markup--p-strong">if you delete the cluster</strong> (as opposed to, say, delete a Kubernetes namespace), <strong class="markup--strong markup--p-strong">Kubernetes has no chance of cleaning the load balancers, and they are left there forever</strong>, until you do something about it.</p><p name="5c63" id="5c63" class="graf graf--p graf-after--p">Well, I decided to do something about it.(I would love to know if there are better ways! Please leave a comment)</p><p name="8a6e" id="8a6e" class="graf graf--p graf-after--p graf--trailing">(UPDATE: supposedly this has been fixed, but recently I have not been creating/deleting clusters right from left, so have not confirmed)</p></div></div></section><section name="f73c" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="d047" id="d047" class="graf graf--p graf--leading">I would almost like to leave these load balancers dangling as they are, but there are two problems:</p><ol class="postList"><li name="1571" id="1571" class="graf graf--li graf-after--p">They cost you money, and</li><li name="26b5" id="26b5" class="graf graf--li graf-after--li">GCP has a quota on maximum number of resources you can create for forwarding rules, backends, etc.</li></ol><p name="65e5" id="65e5" class="graf graf--p graf-after--li">This means it is crucial for us to clean up after ourselves.</p><p name="9ff5" id="9ff5" class="graf graf--p graf-after--p">If you don’t care about how load balancers are structured in GCP, then stop reading and head straight over to my repository:</p><div name="e9fb" id="e9fb" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://github.com/lestrrat-go/gcp-auto-lb-clean" data-href="https://github.com/lestrrat-go/gcp-auto-lb-clean" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat-go/gcp-auto-lb-clean"><strong class="markup--strong markup--mixtapeEmbed-strong">lestrrat-go/gcp-auto-lb-clean</strong><br><em class="markup--em markup--mixtapeEmbed-em">gcp-auto-lb-clean - Delete Dangling GCP Load Balancers Created By GKE</em>github.com</a><a href="https://github.com/lestrrat-go/gcp-auto-lb-clean" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="176147b15a4160bd882b5f4be8264f37" data-thumbnail-img-id="0*QFuGS3UeJPFfiSGz." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*QFuGS3UeJPFfiSGz.);"></a></div><h3 name="c36e" id="c36e" class="graf graf--h3 graf-after--mixtapeEmbed">The Anatomy Of A Load Balancer</h3><p name="932f" id="932f" class="graf graf--p graf-after--h3">There is no such resource as a “Load Balancer” on GCP. Instead, a load balancer consists of multiple resources that collectively act as your trusty worker. If you are ever going to actually work with GCP load balancers, you need to know these terms:</p><ul class="postList"><li name="c422" id="c422" class="graf graf--li graf-after--p"><strong class="markup--strong markup--li-strong">Forwarding Rules</strong>: Determines how you receive your inbound traffic. Sometimes called the “frontend.”</li><li name="e197" id="e197" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Target Proxies</strong>: Receives traffic from the frontend, and routes them to appropriate backends. Note: there exists target <em class="markup--em markup--li-em">https</em> proxies and target <em class="markup--em markup--li-em">http</em> proxies, which are managed separately.</li><li name="1b7f" id="1b7f" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">URL Maps</strong>: The actual map containing the routing rules for target proxies.</li><li name="9573" id="9573" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">SSL Certificates</strong>: The certificates used for HTTPs load balancers.</li><li name="a703" id="a703" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Backend Services</strong>: A grouping of VMs that handle the requests. In our case, points to a particular port(s) on an instance group.</li><li name="64ea" id="64ea" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Instance Groups</strong>: The same instance groups that you know from GCE.</li><li name="ddbf" id="ddbf" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Instances</strong>: The actual VMs.</li><li name="8c0d" id="8c0d" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Health Checks</strong>: Agents that periodically checks your backend services to make sure they are accessible.</li></ul><p name="a2f5" id="a2f5" class="graf graf--p graf-after--li">These are the components that make up a load balancer. If you know these terms, the GCP Networking UI will actually make more sense! :)</p><div name="bdf8" id="bdf8" class="graf graf--mixtapeEmbed graf-after--p"><a href="https://console.cloud.google.com/net-services/loadbalancing/loadBalancers/list" data-href="https://console.cloud.google.com/net-services/loadbalancing/loadBalancers/list" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://console.cloud.google.com/net-services/loadbalancing/loadBalancers/list"><strong class="markup--strong markup--mixtapeEmbed-strong">Google Cloud Platform</strong><br><em class="markup--em markup--mixtapeEmbed-em">Google Cloud Platform lets you build, deploy, and scale applications, websites, and services on the same infrastructure…</em>console.cloud.google.com</a><a href="https://console.cloud.google.com/net-services/loadbalancing/loadBalancers/list" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="48622076ab7ce3bbd00e3b928023384e" data-thumbnail-img-id="0*A6vrDv2eh2dcKTpq." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*A6vrDv2eh2dcKTpq.);"></a></div><h3 name="b773" id="b773" class="graf graf--h3 graf-after--mixtapeEmbed">Finding Dangling Load Balancers</h3><p name="9ee5" id="9ee5" class="graf graf--p graf-after--h3">We basically need to find all load balancers whose backend instance group has ceased to be.</p><p name="196e" id="196e" class="graf graf--p graf-after--p">So first, we look for forwarding rules whose name starts with <code class="markup--code markup--p-code">k8s-fw</code> , which is the name automatically given to load balancers created by the Kubernetes Ingress resources.</p><p name="0cd3" id="0cd3" class="graf graf--p graf-after--p">Then we successively search through the structures until we are at the instance groups level. The way wedo this is as follows:</p><ol class="postList"><li name="7f2f" id="7f2f" class="graf graf--li graf-after--p">Find applicable forwarding rules</li><li name="2f44" id="2f44" class="graf graf--li graf-after--li">Find the target proxies that can be inferred via the forwarding rules <code class="markup--code markup--li-code">target</code> field.</li><li name="60bb" id="60bb" class="graf graf--li graf-after--li">Find the urlMaps that can be inferred via the target proxies <code class="markup--code markup--li-code">urlMap</code> field.</li><li name="7069" id="7069" class="graf graf--li graf-after--li">Find the backend services that can be inferred via the url map’s <code class="markup--code markup--li-code">services</code> field.</li><li name="6016" id="6016" class="graf graf--li graf-after--li">Find the instance groups that can be inferred via the backend service’s<code class="markup--code markup--li-code">pathMatchers.pathRules</code> fields.</li></ol><p name="08bd" id="08bd" class="graf graf--p graf-after--li">At this point we can list the instances that are associated with this backend service. If the total number of instances that are alive on this backend service is zero, we declare this entire load balancer dangling.</p><p name="354e" id="354e" class="graf graf--p graf-after--p">When we do this we can finally start to back pedal a bit and start deleting all the associated resources, plus a few more that we didn’t need to query to get to the instances, such as the SSL certificates and health checks.</p><p name="3432" id="3432" class="graf graf--p graf-after--p">Now, we’d be almost done, except there are cases where we are lacking the forwarding rule, but we have everything after the target proxies. This may happen if we deleted the cluster in the middle of initialization, or when we have a faulty setup that prevented the load balancer from properly forming.</p><p name="e008" id="e008" class="graf graf--p graf-after--p">To capture these cases, after we do the regular walk of the forwarding rules, we list target proxies and pick ones whose names start with <code class="markup--code markup--p-code">k8s-tp</code>, which have yet to be picked up in the previous walk. Then we do the same check.</p><p name="341b" id="341b" class="graf graf--p graf-after--p">Lastly, to prevent accidentally deleting load balancers that are still being initialized, we make sure to check that the target proxy is at least 1 hour old. If your proxy has not initialized after 1 hour, you have a different problem…</p><p name="2bad" id="2bad" class="graf graf--p graf-after--p">And this basically is all that is required to find dangling load balancers.</p><h3 name="24d1" id="24d1" class="graf graf--h3 graf-after--p">Deleting Through Google App Engine</h3><p name="8be3" id="8be3" class="graf graf--p graf-after--h3">Now the above must be checked periodically. Since we’re in the GCP environment, the easiest way to periodically run a task is to use App Engine.</p><p name="b9f1" id="b9f1" class="graf graf--p graf-after--p">If you are interested in how I actually implement it, please go take a look at my repository above. It’s a bit hackish, but App Engine was the right choice for the job, as the Taskqueue proved itself most useful.</p><p name="6fcc" id="6fcc" class="graf graf--p graf-after--p">One thing you should know if you are going to read that code is how the Go binding for Google API is organized. If you are not used to that calling convention they sure look odd, but once you get the hang of it, you quickly realize that the API is that way precisely because it is by far the easiest way to <em class="markup--em markup--p-em">generate</em> code that make RPC calls.</p><p name="293f" id="293f" class="graf graf--p graf-after--p">If you are interested, I explain how the API is used in one of my repositories where I stole their coding style:</p><div name="de10" id="de10" class="graf graf--mixtapeEmbed graf-after--p graf--trailing"><a href="https://github.com/lestrrat-go/slack" data-href="https://github.com/lestrrat-go/slack" class="markup--anchor markup--mixtapeEmbed-anchor" title="https://github.com/lestrrat-go/slack"><strong class="markup--strong markup--mixtapeEmbed-strong">lestrrat-go/slack</strong><br><em class="markup--em markup--mixtapeEmbed-em">slack - Slack client for go</em>github.com</a><a href="https://github.com/lestrrat-go/slack" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="22371b33558edd15cbbd3cf6d3153cc1" data-thumbnail-img-id="0*nWljI9VtcPjc0wqC." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*nWljI9VtcPjc0wqC.);"></a></div></div></div></section><section name="9501" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="a7b3" id="a7b3" class="graf graf--p graf--leading">So that was it. I deployed my code to App Engine, set up my cron.yaml to start looking for dangling HTTP(s) load balancers every 10 minutes, and now I can rest easy knowing that I won’t be slapped with a fee or that I won’t have to worry about exceeding GCP quotas.</p><p name="dbf5" id="dbf5" class="graf graf--p graf-after--p">Thanks for reading, and please let me know if there’s a better way to do this. Happy hacking.</p><div name="6191" id="6191" class="graf graf--mixtapeEmbed graf-after--p graf--trailing"><a href="http://amzn.to/2C438G4" data-href="http://amzn.to/2C438G4" class="markup--anchor markup--mixtapeEmbed-anchor" title="http://amzn.to/2C438G4"><strong class="markup--strong markup--mixtapeEmbed-strong">Kubernetes: Up and Running: Dive into the Future of Infrastructure</strong><br><em class="markup--em markup--mixtapeEmbed-em">Legend has it that Google deploys over two billion application containers a week. How&#39;s that possible? Google revealed…</em>amzn.to</a><a href="http://amzn.to/2C438G4" class="js-mixtapeImage mixtapeImage u-ignoreBlock" data-media-id="a7c42add5376071f7816494d0cb8dc0f" data-thumbnail-img-id="0*mj8GhLAMZjVJeBts." style="background-image: url(https://cdn-images-1.medium.com/fit/c/160/160/0*mj8GhLAMZjVJeBts.);"></a></div></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2017-12-22-c5e0f8b5cde3/index.html"><time class="dt-published" datetime="2017-12-22T13:03:10.347Z">December 22, 2017</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/farewell-to-dangling-http-s-load-balancers-gke-c5e0f8b5cde3">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/farewell-to-dangling-http-s-load-balancers-gke-c5e0f8b5cde3">https://medium.com/@lestrrat/farewell-to-dangling-http-s-load-balancers-gke-c5e0f8b5cde3</a>.</p>
+  </body>
+</html>

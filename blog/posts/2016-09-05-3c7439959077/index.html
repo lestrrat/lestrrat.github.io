@@ -1,84 +1,13 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../blog.css"><title>JSON Schema And Go</title><style>
-      * {
-        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-      }
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      h1 {
-        font-size: 50px;
-        margin-bottom: 17px;
-        color: #333;
-      }
-      h2 {
-        font-size: 24px;
-        line-height: 1.6;
-        margin: 30px 0 0 0;
-        margin-bottom: 18px;
-        margin-top: 33px;
-        color: #333;
-      }
-      h3 {
-        font-size: 30px;
-        margin: 10px 0 20px 0;
-        color: #333;
-      }
-      header {
-        width: 640px;
-        margin: auto;
-      }
-      section {
-        width: 640px;
-        margin: auto;
-      }
-      section p {
-        margin-bottom: 27px;
-        font-size: 20px;
-        line-height: 1.6;
-        color: #333;
-      }
-      section img {
-        max-width: 640px;
-      }
-      footer {
-        padding: 0 20px;
-        margin: 50px 0;
-        text-align: center;
-        font-size: 12px;
-      }
-      .aspectRatioPlaceholder {
-        max-width: auto !important;
-        max-height: auto !important;
-      }
-      .aspectRatioPlaceholder-fill {
-        padding-bottom: 0 !important;
-      }
-      header,
-      section[data-field=subtitle],
-      section[data-field=description] {
-        display: none;
-      }
-      </style></head><body class="article-page"><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../../">lestrrat.github.io</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="../../../#profile">Profile</a></li>
-      <li><a href="../../index.html">Blog</a></li>
-      <li><a href="../../../#talks">Talks/Presentations</a></li>
-      <li><a href="../../../#events">Events</a></li>
-    </ul>
-  </div>
-</div><nav class="blog-nav"><a href="../../index.html">&larr; Back to blog archive</a></nav><article class="h-entry">
-<header>
-<h1 class="p-name">JSON Schema And Go</h1>
-</header>
-<section data-field="subtitle" class="p-summary">
-It has been about 7 months since I started writing a JSON Schema library, named go-jsschema, and other associated libraries for Go. In this…
-</section>
-<section data-field="body" class="e-content">
-<section name="e8b6" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="b99a" id="b99a" class="graf graf--h3 graf--leading graf--title">JSON Schema And Go</h3><p name="0c3b" id="0c3b" class="graf graf--p graf-after--h3">It has been about 7 months since I started writing a <a href="https://github.com/lestrrat/go-jsschema" data-href="https://github.com/lestrrat/go-jsschema" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">JSON Schema library, named <strong class="markup--strong markup--p-strong">go-jsschema</strong></a>, and other associated libraries for Go. In this article, I will try to describe these libraries that I wrote. All features are those as of September 2016.</p><h3 name="3ce3" id="3ce3" class="graf graf--h3 graf-after--p">Parsing</h3><p name="4632" id="4632" class="graf graf--p graf-after--h3">Before doing anything with a JSON Schema, you need to parse it. This is simple: <a href="https://github.com/lestrrat/go-jsschema" data-href="https://github.com/lestrrat/go-jsschema" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">go-jsschema</strong></a> provides a <strong class="markup--strong markup--p-strong">ReadFile()</strong> method as well as a <strong class="markup--strong markup--p-strong">Read()</strong> method that takes in an <strong class="markup--strong markup--p-strong">io.Reader</strong> interface.</p><figure name="5558" id="5558" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*1AKYxjtACCS4Y8qeuVibGg.png" data-width="482" data-height="229" src="image-2f3582306d32680f.png"></figure><p name="922a" id="922a" class="graf graf--p graf-after--figure">Because it’s common to create a sub-rule within the schema, and then reference it via JSON Pointers, <a href="https://github.com/lestrrat/go-jsschema" data-href="https://github.com/lestrrat/go-jsschema" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">go-jsschema</strong></a> allows this notation via <a href="https://github.com/lestrrat/go-jsref" data-href="https://github.com/lestrrat/go-jsref" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">go-jsref.</strong></a></p><p name="df46" id="df46" class="graf graf--p graf-after--p"><a href="https://github.com/lestrrat/go-jsref" data-href="https://github.com/lestrrat/go-jsref" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">go-jsref</strong></a> can also fetch schemas off the network via http(s), but I don’t really recommend doing this, as you lose control on the version of the schema you are currently using. Instead, I recommend generating the validator as Go code. Read the next section for this feature.</p><h3 name="f0c8" id="f0c8" class="graf graf--h3 graf-after--p">Validation</h3><p name="317e" id="317e" class="graf graf--p graf-after--h3">One of the natural ways to use JSON Schema is to validate some arbitrary piece of data. One approach to do this is to create a JSON Schema object from a schema definition, and then let that schema object itself perform the validation. <strong class="markup--strong markup--p-strong">go-jsschema</strong> takes a different approach:<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em"> We generate code that builds a validator</em></strong>.</p><p name="56ad" id="56ad" class="graf graf--p graf-after--p">The package <a href="https://github.com/lestrrat/go-jsval" data-href="https://github.com/lestrrat/go-jsval" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">go-jsval</strong></a> was created for this purpose. You can feed it a Schema instance to the the validator builder, and have a validator that can validate an arbitrary piece of data against the schema (note: “input” in below example should be initialized with whatever piece of data you want to validate)</p><figure name="88c2" id="88c2" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*7cPDVH2bHdruNimlwbt18Q.png" data-width="570" data-height="429" src="image-930b33adc7efd8b6.png"></figure><p name="505d" id="505d" class="graf graf--p graf-after--figure">Or better yet, you can take a validator, and <strong class="markup--strong markup--p-strong">generate Go code that creates the same validator</strong> back. This allows you to embed this code in your project directly, thereby allowing you to completely bypass the JSON Schema parsing and validator generation phase. It’s also probably easier to debug, as you can see the exact code that your validator is being built with.</p><p name="f95c" id="f95c" class="graf graf--p graf-after--p">Below is an image showing how the JSON Schema definition will be laid out as a validator.</p><figure name="0864" id="0864" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*5uU9i-KlGpTbm9_9-WhdBw.png" data-width="569" data-height="544" src="image-8a0dc0647ec164e5.png"></figure><h3 name="9a4f" id="9a4f" class="graf graf--h3 graf-after--figure">Slice It And Dice It</h3><p name="70d9" id="70d9" class="graf graf--p graf-after--h3">I did not want to just validate pieces of data using JSON Schema. I also wanted to inspect the schema, and generate code using it. This means that consumers of this library would need to be able to access all of the fields that are provided by the original schema, but for some reason many of the libraries available that I saw did not provide this. meh :/</p><p name="68b8" id="68b8" class="graf graf--p graf-after--p">The validator <a href="https://github.com/lestrrat/go-jsval" data-href="https://github.com/lestrrat/go-jsval" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">go-jsval</strong></a> is a prime example of a consumer of JSON Schema. It examines all of the fields in a schema, and generates a validator.</p><figure name="3626" id="3626" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*sCaiziweZB_BWGHv7XnJ_w.png" data-width="567" data-height="494" src="image-c887f6bd5d73edc1.png"></figure><p name="c461" id="c461" class="graf graf--p graf-after--figure">This feature is further used in the JSON Hyper Schema library <a href="https://github.com/lestrrat/go-jshschema" data-href="https://github.com/lestrrat/go-jshschema" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">go-jshschema</strong></a>. With<a href="https://github.com/lestrrat/go-jshschema" data-href="https://github.com/lestrrat/go-jshschema" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong"> go-jshschema</strong></a>, you can easily create a library that generates scaffold web application.</p><h3 name="6d30" id="6d30" class="graf graf--h3 graf-after--p">Generate Scaffolds</h3><p name="ede2" id="ede2" class="graf graf--p graf-after--h3">So I wrote one such scaffold generator implementation called <a href="https://github.com/lestrrat/go-hsup" data-href="https://github.com/lestrrat/go-hsup" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">go-hsup</strong></a>. It’s probably not a general purpose tool (then again, when are “general purpose” web application scaffold generators ever sufficient for our needs?), but it should give you a sense of what can be done using parsed schemas.</p><figure name="74af" id="74af" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*FPTiDNRCf0iU7CcVSw99NQ.png" data-width="568" data-height="284" src="image-e5481367e8bb351a.png"></figure><p name="b070" id="b070" class="graf graf--p graf-after--figure"><a href="https://github.com/lestrrat/go-hsup" data-href="https://github.com/lestrrat/go-hsup" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">go-hsup</strong></a> generates code like below. It actually saved me quite a lot of typing, and also spares me from making silly mistakes.</p><figure name="30e2" id="30e2" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*UUfL8Di-6OLodmHwiXw-pg.png" data-width="567" data-height="271" src="image-d21fb33b2f9c4467.png"></figure><p name="c278" id="c278" class="graf graf--p graf-after--figure">So that’s it! Please let me know if you find these tools useful!</p><ul class="postList"><li name="8a10" id="8a10" class="graf graf--li graf-after--p"><a href="https://github.com/lestrrat/go-jsschema" data-href="https://github.com/lestrrat/go-jsschema" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--li-strong">go-jsschema</strong></a>: JSON Schema implementation</li><li name="8bb1" id="8bb1" class="graf graf--li graf-after--li"><a href="https://github.com/lestrrat/go-jshschema" data-href="https://github.com/lestrrat/go-jshschema" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--li-strong">go-jshschema</strong></a>: JSON Hyper Schema implementation</li><li name="643e" id="643e" class="graf graf--li graf-after--li"><a href="https://github.com/lestrrat/go-jsref" data-href="https://github.com/lestrrat/go-jsref" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--li-strong">go-jsref</strong></a>: JSON Reference implementation</li><li name="3c65" id="3c65" class="graf graf--li graf-after--li"><a href="https://github.com/lestrrat/go-jspointer" data-href="https://github.com/lestrrat/go-jspointer" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--li-strong">go-jspointer</strong></a>: JSON Pointer implementation</li><li name="aa42" id="aa42" class="graf graf--li graf-after--li"><a href="https://github.com/lestrrat/go-jsval" data-href="https://github.com/lestrrat/go-jsval" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--li-strong">go-jsval</strong></a>: Validator Framework Using JSON Schema</li><li name="12e9" id="12e9" class="graf graf--li graf-after--li graf--trailing"><a href="https://github.com/lestrrat/go-hsup" data-href="https://github.com/lestrrat/go-hsup" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--li-strong">go-hsup</strong></a>: A Tool To Generate Web Application Scaffolds</li></ul></div></div></section>
-</section>
-<footer><p>By <a href="../../index.html" class="p-author h-card">Daisuke Maki</a> on <a href="../2016-09-05-3c7439959077/index.html"><time class="dt-published" datetime="2016-09-05T00:12:35.575Z">September 5, 2016</time></a>.</p></footer></article></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta http-equiv="refresh" content="0; url=https://medium.com/@lestrrat/json-schema-and-go-3c7439959077">
+    <title>Redirecting | lestrrat.github.io</title>
+  </head>
+  <body>
+    <p>This article moved to <a href="https://medium.com/@lestrrat/json-schema-and-go-3c7439959077">https://medium.com/@lestrrat/json-schema-and-go-3c7439959077</a>.</p>
+  </body>
+</html>
